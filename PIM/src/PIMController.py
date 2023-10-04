@@ -1,4 +1,4 @@
 import model.PIR
-import model.PlainText
+import PIM.src.model.PlainText
 import model.Contact
 

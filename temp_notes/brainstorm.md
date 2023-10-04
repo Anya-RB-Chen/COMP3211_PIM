@@ -72,9 +72,7 @@ A ".pim" file is a file that stores the personal information records (PIRs) crea
 # Each record may have other fields depending on its type
 # The fields are separated by commas
 
-1,PlainText
-date,2023-10-01 10:00
-text,Hello world
+1,PlainText,date,2023-10-01 10:00,text,Hello world
 ```
 
 - Example 2: A ".pim" file that contains one task record with the description "Finish project" and the deadline "2023-11-25 23:59".
@@ -86,10 +84,7 @@ text,Hello world
 # Each record may have other fields depending on its type
 # The fields are separated by commas
 
-2,Task
-date,2023-10-02 11:00
-description,Finish project
-deadline,2023-11-25 23:59
+2,Task,date,2023-10-02 11:00,description,Finish project,deadline,2023-11-25 23:59
 ```
 
 - Example 3: A ".pim" file that contains one event record with the description "Birthday party", the starting time "2023-12-01 18:00", and the alarm "2023-12-01 17:00".
@@ -101,11 +96,7 @@ deadline,2023-11-25 23:59
 # Each record may have other fields depending on its type
 # The fields are separated by commas
 
-3,Event
-date,2023-10-03 12:00
-description,Birthday party
-start_time,2023-12-01 18:00
-alarm,2023-12-01 17:00
+3,Event,date,2023-10-03 12:00,description,Birthday party,start_time,2023-12-01 18:00,alarm,2023-12-01 17:00
 ```
 
 - Example 4: A ".pim" file that contains one contact record with the name "Alice", the address "123 Main Street", and the mobile number "1234567890".
@@ -117,11 +108,7 @@ alarm,2023-12-01 17:00
 # Each record may have other fields depending on its type
 # The fields are separated by commas
 
-4,Contact
-date,2023-10-04 13:00
-name,Alice
-address,123 Main Street
-mobile_number,1234567890
+4,Contact,date,2023-10-04 13:00,name,Alice,address,123 Main Street,mobile_number,1234567890
 ```
 
 <br>
