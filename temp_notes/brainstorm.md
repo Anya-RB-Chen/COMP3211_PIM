@@ -18,7 +18,7 @@ PIM
 ├── src
 │   ├── model
 │   │   ├── __init__.py
-│   │   ├── PIR.py
+│   │   ├── PIM.py
 │   │   ├── PlainText.py
 │   │   ├── Task.py
 │   │   ├── Event.py
@@ -29,7 +29,7 @@ PIM
 ├── test
 │   ├── model
 │   │   ├── __init__.py
-│   │   ├── PIRTest.py
+│   │   ├── PIMTest.py
 │   │   ├── PlainTextTest.py
 │   │   ├── TaskTest.py
 │   │   ├── EventTest.py
@@ -61,7 +61,7 @@ The PIM is a personal information manager that can handle different types of rec
 <br>
 
 # Data Structure
-A ".pim" file is a file that stores the personal information records (PIRs) created by the PIM program. It has a specific format that allows the PIM to load and save the PIRs. Here are some examples of how a ".pim" file may look like, based on the user stories in Appendix B:
+A ".pim" file is a file that stores the personal information records (PIMs) created by the PIM program. It has a specific format that allows the PIM to load and save the PIMs. Here are some examples of how a ".pim" file may look like, based on the user stories in Appendix B:
 
 - Example 1: A ".pim" file that contains one plain text record with the text "Hello world".
 
@@ -120,8 +120,8 @@ To write a "help" function to show the manual for a specific function when the u
 
 ```python
 manuals = {
-    "create": "Create a new PIR of a given type with the given data. The type can be one of PlainText, Task, Event, or Contact. The data depends on the type of PIR. For example, to create a new plain text record with the text 'Hello world', you can enter 'create plain text Hello world'.",
-    "modify": "Modify an existing PIR with a given id by changing its field to a new value. The id is a unique identifier for each PIR. The field depends on the type of PIR. For example, to change the deadline of a task record with id 1 to '2023-11-30 23:59', you can enter 'modify 1 deadline 2023-11-30 23:59'.",
+    "create": "Create a new PIM of a given type with the given data. The type can be one of PlainText, Task, Event, or Contact. The data depends on the type of PIM. For example, to create a new plain text record with the text 'Hello world', you can enter 'create plain text Hello world'.",
+    "modify": "Modify an existing PIM with a given id by changing its field to a new value. The id is a unique identifier for each PIM. The field depends on the type of PIM. For example, to change the deadline of a task record with id 1 to '2023-11-30 23:59', you can enter 'modify 1 deadline 2023-11-30 23:59'.",
     # and so on for other keywords
 }
 ```
@@ -146,12 +146,12 @@ def help(keyword):
 
 To design the user manual or menu for this command-line-based program, you can follow these steps:
 
-- Write a brief introduction that explains the purpose and features of the PIM program, such as managing different types of personal information records (PIRs) using natural language commands.
+- Write a brief introduction that explains the purpose and features of the PIM program, such as managing different types of personal information records (PIMs) using natural language commands.
 - Write a section that describes the installation and setup of the PIM program, such as how to download the source code, how to compile and run the program, and what are the system requirements and dependencies.
 - Write a section that explains the basic usage of the PIM program, such as how to enter and execute commands, how to exit the program, and how to get help information.
 - Write a section that lists and explains all the supported commands of the PIM program, such as create, modify, search, print, delete, store, and load. For each command, provide the syntax, the description, the parameters, the examples, and the possible errors or exceptions.
-- Write a section that describes the types and formats of PIRs that the PIM program can handle, such as plain texts, tasks, events, and contacts. For each type of PIR, provide the fields, the data types, the constraints, and the examples.
-- Write a section that explains how to use criteria to search for PIRs based on their types and fields¹[1]. Provide some examples of valid and invalid criteria and their results.
+- Write a section that describes the types and formats of PIMs that the PIM program can handle, such as plain texts, tasks, events, and contacts. For each type of PIM, provide the fields, the data types, the constraints, and the examples.
+- Write a section that explains how to use criteria to search for PIMs based on their types and fields¹[1]. Provide some examples of valid and invalid criteria and their results.
 - Write a section that provides some tips and tricks for using the PIM program more effectively and efficiently, such as how to use shortcuts, aliases, or macros for common commands or operations.
 - Write a section that acknowledges the sources and references that you used to develop the PIM program, such as libraries, frameworks, tutorials, or articles.
 
@@ -170,8 +170,8 @@ Here are some examples of how to write the user manual or menu and the 'help' co
 """
 Personal Information Manager (PIM)
 
-This is a command-line-based program that allows you to manage different types of personal information records (PIRs) using natural language commands³[3]. You can create, modify, search, print, delete,
-store, and load PIRs of four types: plain texts, tasks, events,
+This is a command-line-based program that allows you to manage different types of personal information records (PIMs) using natural language commands³[3]. You can create, modify, search, print, delete,
+store, and load PIMs of four types: plain texts, tasks, events,
 and contacts.
 
 Installation and Setup
@@ -192,49 +192,49 @@ Supported Commands
 
 The following commands are supported by this program:
 
-create <type> <data>: Create a new PIR of a given type with
+create <type> <data>: Create a new PIM of a given type with
 the given data. The type can be one of PlainText,
 Task,
 Event,
 or Contact. The data depends on
-the type of PIR. For example,
+the type of PIM. For example,
 to create a new plain text record with
 the text "Hello world", you can enter 'create plain text Hello world'.
 
-modify <id> <field> <value>: Modify an existing PIR with
+modify <id> <field> <value>: Modify an existing PIM with
 a given id by changing its field to a new value. The id is
-a unique identifier for each PIR. The field depends on
-the type of PIR. For example,
+a unique identifier for each PIM. The field depends on
+the type of PIM. For example,
 to change
 the deadline of a task record with id 1 to "2023-11-30 23:59", you can enter 'modify 1 deadline 2023-11-30 23:59'.
 
-search <criterion>: Search for PIRs that match a given criterion based on their types and fields¹[1]. A criterion is
-a condition that involves one or more fields of a PIR. For example,
+search <criterion>: Search for PIMs that match a given criterion based on their types and fields¹[1]. A criterion is
+a condition that involves one or more fields of a PIM. For example,
 to search for all plain text records that contain
 the word "project", you can enter 'search type == PlainText && text contains project'.
 
 print <id> or print all: Print out detailed information about
-a specific PIR with a given id or all PIRs⁴[4]. The id is
-a unique identifier for each PIR. For example,
-to print out all PIRs in the program, you can enter 'print all'.
+a specific PIM with a given id or all PIMs⁴[4]. The id is
+a unique identifier for each PIM. For example,
+to print out all PIMs in the program, you can enter 'print all'.
 
-delete <id>: Delete a specific PIR with a given id. The id is
-a unique identifier for each PIR. For example,
+delete <id>: Delete a specific PIM with a given id. The id is
+a unique identifier for each PIM. For example,
 to delete a contact record with id 5, you can enter 'delete 5'.
 
-store <filename>: Store all PIRs in a file with the extension name ".pim"⁵[5]. The filename is
+store <filename>: Store all PIMs in a file with the extension name ".pim"⁵[5]. The filename is
 a name for the file. For example,
-to store all PIRs in a file named "mydata.pim", you can enter 'store mydata.pim'.
+to store all PIMs in a file named "mydata.pim", you can enter 'store mydata.pim'.
 
-load <filename>: Load all PIRs from a file with the extension name ".pim"⁶[6]. The filename is
+load <filename>: Load all PIMs from a file with the extension name ".pim"⁶[6]. The filename is
 a name for the file. For example,
-to load all PIRs from a file named "mydata.pim", you can enter 'load mydata.pim'.
+to load all PIMs from a file named "mydata.pim", you can enter 'load mydata.pim'.
 
 For more details about these commands, please refer to the user manual.
 
-Types and Formats of PIRs
+Types and Formats of PIMs
 
-This program can handle four types of PIRs: plain texts, tasks, events, and contacts. Each type of PIR has different fields that store different information. Here are the types and formats of PIRs:
+This program can handle four types of PIMs: plain texts, tasks, events, and contacts. Each type of PIM has different fields that store different information. Here are the types and formats of PIMs:
 
 PlainText: A plain text record that contains a text. It has two fields: date and text. The date field stores the date and time of creation of the record. The text field stores the text of the record.
 
@@ -244,28 +244,28 @@ Event: An event record that contains a description, a starting time, and an alar
 
 Contact: A contact record that contains a name, an address, and a mobile number. It has four fields: date, name, address, and mobile_number. The date field stores the date and time of creation of the record. The name field stores the name of the contact. The address field stores the address of the contact. The mobile_number field stores the mobile number of the contact.
 
-How to Use Criteria to Search for PIRs
+How to Use Criteria to Search for PIMs
 
-To search for PIRs based on criteria concerning their types and fields, you need to follow certain syntaxes and rules¹[1]. Here are some examples of how to use criteria to search for PIRs:
+To search for PIMs based on criteria concerning their types and fields, you need to follow certain syntaxes and rules¹[1]. Here are some examples of how to use criteria to search for PIMs:
 
 - To search for all plain text records that contain
 the word "project", you can enter 'search type == PlainText && text contains project'. This criterion means that
-the type field of the PIR should be equal to PlainText and
-the text field of the PIR should contain
+the type field of the PIM should be equal to PlainText and
+the text field of the PIM should contain
 the string "project".
 - To search for all task records that have a deadline before "2023-11-30 23:59", you can enter 'search type == Task && deadline < 2023-11-30 23:59'. This criterion means that
-the type field of the PIR should be equal to Task and
-the deadline field of the PIR should be before
+the type field of the PIM should be equal to Task and
+the deadline field of the PIM should be before
 the given point in time.
 - To search for all event records that have an alarm after "2023-12-01 17:00" or a starting time after "2023-12-01 18:00", you can enter 'search type == Event && (alarm > 2023-12-01 17:00 || start_time > 2023-12-01 18:00)'. This criterion means that
-the type field of the PIR should be equal to Event and either
-the alarm field of the PIR should be after
+the type field of the PIM should be equal to Event and either
+the alarm field of the PIM should be after
 the first given point in time or
-the start_time field of the PIR should be after
+the start_time field of the PIM should be after
 the second given point in time.
 - To search for all contact records that have a name that does not contain "Alice", you can enter 'search type == Contact && !name contains Alice'. This criterion means that
-the type field of the PIR should be equal to Contact and
-the name field of the PIR should not contain
+the type field of the PIM should be equal to Contact and
+the name field of the PIM should not contain
 the string "Alice".
 
 Tips and Tricks
