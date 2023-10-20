@@ -181,7 +181,7 @@ class InteractiveUI:
                     buffer.append(choice[i] + " ")
                 choice = "".join(buffer)
 
-            print(Fore.BLUE + f"Enter an integer to make the choose (enter 0 to quit): {choice}")
+            print( f"Enter an integer to make the choose (enter 0 to quit): {choice}")
 
 
     def print_message(self, hint):

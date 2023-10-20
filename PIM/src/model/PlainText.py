@@ -1,4 +1,5 @@
 from PIM.src.model.PIM import PIM
+from PIM.src.tools.Tools import Tools
 
 
 class PlainText(PIM):
@@ -39,4 +40,10 @@ class PlainText(PIM):
     @classmethod
     def get_field_checker(cls, field: str):
         return cls.get_fields_checkers_map()[field]
+
+    @classmethod
+    def create_object_from_lines(self, lines, index):
+        name = Tools.get_value_from_line(lines[index ])
+        text = Tools.get_value_from_line(lines[index + 2])
+        return PlainText(name, text)
 

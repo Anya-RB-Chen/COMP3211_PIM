@@ -35,6 +35,12 @@ class PIM:
 
     @classmethod
     @abstractmethod
+    # 对于类别进行描述。 基本功能，字段。
+    def decode(cls,):
+        pass
+
+    @classmethod
+    @abstractmethod
     # 得到PIM类的字段，用字符串列表表示。
     def get_fields(cls) -> list[str]:
         pass
@@ -83,6 +89,11 @@ class PIM:
 
 
     @classmethod
+    @abstractmethod
+    def create_object_from_lines(self, lines, index):
+        pass
+
+    @classmethod
     # get a valid input of field  |  None
     def get_field_input(cls, field: str):
         # if field == "name": # assumption：
@@ -113,3 +124,5 @@ class PIM:
 
         # other field needing change format ?
         return input_field
+
+

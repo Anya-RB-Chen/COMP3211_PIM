@@ -3,7 +3,7 @@ from PIM.src.tools.Tools import Tools
 
 
 class Event(PIM):
-    def __init__(self, description: str, start_time: float, alarms: list[float], name="unamed"):
+    def __init__(self, description: str, start_time: str, alarms: str, name="unamed"):
         super().__init__(name)
         self.description = description
         self.start_time = start_time
@@ -35,8 +35,7 @@ class Event(PIM):
         return text.lower() in self.name.lower() or text.lower() in self.description.lower()
 
     def __str__(self):
-        alarms_str = ", ".join(str(alarm) for alarm in self.alarms) if self.alarms else "None"
-        return f"Name: {self.name}\nType: Event\nDescription: {self.description}\nStart time: {self.start_time}\nAlarms: {alarms_str}"
+        return f"Name: {self.name}\nType: Event\nDescription: {self.description}\nStart time: {self.start_time}\nAlarms: {self.alarms}"
 
 
     def time_condition_checker(self, time: float, comparator: str):
@@ -52,3 +51,12 @@ class Event(PIM):
     @classmethod
     def get_field_checker(cls, field: str):
         return cls.get_fields_checkers_map()[field]
+
+    @classmethod
+    def create_object_from_lines(self, lines, index):
+        name = Tools.get_value_from_line(lines[index])
+        description = Tools.get_value_from_line(lines[index + 2])
+        start_time = Tools.get_value_from_line(lines[index + 3])
+        alarms = Tools.get_value_from_line(lines[index + 4])
+        return Event(name, description, start_time, alarms)
+

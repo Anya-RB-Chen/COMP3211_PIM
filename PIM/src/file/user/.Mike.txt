@@ -1,0 +1,60 @@
+History:
+
+2023-10-20 16:34 log in  |                20 log out
+2023-10-20 16:45 log in  |              2023 log out
+2023-10-20 16:46 log in  |            2023-1 log out
+2023-10-20 16:55 log in  |          2023-10- log out
+2023-10-20 16:57 log in  |        2023-10-20 log out
+2023-10-20 17:26 log in  |      2023-10-20 1 log out
+2023-10-20 17:34 log in  |    2023-10-20 17: log out
+2023-10-20 17:38 log in  |  2023-10-20 17:38 log out
+
+
+Personal Information Refords:
+
+
+PIM 1: 
+Name: John Doe
+Type: Contact
+Mobile number: 123-456-7890
+Address: 123 Elm St.
+
+PIM 2: 
+Name: Jane Smith
+Type: Contact
+Mobile number: 234-567-8901
+Address: 456 Oak St.
+
+PIM 3: 
+Name: John's 30th birthday
+Type: Event
+Description: 2023-11-15 19:00
+Start time: 2023-11-15 18:30
+Alarms: Birthday party
+
+PIM 4: 
+Name: Live music by The Beatles
+Type: Event
+Description: 2023-12-01 20:00
+Start time: 2023-12-01 19:00, 2023-12-01 19:30
+Alarms: Concert
+
+PIM 5: 
+Name: Milk, Bread, Eggs, Butter
+Type: PlainText
+Text: Shopping List
+
+PIM 6: 
+Name: Discuss project timeline in the next meeting.
+Type: PlainText
+Text: Work Notes
+
+PIM 7: 
+Name: Roses are red, Violets are blue.
+Type: PlainText
+Text: Poem
+
+PIM 8: 
+Name: Be yourself; everyone else is already taken. - Oscar Wilde
+Type: PlainText
+Text: Quotes

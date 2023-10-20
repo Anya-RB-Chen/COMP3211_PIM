@@ -9,36 +9,74 @@ g_SystemManager = None
 # naive方式： 单进程访问，直接重新写所有内容。 只需要定义encoding、decoding方法， 其他处理完全基于对象
 class SystemManager:  # 老子不用file manager了，直接封装在系统内，毕竟解码方式和相关
 
+    __systemFilePath = os.getcwd() + "/file" + "/.system.txt"
+
     __instance = None
 
-    def __init__(self, filePath):
+    def __init__(self):
         # singleton
         if not SystemManager.__instance:
-            self.__filePath = filePath
-
-            if not os.path.exists(filePath):
-                self.system_file_create()
-
-            # write buffer initialization.
-            self.__history = []  # str
-            self.__user_profiles = []  # profile object
-            self.__system_state = []
-
-            self.__system_file_read()
+            # self.__filePath = filePath
             SystemManager.__instance = self
 
-            global g_SystemManager
-            g_SystemManager = self
+        # write buffer initialization.
+        self.__history = []  # str
+
+        if not os.path.exists(SystemManager.__systemFilePath):
+            self.system_file_create()
+        self.__user_profiles = self.__system_file_read()  # profile object
+        if not self.__user_profiles:
+            self.__user_profiles = []
+
+        self.__system_state = []
+
+
+        global g_SystemManager
+        g_SystemManager = self
 
 
     def system_file_create(self):
-        pass
+        if not os.path.exists(SystemManager.__systemFilePath):
+            with open(SystemManager.__systemFilePath, "w") as f:
+                f.write("")
+
+    def __system_file_read(self) -> list:
+        with open(SystemManager.__systemFilePath, "r") as f:
+            lines = f.readlines()
+            index = 2
+            user_profiles = []
+            while index < len(lines):
+                line = lines[index]
+                if line == "\n":
+                    index += 1
+                    continue
+
+                if line.startswith("name:"):
+                    name = line[len("name:"):].strip()
+                    password = lines[index + 1][len("password:"):].strip()
+                    user_profiles.append(UserProfile(name, password))
+                    index += 2
+                else:
+                    index += 1
+
+            return user_profiles
+
+    def system_file_write(self):
+        with open (SystemManager.__systemFilePath, "w") as f:
+            f.write("User Profiles:\n\n")
+            for userProfile in self.__user_profiles:
+                name = userProfile.get_name()
+                password = userProfile.get_password()
+                f.write("name:" + name + "\n")
+                f.write("password:" + password + "\n")
+                f.write("\n")
+
+
+
 
     def get_user_profiles(self):
         return self.__user_profiles.copy()
 
-    def __system_file_read(self):
-        pass
 
     def logging_history(self):
         pass
@@ -56,9 +94,6 @@ class SystemManager:  # 老子不用file manager了，直接封装在系统内�
         if userProfile:
             self.__user_profiles.append(userProfile)
 
-
-    def __system_file_write(self):
-        pass
 
 
 
@@ -79,6 +114,9 @@ class UserProfile:
 
     def set_password(self, new_password):
         self.password = new_password
+
+    def get_password(self):
+        return self.__password
 
     def get_name(self):
         return self.__name

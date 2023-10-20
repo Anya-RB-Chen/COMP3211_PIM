@@ -217,9 +217,16 @@ class Tools:
         return int(dt.replace(tzinfo=timezone.utc).timestamp())
 
     @staticmethod
-    def timeStamp_to_timeStr(timestamp: int) -> str:
+    def timeStamp_to_timeStr(timestamp: float) -> str:
         """
         Convert UNIX timestamp to datetime string in format "YYYY-MM-DD HH:MM".
         """
         dt = datetime.utcfromtimestamp(timestamp)
         return dt.strftime("%Y-%m-%d %H:%M")
+
+    # 文件I/O
+    @staticmethod
+    def get_value_from_line(line):
+        index=  line.index(":")
+        return line[index+1:].strip()
+

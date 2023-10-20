@@ -21,14 +21,14 @@ class PIMApp:
 
     # level 0
     __logFilePath =  os.getcwd() + "/file" + "/log" + "/log.txt"
-    __systemFilePath = os.getcwd() + "/file" + "/system" + "/system.txt"
+
 
     def __init__(self): # 先不用单例模式。直接把系统文件作为字段来使用。
         # file system initialization
         self.file_system_initialization()
 
        # 系统模块初始化
-        self.systemManager = SystemManager(PIMApp.__systemFilePath)
+        self.systemManager = SystemManager()
         self.logger = Logger(PIMApp.__logFilePath)
 
        # ------------------------------------------------------------------------------------------------------------------------------
@@ -48,19 +48,22 @@ class PIMApp:
         ui.print_welcome_message()
 
         # ------------------------------------------------------------------------------------------------------------------------------
-        print("测试模式: 跳过主系统，直接进入用户界面")
-        testUserProfile = UserProfile("Mike", "123456", "","")
-        print("test user profile: ", testUserProfile)
-        self.mainPage.main(testUserProfile)
+        if len(self.systemManager.get_user_profiles()) == 0:
+            print("测试模式: 添加新用户 Mike")
+            testUserProfile = UserProfile("Mike", "123456", "","")
+            self.systemManager.add_profile(testUserProfile)
+            self.systemManager.system_file_write()
+            # print( "以默认用户Mike方式登录", testUserProfile)
+            # self.mainPage.main(testUserProfile)
 
         # ------------------------------------------------------------------------------------------------------------------------------
 
 
         # 2, page 1: log in system | register | command mode
-        choice = "1 --log in  2 --register 3--command mode. 0-- quit"
+        choice = " \n直接输入4以默认用户Mike登录，跳过log in module  \nn1 --log in  2 --register 3--command mode.0-- quit"
         ui.print_choose_hint("","",choice)
 
-        choice = ui.get_int_input(3) #
+        choice = ui.get_int_input(3 + 1) #
 
         # 2, 
         try:
@@ -72,13 +75,20 @@ class PIMApp:
                     
             elif choice == 2: #注册 -- 进入系统
                 userProfile = self.register()
-                ui.print_choose_hint("","Do you want to log in directly?", "1-- yes")
-                choice1 = ui.get_int_input(1)
-                if choice1:
-                    self.mainPage.main(userProfile)
+                if UserProfile:
+                    ui.print_choose_hint("","Do you want to log in directly?", "1-- yes")
+                    choice1 = ui.get_int_input(1)
+                    if choice1:
+                        self.mainPage.main(userProfile)
         
-            else: # cmd模式。 需要改交互方式。 这只作为一个 prototype
+            elif choice == 3: # cmd模式。 需要改交互方式。 这只作为一个 prototype
                 self.cmdLineMode()
+
+            elif choice == 4: # 测试模式
+                defaultUserProfile = self.systemManager.get_user_profiles()[0]
+                print( "以默认用户Mike方式登录",)
+                self.mainPage.main(defaultUserProfile)
+
                 
         except Exception:
             print("Error happends in welcome page.")
@@ -198,6 +208,9 @@ class PIMApp:
             user_profile = UserProfile(name, password, email, description)
             self.systemManager.add_profile(user_profile)
             print("Successfully registered as a new patron to the PIM system. Welcome!")
+            # ------------------------------------------------------------------------------------------------------------------------------
+            self.systemManager.system_file_write()
+            # ------------------------------------------------------------------------------------------------------------------------------
 
             return user_profile
 

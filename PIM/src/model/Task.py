@@ -56,3 +56,11 @@ class Task(PIM):
     def get_field_checker(cls, field: str):
         return cls.get_fields_checkers_map()[field]
 
+    @classmethod
+    def create_object_from_lines(self, lines, index):
+        name = Tools.get_value_from_line(lines[index ])
+        description = Tools.get_value_from_line(lines[index + 2])
+        deadline = Tools.get_value_from_line(lines[index + 3])
+        reminder = Tools.get_value_from_line(lines[index + 4]) if lines[index + 4].strip().startswith("Reminder") else ""
+        return Task(name, description, deadline, reminder)
+

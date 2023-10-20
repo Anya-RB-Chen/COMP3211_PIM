@@ -2,7 +2,10 @@ from PIM.src.model.PIM import PIM
 from PIM.src.tools.Tools import Tools
 
 
+
 class Contact(PIM):
+
+
     def __init__(self, name: str, mobile_number: str, address: str = ""):
         super().__init__(name)
         self.mobile_number = mobile_number
@@ -50,3 +53,11 @@ class Contact(PIM):
     def get_field_checker(cls, field: str):
         return cls.get_fields_checkers_map()[field]
 
+
+    @classmethod
+    def create_object_from_lines(cls, lines, index):
+
+        name = Tools.get_value_from_line(lines[index])
+        mobile_number = Tools.get_value_from_line(lines[index + 2])
+        address = Tools.get_value_from_line(lines[index + 3])
+        return cls(name, mobile_number, address)

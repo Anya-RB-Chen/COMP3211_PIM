@@ -29,42 +29,43 @@ class MainPage:
         self.ui.print_user_welcome_message(self.__userManager.userName)
         self.ui.print_message("ps: You can tap or enter 0 to quit the module whenever you want.")
 
-        # 1, main interaction and functional module
-        # ------------------------------------------------------------------------------------------------------------------------------
-        # 测试： 系统内设置PIM信息
-        print("测试模式： 系统内设置PIM信息\n")
-        # Contact PIMs
-        contact1 = Contact.create("John Doe", {"mobile_number": "123-456-7890", "address": "123 Elm St."})
-        contact2 = Contact.create("Jane Smith",
-                                  {"mobile_number": "234-567-8901", "address": "456 Oak St."})
+        # # # 1, main interaction and functional module
+            # ------------------------------------------------------------------------------------------------------------------------------
+        if len(self.__userManager.get_PIM_List()) == 0:
+            # 测试： 系统内设置PIM信息
+            print("测试模式： 系统内设置PIM信息\n")
+            # Contact PIMs
+            contact1 = Contact.create("John Doe", {"mobile_number": "123-456-7890", "address": "123 Elm St."})
+            contact2 = Contact.create("Jane Smith",
+                                      {"mobile_number": "234-567-8901", "address": "456 Oak St."})
 
-        # Task PIMs 有问题
-        task1 = Task.create("Buy groceries", {"description": "Buy milk, bread, and eggs", "deadline": "2023-10-25 09:00"})
-        task2 = Task.create("Attend meeting",
-                            {"description": "Team sync-up", "deadline": "2023-10-21 09:00", "reminder": "2023-10-20 09:00"})
+            # Task PIMs 有问题
+            task1 = Task.create("Buy groceries", {"description": "Buy milk, bread, and eggs", "deadline": "2023-10-25 09:00"})
+            task2 = Task.create("Attend meeting",
+                                {"description": "Team sync-up", "deadline": "2023-10-21 09:00", "reminder": "2023-10-20 09:00"})
 
-        # Event PIMs
-        event1 = Event.create("Birthday party",
-                              {"description": "John's 30th birthday", "start_time": "2023-11-15 19:00",
-                               "alarms": ["2023-11-15 18:30"]})
-        event2 = Event.create("Concert", {"description": "Live music by The Beatles", "start_time": "2023-12-01 20:00",
-                                          "alarms": ["2023-12-01 19:00", "2023-12-01 19:30"]})
+            # Event PIMs
+            event1 = Event.create("Birthday party",
+                                  {"description": "John's 30th birthday", "start_time": "2023-11-15 19:00",
+                                   "alarms": ["2023-11-15 18:30"]})
+            event2 = Event.create("Concert", {"description": "Live music by The Beatles", "start_time": "2023-12-01 20:00",
+                                              "alarms": ["2023-12-01 19:00", "2023-12-01 19:30"]})
 
-        # PlainText PIMs 有问题
-        text1 = PlainText.create("Shopping List", {"text": "Milk, Bread, Eggs, Butter"})
-        text2 = PlainText.create("Work Notes", {"text": "Discuss project timeline in the next meeting."})
-        text3 = PlainText.create("Poem", {"text": "Roses are red, Violets are blue."})
-        text4 = PlainText.create("Quotes", {"text": "Be yourself; everyone else is already taken. - Oscar Wilde"})
+            # PlainText PIMs 有问题
+            text1 = PlainText.create("Shopping List", {"text": "Milk, Bread, Eggs, Butter"})
+            text2 = PlainText.create("Work Notes", {"text": "Discuss project timeline in the next meeting."})
+            text3 = PlainText.create("Poem", {"text": "Roses are red, Violets are blue."})
+            text4 = PlainText.create("Quotes", {"text": "Be yourself; everyone else is already taken. - Oscar Wilde"})
 
-        PIMList = [contact1, contact2, task1, task2, event1, event2, text1, text2, text3, text4]
-        for pim in PIMList:
-            self.__userManager.add_PIM(pim)
-            self.ui.print_message(f"Added PIM: {pim}")
-        print("\n\n\n")
+            PIMList = [contact1, contact2, task1, task2, event1, event2, text1, text2, text3, text4]
+            for pim in PIMList:
+                self.__userManager.add_PIM(pim)
+                self.ui.print_message(f"Added PIM: {pim}")
+            print("\n\n\n")
 
-        # You now have 10 PIM items: 2 Contacts, 2 Tasks, 2 Events, and 4 PlainTexts.
+            # You now have 10 PIM items: 2 Contacts, 2 Tasks, 2 Events, and 4 PlainTexts.
 
-        # ------------------------------------------------------------------------------------------------------------------------------
+            # # ------------------------------------------------------------------------------------------------------------------------------
 
 
         moduleNameList = ["create new PIM", "manipulate existing PIM", "generate personal PIM report"]
@@ -84,6 +85,9 @@ class MainPage:
 
         # 2, exit
         self.ui.print_leave_main_page()
+        # ------------------------------------------------------------------------------------------------------------------------------
+        # 文件输出
+        self.__userManager.write()
 
 
 
@@ -240,11 +244,15 @@ class MainPage:
 
         PIMList = self.__userManager.get_PIM_List()
         self.ui.print_message(f"You have {len(PIMList)}.PIMs in total.")
+        if len(PIMList) == 0: # no PIM no output
+            return
+
         count = 0
         for pim in PIMList:
             count += 1
-            print(f"PIM {count}", end=" ")
+            print(f"PIM {count}")
             self.ui.print_message(pim.__str__())
+
 
         # 2, get the confirm information
         self.ui.print_message("Do you want to output them to a file? (1/0)")
@@ -252,8 +260,10 @@ class MainPage:
         if choice == 0:
             return
 
+        # 需要增加部分输出
+        # self.ui.print_message("You can choose to outpu")
         # 3, output
-        self.__userManager.output_user_information()
+        self.__userManager.output_user_information(self.__userManager.get_PIM_List())
 
 # ------------------------------------------------------------------------------------------------------------------------------
     # level 3 细化功能模块以及
