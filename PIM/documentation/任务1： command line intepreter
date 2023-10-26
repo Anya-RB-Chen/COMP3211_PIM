@@ -1,0 +1,29 @@
+
+功能实现：
+command line intepreter
+
+位置：
+Main page: 功能性指令交互
+
+具体说明：
+1, command 格式定义 + 用户使用说明
+2， 功能模块 SRS
+3， 系统内功能实现
+
+command_line_intepreter(command:str) -> None:  不做返回。
+输入： 指令
+输出： 1， 系统内做变化  2，打印message
+
+需要能够对错误输入做识别，打印error message。
+
+4， 集成到系统之中。
+interpreter 外部交互 （指令识别 + intepreter调用）
+
+
+功能使用：
+PIM： PIM的操作
+UserManager： 对于用户PIM信息的操作
+Tools： 格式检验方法
+InteractiveUI： optional
+
+具体调用类方法 应用Main page 内部创建的对象

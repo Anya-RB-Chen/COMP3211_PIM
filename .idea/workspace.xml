@@ -5,21 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="40869e6f-338c-4dff-afe4-8f8483c2e83b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PIM/src/MainPage.py" beforeDir="false" afterPath="$PROJECT_DIR$/PIM/src/MainPage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PIM/src/PIMApp.py" beforeDir="false" afterPath="$PROJECT_DIR$/PIM/src/PIMApp.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PIM/src/model/Contact.py" beforeDir="false" afterPath="$PROJECT_DIR$/PIM/src/model/Contact.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PIM/src/model/Event.py" beforeDir="false" afterPath="$PROJECT_DIR$/PIM/src/model/Event.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PIM/src/model/PIM.py" beforeDir="false" afterPath="$PROJECT_DIR$/PIM/src/model/PIM.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PIM/src/model/PlainText.py" beforeDir="false" afterPath="$PROJECT_DIR$/PIM/src/model/PlainText.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PIM/src/model/Task.py" beforeDir="false" afterPath="$PROJECT_DIR$/PIM/src/model/Task.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PIM/src/module/SystemManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/PIM/src/module/SystemManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PIM/src/module/UserManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/PIM/src/module/UserManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PIM/src/tools/InteractiveUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/PIM/src/tools/InteractiveUI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PIM/src/tools/Tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/PIM/src/tools/Tools.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UML/class hiarachy 10.19.vpp" beforeDir="false" afterPath="$PROJECT_DIR$/UML/class hiarachy 10.19.vpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UML/class hiarachy 10.19.vpp.bak_000d" beforeDir="false" afterPath="$PROJECT_DIR$/UML/class hiarachy 10.19.vpp.bak_000d" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UML/class hiarachy 10.19.vpp.bak_001f" beforeDir="false" afterPath="$PROJECT_DIR$/UML/class hiarachy 10.19.vpp.bak_001f" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PIM/documentation/任务1： command line intepreter" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PIM/documentation/任务2： 文件IO" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PIM/documentation/任务3： 核心功能拓展" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PIM/src/file/.system.txt" beforeDir="false" afterPath="$PROJECT_DIR$/PIM/src/file/.system.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PIM/src/file/output/Mike.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PIM/src/file/user/.Mike.txt" beforeDir="false" afterPath="$PROJECT_DIR$/PIM/src/file/user/.Mike.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -197,13 +189,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/PIM/src/module/SystemManager.py</url>
-          <line>28</line>
-          <option name="timeStamp" value="24" />
-        </line-breakpoint>
-      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
