@@ -1,0 +1,46 @@
+History:
+
+2023-10-26 09:08 log in  |  2023-10-26 09:14 log out
+
+
+Personal Information Refords:
+
+
+PIM 1: 
+Name: John Doe
+Type: Contact
+Mobile number: 123-456-7890
+Address: 123 Elm St.
+
+PIM 2: 
+Name: Attend meeting
+Type: Task
+Description: whfoewhfew;fhewuifheiwfhewifheowi;fhewo;f
+Deadline: 2023-10-21 09:00
+Reminder: 2023-10-20 09:00
+
+PIM 3: 
+Name: Shopping List
+Type: PlainText
+Text: e;fheifhei;fhewiofhjewoifhjewio;fhj
+
+PIM 4: 
+Name: Work Notes
+Type: PlainText
+Text: Discuss project timeline in the next meeting.
+
+PIM 5: 
+Name: Poem
+Type: PlainText
+Text: Roses are red, Violets are blue.
+
+PIM 6: 
+Name: Quotes
+Type: PlainText
+Text: Be yourself; everyone else is already taken. - Oscar Wilde
+
+PIM 7: 
+Name: Mike
+Type: Contact
+Mobile number: 88888888
+Address: ldsjfoesjf;e
