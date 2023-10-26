@@ -60,7 +60,7 @@ class PIMApp:
 
 
         # 2, page 1: log in system | register | command mode
-        choice = " \n直接输入4以默认用户Mike登录，跳过log in module  \nn1 --log in  2 --register 3--command mode.0-- quit"
+        choice = " \n直接输入4以默认用户Mike登录，跳过log in module  \n1 --log in  2 --register 3--command mode.0-- quit"
         ui.print_choose_hint("","",choice)
 
         choice = ui.get_int_input(3 + 1) #

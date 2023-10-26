@@ -5,13 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="40869e6f-338c-4dff-afe4-8f8483c2e83b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/PIM/documentation/任务1： command line intepreter" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PIM/documentation/任务2： 文件IO" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PIM/documentation/任务3： 核心功能拓展" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PIM/src/file/.system.txt" beforeDir="false" afterPath="$PROJECT_DIR$/PIM/src/file/.system.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PIM/src/file/output/Mike.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PIM/src/file/user/.Mike.txt" beforeDir="false" afterPath="$PROJECT_DIR$/PIM/src/file/user/.Mike.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PIM/documentation/任务1： command line intepreter" beforeDir="false" afterPath="$PROJECT_DIR$/PIM/documentation/任务1： command line intepreter" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PIM/documentation/任务3： 核心功能拓展" beforeDir="false" afterPath="$PROJECT_DIR$/PIM/documentation/任务3： 核心功能拓展" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PIM/src/PIMApp.py" beforeDir="false" afterPath="$PROJECT_DIR$/PIM/src/PIMApp.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
