@@ -32,6 +32,7 @@ class Tools:
         if not name.isidentifier():
             return False
         if len(name) < 3 or len(name) > 20:
+            print("Your username must be between 3 and 20 characters in length")
             return False
         return True
 
