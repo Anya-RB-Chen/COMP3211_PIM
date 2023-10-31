@@ -5,9 +5,9 @@ from PIM.src.tools.InteractiveUI import InteractiveUI
 from PIM.src.MainPage import MainPage
 from PIM.src.module.SystemManager import SystemManager,UserProfile
 from PIM.src.tools.Tools import Tools
-from module.CMDLineIntepreter import CMDLineIntepreter
-from module.UserManager import UserInformationManager
-from module.Logger import Logger
+from PIM.src.module.CMDLineIntepreter import CMDLineIntepreter
+from PIM.src.module.UserManager import UserInformationManager
+from PIM.src.module.Logger import Logger
 
 
 # 10.14 1h 自顶向下 XP实现。
@@ -60,7 +60,7 @@ class PIMApp:
 
 
         # 2, page 1: log in system | register | command mode
-        choice = " \n直接输入4以默认用户Mike登录，跳过log in module  \nn1 --log in  2 --register 3--command mode.0-- quit"
+        choice = " \n直接输入4以默认用户Mike登录，跳过log in module  \n1 --log in  2 --register 3--command mode.0-- quit"
         ui.print_choose_hint("","",choice)
 
         choice = ui.get_int_input(3 + 1) #
@@ -75,7 +75,7 @@ class PIMApp:
                     
             elif choice == 2: #注册 -- 进入系统
                 userProfile = self.register()
-                if UserProfile:
+                if userProfile:
                     ui.print_choose_hint("","Do you want to log in directly?", "1-- yes")
                     choice1 = ui.get_int_input(1)
                     if choice1:
@@ -137,7 +137,7 @@ class PIMApp:
     #下层接口： g_SystemManager.get_user_profile()  -- 登录属于业务逻辑，与底层分开。
     # 1, ask the user to input name. (if enter 0, return None) 2, search name in the system. all of the user profiles can be obtained by self.get_user_profiles() method (a list of UserProfile objects), and the UserProfile object have "==" operator.  3, if the name not in the system,  return None. otherwise, ask for enterring password (in UserProfile: check_password() -> bool ). There are 3 chances at all. if the input is correct, return userProfile. otherwise, return None.
     def login(self):
-        name = input("Please enter your name: ")
+        name = input("Please enter your name (enter 0 to quit): ")
         if name == "0":
             return None
         user_profiles = self.systemManager.get_user_profiles()
@@ -150,7 +150,7 @@ class PIMApp:
                             return user_profile
                     print("wrong password. Sorry.")
                     return None
-            print("Sorry, cannot find you in system.")
+            print("Sorry, cannot find you in the system.")
         return None
 
     # 1,
@@ -174,11 +174,11 @@ class PIMApp:
             if name == "0":
                 return None
             if not Tools.checkNameAvailable(name):
-                print("Invalid name format. Please try again.")
+                print("Invalid name format. Please input again.")
                 continue
             user_profiles = self.systemManager.get_user_profiles()
             if user_profiles and UserProfile(name,"") in user_profiles:
-                print("This name already exists. Please try again.")
+                print("This name already exists. Please input again.")
                 continue
 
             # password
@@ -187,7 +187,7 @@ class PIMApp:
                 if password == "0":
                     return None
                 if not Tools.checkPasswordStrength(password):
-                    print("Weak password. Do you want to keep it? (y/n)")
+                    print("Weak password. Your password should ideally contain at least one uppercase letter, one lowercase letter, one digit, and one special character.\n Do you still want to keep it? (y/n)")
                     choice = input()
                     if choice.lower() == "n":
                         continue
@@ -232,5 +232,7 @@ class PIMApp:
 if __name__ == "__main__":
     app = PIMApp()
     app.main()
+
+
 
 
