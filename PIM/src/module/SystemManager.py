@@ -35,6 +35,13 @@ class SystemManager:  # 老子不用file manager了，直接封装在系统内�
         g_SystemManager = self
 
 
+    def check_username_form(self, name):
+        while True:
+            if len(name) > 10:
+                print("Sorry, your username must be less than 20 characters long.")
+
+
+
     def system_file_create(self):
         if not os.path.exists(SystemManager.__systemFilePath):
             with open(SystemManager.__systemFilePath, "w") as f:
