@@ -147,13 +147,15 @@ class InteractiveUI:
         self.print_line()
 
    def get_int_input(self,n):
-    while True:
-        #LZD更改
-        num = int(input(f"Enter an integer from 0 to {n}: "))
-        if 0 <= num <= n:
-            return num
-        else:
-            print("Invalid input, please try again")
+        while True:
+            try:
+                num = int(input(f"Enter an integer from 0 to {n}: "))
+                if 0 <= num <= n:
+                    return num
+                else:
+                    print("Invalid input, please try again")
+            except ValueError:
+                print("Invalid input, please try again")
 
 
     def print_line(self):
