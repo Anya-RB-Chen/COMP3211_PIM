@@ -91,7 +91,7 @@ class PIMApp:
 
                 
         except Exception:
-            print("Error happends in welcome page.")
+            print("Error happens in welcome page.")
             traceback.print_exc()
             return -1
             
@@ -137,7 +137,7 @@ class PIMApp:
     #下层接口： g_SystemManager.get_user_profile()  -- 登录属于业务逻辑，与底层分开。
     # 1, ask the user to input name. (if enter 0, return None) 2, search name in the system. all of the user profiles can be obtained by self.get_user_profiles() method (a list of UserProfile objects), and the UserProfile object have "==" operator.  3, if the name not in the system,  return None. otherwise, ask for enterring password (in UserProfile: check_password() -> bool ). There are 3 chances at all. if the input is correct, return userProfile. otherwise, return None.
     def login(self):
-        name = input("Please enter your name (enter 0 to quit): ")
+        name = input("Please enter your name (enter 0 to quit): ").strip()
         if name == "0":
             return None
         user_profiles = self.systemManager.get_user_profiles()
@@ -145,10 +145,10 @@ class PIMApp:
             for user_profile in user_profiles:
                 if user_profile.get_name() == name:
                     for i in range(3):
-                        password = input("Please enter your password: ")
+                        password = input("Please enter your password: ").strip()
                         if user_profile.check_password(password):
                             return user_profile
-                    print("wrong password. Sorry.")
+                        print("wrong password. Sorry.")
                     return None
             print("Sorry, cannot find you in the system.")
         return None
@@ -170,11 +170,13 @@ class PIMApp:
     def register(self):
         while True:
             # name
-            name = input("Please enter your name (enter 0 to quit): ")
+            name = input("Please enter your name (enter 0 to quit): ").strip()
             if name == "0":
                 return None
             if not Tools.checkNameAvailable(name):
-                print("Invalid name format. Please input again.")
+                print("Invalid name format. There are some requirements about the form of your user name:\n 1. "
+                      "contains only letters, digits, and underscores;\n 2. starts with a letter;\n 3. has at least 3 "
+                      "characters and at most 20 characters.\n Please input again.")
                 continue
             user_profiles = self.systemManager.get_user_profiles()
             if user_profiles and UserProfile(name,"") in user_profiles:
@@ -183,11 +185,13 @@ class PIMApp:
 
             # password
             while True:
-                password = input("Please enter your password (enter 0 to quit): ")
+                password = input("Please enter your password (enter 0 to quit): ").strip()
                 if password == "0":
                     return None
                 if not Tools.checkPasswordStrength(password):
-                    print("Weak password. Your password should ideally contain at least one uppercase letter, one lowercase letter, one digit, and one special character.\n Do you still want to keep it? (y/n)")
+                    print("Weak password.\n Your password should ideally contain at least one uppercase letter, "
+                          "one lowercase letter, one digit, and one special character.\n Do you still want to keep "
+                          "it? (y/n)")
                     choice = input()
                     if choice.lower() == "n":
                         continue
@@ -196,7 +200,7 @@ class PIMApp:
             # additional information
             email = input("Please enter your email (optional, enter 0 to skip): ")
             while email != "0" and not Tools.is_valid_email(email):
-                email = input("Invalid Email. Input again. (enter 0 to skip)")
+                email = input("Invalid Email. Please input again. (enter 0 to skip)")
             if email == "0":
                 email = ""
 
@@ -228,11 +232,8 @@ class PIMApp:
 
 
 
-
 if __name__ == "__main__":
     app = PIMApp()
     app.main()
-
-
 
 
