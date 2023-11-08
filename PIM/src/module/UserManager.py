@@ -72,7 +72,7 @@ class UserInformationManager:
     # format
     """
     History:
-    time1 log in  |  time2 log out
+    time1 log in  |  time2 log out 
     ...
     
     Personal information records:
@@ -177,7 +177,7 @@ class UserInformationManager:
 
             f.write("\n\n")
 
-            f.write("Personal Information Refords:\n\n")
+            f.write("Personal Information Records:\n\n")
             index_number = 1
             for pim in self.__PIMList:
                 f.write(f"\nPIM {index_number}: \n")
@@ -224,6 +224,44 @@ class UserInformationManager:
                 f.write(str(pim))
                 f.write("\n")
         pass
+
+    def output_specified_information(self,PIMList,choice):
+        outputFilePath = self.__outputFileRootPath + "/" + self.userName + ".txt"
+        count = 1
+        while os.path.exists(outputFilePath):
+            outputFilePath = self.__outputFileRootPath + "/" + self.userName + str(count) + ".txt"
+            count += 1
+        with open(outputFilePath, "w") as f:
+            message = """
+                     ☆──────────────✬❖✬───────────☆
+                     │       ❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈     │
+                     │       😄   PERSONAL  😃     │
+                     │       😆 INFORMATION 😁     │
+                     │       ❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈     │
+                     ☆──────────────✬❖✬───────────☆
+
+                    """
+            f.write(message)
+            f.write("\n\n")
+            f.write(f"Hi {self.userName}! Here are {len(choice)} personal information records that you selected.")
+            f.write("\n\n")
+
+            j = 0
+            idx = 1
+            while j<=len(choice) and idx<=len(PIMList):
+                print("idx:",idx)
+                if idx == choice[j]:
+                    print(choice[j],"match")
+                    f.write(f"\nPIM {idx}: \n")
+                    f.write(str(self.__PIMList[idx-1]))
+                    j += 1
+                    idx += 1
+                    f.write("\n")
+                else:
+                    idx += 1
+
+
+
 
     @staticmethod
     def create_pim_object_from_lines(lines, line_index, pim_type) ->(list,int):

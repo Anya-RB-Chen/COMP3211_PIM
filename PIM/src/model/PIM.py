@@ -1,6 +1,8 @@
 from abc import abstractmethod,ABC
 from time import time
 
+from typing import List
+
 from PIM.src.tools.InteractiveUI import InteractiveUI
 from PIM.src.tools.Tools import Tools
 
@@ -42,7 +44,7 @@ class PIM:
     @classmethod
     @abstractmethod
     # 得到PIM类的字段，用字符串列表表示。
-    def get_fields(cls) -> list[str]:
+    def get_fields(cls) -> List[str]:
         pass
 
     @classmethod

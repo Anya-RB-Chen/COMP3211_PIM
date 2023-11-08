@@ -1,6 +1,8 @@
 
 
 # 用户主页面
+from typing import List
+
 from PIM.src.model.Contact import Contact
 from PIM.src.model.Event import Event
 from PIM.src.model.PIM import PIM
@@ -156,7 +158,7 @@ class MainPage:
             return
 
         elif PIMList == []:
-            self.ui.print_message("Cannot find the PIM satifying your criteria.")
+            self.ui.print_message("Cannot find the PIM satisfying your criteria.")
             return
 
         # pre: get valid PIMList
@@ -261,9 +263,15 @@ class MainPage:
             return
 
         # 需要增加部分输出
-        # self.ui.print_message("You can choose to outpu")
+        self.ui.print_message("Please specify the PIMs you want to print. Enter 0 to print all.")
+        choice = self.ui.get_int_input_list(len(PIMList))
+
         # 3, output
-        self.__userManager.output_user_information(self.__userManager.get_PIM_List())
+        if choice[0] == 0:
+            self.__userManager.output_user_information(self.__userManager.get_PIM_List())
+        else:
+            self.__userManager.output_specified_information(self.__userManager.get_PIM_List(),choice)
+
 
 # ------------------------------------------------------------------------------------------------------------------------------
     # level 3 细化功能模块以及
@@ -312,7 +320,7 @@ class MainPage:
     if the user enter "" or "0" the system quit with return value None.
     """
 
-    def search_PIM(self) -> list[PIM]:
+    def search_PIM(self) -> List[PIM]:
         # Step 1: Message
 
         self.ui.print_choose_hint("", "Choose a mode of search:",["Type", "Text", "Time", "Compound condition"])
@@ -466,7 +474,7 @@ class MainPage:
     # 对于每一个PIM 提供交互界面让用户指明 更改字段，输入新内容， （有效性查验， 名字需要查看是否重复）
     # 完成以后进行调用 __userManager 接口在用户信息内进行更改。
 
-    def modify_PIM(self,PIMList:list[PIM]):
+    def modify_PIM(self, PIMList: List[PIM]):
         self.ui.print_e_line()
         self.ui.print_message(f"You have {len(PIMList)} to manipulate.")
         self.ui.print_message("Let's manipulate the PIM now!")
@@ -521,7 +529,7 @@ class MainPage:
             self.__userManager.modify(pim,newPim)
 
     # 4, delete
-    def delete_PIM(self,PIMList:list[PIM]):
+    def delete_PIM(self, PIMList: List[PIM]):
         # 1, print the information of PIMs
         self.ui.print_e_line()
         self.ui.print_message(f"You have {len(PIMList)} to delete.")

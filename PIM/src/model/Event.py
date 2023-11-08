@@ -1,3 +1,5 @@
+from typing import List
+
 from PIM.src.model.PIM import PIM
 from PIM.src.tools.Tools import Tools
 
@@ -14,7 +16,7 @@ class Event(PIM):
         return cls(fields_map["description"], fields_map["start_time"], fields_map.get("alarms", []), name)
 
     @classmethod
-    def get_fields(cls) -> list[str]:
+    def get_fields(cls) -> List[str]:
         return ["name", "description", "start_time", "alarms"]
 
     @classmethod

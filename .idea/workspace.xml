@@ -5,13 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="40869e6f-338c-4dff-afe4-8f8483c2e83b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/PIM/documentation/任务1： command line intepreter" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PIM/documentation/任务2： 文件IO" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PIM/documentation/任务3： 核心功能拓展" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/COMP3211_PIM.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/COMP3211_PIM.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PIM/src/file/.system.txt" beforeDir="false" afterPath="$PROJECT_DIR$/PIM/src/file/.system.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PIM/src/file/output/Mike.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PIM/src/file/user/.Mike.txt" beforeDir="false" afterPath="$PROJECT_DIR$/PIM/src/file/user/.Mike.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PIM/documentation/任务1： command line intepreter" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PIM/documentation/任务2： 文件IO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PIM/documentation/任务3： 核心功能拓展" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PIM/src/MainPage.py" beforeDir="false" afterPath="$PROJECT_DIR$/PIM/src/MainPage.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PIM/src/file/output/Mike1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PIM/src/model/Contact.py" beforeDir="false" afterPath="$PROJECT_DIR$/PIM/src/model/Contact.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PIM/src/model/Event.py" beforeDir="false" afterPath="$PROJECT_DIR$/PIM/src/model/Event.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PIM/src/model/PIM.py" beforeDir="false" afterPath="$PROJECT_DIR$/PIM/src/model/PIM.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PIM/src/model/PlainText.py" beforeDir="false" afterPath="$PROJECT_DIR$/PIM/src/model/PlainText.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PIM/src/model/Task.py" beforeDir="false" afterPath="$PROJECT_DIR$/PIM/src/model/Task.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PIM/src/module/UserManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/PIM/src/module/UserManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PIM/src/tools/InteractiveUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/PIM/src/tools/InteractiveUI.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,9 +44,6 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file:///Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/unittest/main.py" root0="SKIP_INSPECTION" />
-  </component>
   <component name="ProjectId" id="2WhXfh6sh5xrlgEXolGyFZPoleD" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -49,7 +54,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/UML" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="preferences.fileTypes" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">

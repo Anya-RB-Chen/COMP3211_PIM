@@ -1,3 +1,5 @@
+from typing import List
+
 from PIM.src.model.PIM import PIM
 from PIM.src.tools.Tools import Tools
 
@@ -17,7 +19,7 @@ class Task(PIM):
         return cls(fields_map["description"], fields_map["deadline"], fields_map.get("reminder", []), name)
 
     @classmethod
-    def get_fields(cls) -> list[str]:
+    def get_fields(cls) -> List[str]:
         return ["name", "description", "deadline", "reminder"]
 
     @classmethod

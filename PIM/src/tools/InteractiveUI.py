@@ -146,7 +146,7 @@ class InteractiveUI:
         print(f"\nLeave {module_name}")
         self.print_line()
 
-   def get_int_input(self,n):
+    def get_int_input(self,n):
         while True:
             try:
                 num = int(input(f"Enter an integer from 0 to {n}: "))
@@ -156,6 +156,16 @@ class InteractiveUI:
                     print("Invalid input, please try again")
             except ValueError:
                 print("Invalid input, please try again")
+
+    def get_int_input_list(self, n):
+        li = list(map(int, input(f"Enter integers from 0 to {n}: ").split()))
+        for i in range(len(li)):
+            num = li[i]
+            while num < 0 or num > n:
+                print(f"{num} in an invalid input. Please try again")
+                num = self.get_int_input(n)
+            li[i] = num
+        return sorted(list(set(li)))
 
 
     def print_line(self):

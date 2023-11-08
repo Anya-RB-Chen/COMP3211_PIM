@@ -1,3 +1,5 @@
+from typing import List
+
 from PIM.src.model.PIM import PIM
 from PIM.src.tools.Tools import Tools
 
@@ -13,7 +15,7 @@ class PlainText(PIM):
         return cls(fields_map.get("text", ""), name)
 
     @classmethod
-    def get_fields(cls) -> list[str]:
+    def get_fields(cls) -> List[str]:
         return ["name", "text"]
 
     @classmethod

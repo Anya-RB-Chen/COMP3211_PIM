@@ -1,3 +1,5 @@
+from typing import List
+
 from PIM.src.model.PIM import PIM
 from PIM.src.tools.Tools import Tools
 
@@ -16,7 +18,7 @@ class Contact(PIM):
         return cls(name, fields_map["mobile_number"], fields_map.get("address", ""))
 
     @classmethod
-    def get_fields(cls) -> list[str]:
+    def get_fields(cls) -> List[str]:
         return ["name", "mobile_number", "address"]
 
     @classmethod
