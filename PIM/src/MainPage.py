@@ -70,8 +70,8 @@ class MainPage:
             # # ------------------------------------------------------------------------------------------------------------------------------
 
 
-        moduleNameList = ["create new PIM", "manipulate existing PIM", "generate personal PIM report"]
-        moduleFunctionList = [self.create_new_PIM,self.manipulate_existing_PIM, self.generate_personal_PIM_report]
+        moduleNameList = ["Create new PIM", "Manipulate existing PIM", "Generate personal PIM report","Load PIM file"]
+        moduleFunctionList = [self.create_new_PIM,self.manipulate_existing_PIM, self.generate_personal_PIM_report,self.load_PIM_file]
 
         self.ui.print_choose_hint("", "", moduleNameList)
         choice = self.ui.get_int_input(len(moduleNameList))
@@ -265,12 +265,29 @@ class MainPage:
         # 需要增加部分输出
         self.ui.print_message("Please specify the PIMs you want to print. Enter 0 to print all.")
         choice = self.ui.get_int_input_list(len(PIMList))
-
+        file_name = input(self.ui.print_message("Please enter the file name you want to save as. Enter \" \" "
+                                                "to save as your_name.pim."))
+        if file_name == " ":
+            file_name = self.__userManager.userName
         # 3, output
         if choice[0] == 0:
-            self.__userManager.output_user_information(self.__userManager.get_PIM_List())
+            self.__userManager.output_user_information(self.__userManager.get_PIM_List(),file_name)
         else:
-            self.__userManager.output_specified_information(self.__userManager.get_PIM_List(),choice)
+            self.__userManager.output_specified_information(self.__userManager.get_PIM_List(),choice,file_name)
+
+
+    def load_PIM_file(self):
+        # 1. print hint to load file
+        self.ui.print_message("You can have these PIM files. Please choose one to load.")
+        # 2. display all files that can be loaded
+        self.__userManager.display_all_files()
+        # 3. enter the file name (error message if not existed)
+
+        file_name = input(self.ui.print_message("Please enter the file's name you want to load(.pim is not required):"))
+
+        # 4. display the content of the pim file
+        self.__userManager.load_file(file_name)
+
 
 
 # ------------------------------------------------------------------------------------------------------------------------------

@@ -117,10 +117,10 @@ class UserProfile:
         self.__description = description
 
     def check_password(self, password):
-        return self.password == password
+        return self.__password == password
 
     def set_password(self, new_password):
-        self.password = new_password
+        self.__password = new_password
 
     def get_password(self):
         return self.__password

@@ -143,11 +143,11 @@ class UserInformationManager:
                     reading_history = False
                     reading_pim_records = True
 
-                elif reading_history:
-                    # print(line)
-                    log_in_time_str, log_out_time_str = line.strip().split("|")
-                    TIME_TYPE_LEN = 16
-                    history.append([log_in_time_str[:TIME_TYPE_LEN], log_out_time_str[:TIME_TYPE_LEN]])
+                # elif reading_history:
+                #     # print(line)
+                #     log_in_time_str, log_out_time_str = line.strip().split("|")
+                #     TIME_TYPE_LEN = 16
+                #     history.append([log_in_time_str[:TIME_TYPE_LEN], log_out_time_str[:TIME_TYPE_LEN]])
 
                 elif reading_pim_records:
                     if line.startswith("PIM"):
@@ -195,12 +195,18 @@ class UserInformationManager:
     def get_output_file_root_path(cls):
         return cls.__outputFileRootPath
 
-    def output_user_information(self,PIMList):
-        outputFilePath = self.__outputFileRootPath + "/" + self.userName + ".txt"
-        count = 1
-        while os.path.exists(outputFilePath):
-            outputFilePath = self.__outputFileRootPath + "/" + self.userName + str(count) + ".txt"
-            count += 1
+    def output_user_information(self,PIMList, file_name):
+        outputFilePath = self.__outputFileRootPath + f"/{self.userName}"
+        isExist = os.path.exists(outputFilePath)
+        if not isExist:
+            os.makedirs(outputFilePath)
+        outputFilePath += f"/{file_name}" + ".pim"
+
+        # count = 1
+        # while os.path.exists(outputFilePath): # 改为append
+        #     outputFilePath = self.__outputFileRootPath + "/" + self.userName + str(count) + ".pim"
+        #     count += 1
+
         with open(outputFilePath, "w") as f:
             message = """
              ☆──────────────✬❖✬───────────☆
@@ -225,12 +231,17 @@ class UserInformationManager:
                 f.write("\n")
         pass
 
-    def output_specified_information(self,PIMList,choice):
-        outputFilePath = self.__outputFileRootPath + "/" + self.userName + ".txt"
-        count = 1
-        while os.path.exists(outputFilePath):
-            outputFilePath = self.__outputFileRootPath + "/" + self.userName + str(count) + ".txt"
-            count += 1
+    def output_specified_information(self,PIMList,choice,file_name):
+        outputFilePath = self.__outputFileRootPath + f"/{self.userName}"
+        isExist = os.path.exists(outputFilePath)
+        if not isExist:
+            os.makedirs(outputFilePath)
+        outputFilePath += f"/{file_name}" + ".pim"
+        # count = 1
+        # while os.path.exists(outputFilePath): # 改为append
+        #     outputFilePath = self.__outputFileRootPath + "/" + self.userName + str(count) + ".pim"
+        #     count += 1
+
         with open(outputFilePath, "w") as f:
             message = """
                      ☆──────────────✬❖✬───────────☆
@@ -249,9 +260,7 @@ class UserInformationManager:
             j = 0
             idx = 1
             while j<=len(choice) and idx<=len(PIMList):
-                print("idx:",idx)
                 if idx == choice[j]:
-                    print(choice[j],"match")
                     f.write(f"\nPIM {idx}: \n")
                     f.write(str(self.__PIMList[idx-1]))
                     j += 1
@@ -259,6 +268,23 @@ class UserInformationManager:
                     f.write("\n")
                 else:
                     idx += 1
+
+    def display_all_files(self):
+        outputFilePath = self.__outputFileRootPath + f"/{self.userName}"
+        isExist = os.path.exists(outputFilePath)
+        if isExist:
+            for file in os.listdir(outputFilePath):
+                print(file,"  ",end='')
+            print()
+
+
+    def load_file(self, file_name):
+        outputFilePath = self.__outputFileRootPath + f"/{self.userName}/{file_name}.pim"
+        try:
+            f = open(outputFilePath)
+            print(f.read())
+        except FileNotFoundError:
+            print("Please enter the right file name.")
 
 
 
