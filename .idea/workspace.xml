@@ -4,14 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="40869e6f-338c-4dff-afe4-8f8483c2e83b" name="Changes" comment="新加功能：可以输出指定PIM">
+    <list default="true" id="40869e6f-338c-4dff-afe4-8f8483c2e83b" name="Changes" comment="11.9&#10;1.整理了输出文件，每个用户有个单独的以用户名命名的输出文件夹，只对该用户可见；&#10;2.output file以pim存储&#10;3.增加load PIM file功能">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PIM/src/MainPage.py" beforeDir="false" afterPath="$PROJECT_DIR$/PIM/src/MainPage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PIM/src/file/.system.txt" beforeDir="false" afterPath="$PROJECT_DIR$/PIM/src/file/.system.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PIM/src/file/output/Tom.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PIM/src/file/user/.Mike.txt" beforeDir="false" afterPath="$PROJECT_DIR$/PIM/src/file/user/.Mike.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PIM/src/file/user/.Tom.txt" beforeDir="false" afterPath="$PROJECT_DIR$/PIM/src/file/user/.Tom.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PIM/src/module/SystemManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/PIM/src/module/SystemManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PIM/src/PIMApp.py" beforeDir="false" afterPath="$PROJECT_DIR$/PIM/src/PIMApp.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PIM/src/module/UserManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/PIM/src/module/UserManager.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -184,7 +180,14 @@
       <option name="project" value="LOCAL" />
       <updated>1699432446318</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="11.9&#10;1.整理了输出文件，每个用户有个单独的以用户名命名的输出文件夹，只对该用户可见；&#10;2.output file以pim存储&#10;3.增加load PIM file功能">
+      <created>1699522679754</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1699522679755</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -201,7 +204,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="新加功能：可以输出指定PIM" />
-    <option name="LAST_COMMIT_MESSAGE" value="新加功能：可以输出指定PIM" />
+    <MESSAGE value="11.9&#10;1.整理了输出文件，每个用户有个单独的以用户名命名的输出文件夹，只对该用户可见；&#10;2.output file以pim存储&#10;3.增加load PIM file功能" />
+    <option name="LAST_COMMIT_MESSAGE" value="11.9&#10;1.整理了输出文件，每个用户有个单独的以用户名命名的输出文件夹，只对该用户可见；&#10;2.output file以pim存储&#10;3.增加load PIM file功能" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

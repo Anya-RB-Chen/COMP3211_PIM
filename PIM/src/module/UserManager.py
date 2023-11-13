@@ -1,6 +1,7 @@
 import os
 from datetime import datetime
 import time
+import stat
 
 from colorama import Fore
 
@@ -13,16 +14,16 @@ from PIM.src.module.SystemManager import UserProfile
 from PIM.src.tools.Tools import Tools
 
 
+# 思路：将修改/添加PIM与load/save PIM分为两个class，IO只管单纯的文件读写
+
+
 class UserInformationManager:
 
     __PIMClassList = [Contact,Event,PlainText, Task]
     # ------------------------------------------------------------------------------------------------------------------------------
     # md 搞不懂python的class字段处理，debug一小时了，还是不行。先这样写吧。 按理来说应该runtime在PIMApp.filesysteminitialization()里面初始化。
     __userFileRootPath =  os.getcwd() + "/file" + "/user"
-    __outputFileRootPath =  os.getcwd() + "/file" + "/output"
     # ------------------------------------------------------------------------------------------------------------------------------
-
-
 
     # 1, initialization
     def __init__(self,userProfile:UserProfile) -> None:
@@ -143,12 +144,6 @@ class UserInformationManager:
                     reading_history = False
                     reading_pim_records = True
 
-                # elif reading_history:
-                #     # print(line)
-                #     log_in_time_str, log_out_time_str = line.strip().split("|")
-                #     TIME_TYPE_LEN = 16
-                #     history.append([log_in_time_str[:TIME_TYPE_LEN], log_out_time_str[:TIME_TYPE_LEN]])
-
                 elif reading_pim_records:
                     if line.startswith("PIM"):
                         # assumption type 在第二行
@@ -184,110 +179,6 @@ class UserInformationManager:
                 index_number += 1
                 f.write(str(pim))
                 f.write("\n")
-
-
-    # (2) output file
-    @classmethod
-    def set_output_file_root_path(cls, outputFileRootPath):
-        cls.__outputFileRootPath = outputFileRootPath
-
-    @classmethod
-    def get_output_file_root_path(cls):
-        return cls.__outputFileRootPath
-
-    def output_user_information(self,PIMList, file_name):
-        outputFilePath = self.__outputFileRootPath + f"/{self.userName}"
-        isExist = os.path.exists(outputFilePath)
-        if not isExist:
-            os.makedirs(outputFilePath)
-        outputFilePath += f"/{file_name}" + ".pim"
-
-        # count = 1
-        # while os.path.exists(outputFilePath): # 改为append
-        #     outputFilePath = self.__outputFileRootPath + "/" + self.userName + str(count) + ".pim"
-        #     count += 1
-
-        with open(outputFilePath, "w") as f:
-            message = """
-             ☆──────────────✬❖✬───────────☆
-             │       ❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈     │
-             │       😄   PERSONAL  😃     │
-             │       😆 INFORMATION 😁     │
-             │       ❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈     │
-             ☆──────────────✬❖✬───────────☆
-
-            """
-            f.write(message)
-            f.write("\n\n")
-
-            f.write(f"Hi {self.userName}, You have {len(PIMList)} personal information records.")
-            f.write("\n\n")
-
-            index_number = 1
-            for pim in self.__PIMList:
-                f.write(f"\nPIM {index_number}: \n")
-                index_number += 1
-                f.write(str(pim))
-                f.write("\n")
-        pass
-
-    def output_specified_information(self,PIMList,choice,file_name):
-        outputFilePath = self.__outputFileRootPath + f"/{self.userName}"
-        isExist = os.path.exists(outputFilePath)
-        if not isExist:
-            os.makedirs(outputFilePath)
-        outputFilePath += f"/{file_name}" + ".pim"
-        # count = 1
-        # while os.path.exists(outputFilePath): # 改为append
-        #     outputFilePath = self.__outputFileRootPath + "/" + self.userName + str(count) + ".pim"
-        #     count += 1
-
-        with open(outputFilePath, "w") as f:
-            message = """
-                     ☆──────────────✬❖✬───────────☆
-                     │       ❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈     │
-                     │       😄   PERSONAL  😃     │
-                     │       😆 INFORMATION 😁     │
-                     │       ❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈     │
-                     ☆──────────────✬❖✬───────────☆
-
-                    """
-            f.write(message)
-            f.write("\n\n")
-            f.write(f"Hi {self.userName}! Here are {len(choice)} personal information records that you selected.")
-            f.write("\n\n")
-
-            j = 0
-            idx = 1
-            while j<=len(choice) and idx<=len(PIMList):
-                if idx == choice[j]:
-                    f.write(f"\nPIM {idx}: \n")
-                    f.write(str(self.__PIMList[idx-1]))
-                    j += 1
-                    idx += 1
-                    f.write("\n")
-                else:
-                    idx += 1
-
-    def display_all_files(self):
-        outputFilePath = self.__outputFileRootPath + f"/{self.userName}"
-        isExist = os.path.exists(outputFilePath)
-        if isExist:
-            for file in os.listdir(outputFilePath):
-                print(file,"  ",end='')
-            print()
-
-
-    def load_file(self, file_name):
-        outputFilePath = self.__outputFileRootPath + f"/{self.userName}/{file_name}.pim"
-        try:
-            f = open(outputFilePath)
-            print(f.read())
-        except FileNotFoundError:
-            print("Please enter the right file name.")
-
-
-
 
     @staticmethod
     def create_pim_object_from_lines(lines, line_index, pim_type) ->(list,int):
@@ -353,9 +244,6 @@ class UserInformationManager:
         self.__PIMList.pop(index)
         return True
 
-
-
-
     # 4, pim information
     @classmethod
     def get_PIMClassList(cls):
@@ -375,4 +263,110 @@ class UserInformationManager:
             return PIMTypeToClassMap[type]
         else:
             return None
+
+
+
+
+class UserIO:
+
+    __outputFileRootPath = os.getcwd() + "/file" + "/output"
+
+    def __init__(self, UserInformationManager):
+        self.user = UserInformationManager
+        self.userName = self.user.userName
+        self.PIMList = self.user.get_PIM_List()
+
+    def set_output_file_root_path(self, outputFileRootPath):
+        self.__outputFileRootPath = outputFileRootPath
+
+    def get_output_file_root_path(self):
+        return self.__outputFileRootPath
+
+    def output_user_information(self,PIMList, file_name):
+        outputFilePath = self.__outputFileRootPath + f"/{self.userName}"
+        isExist = os.path.exists(outputFilePath)
+        if not isExist:
+            os.makedirs(outputFilePath)
+        outputFilePath += f"/{file_name}" + ".pim"
+
+        with open(outputFilePath, "w") as f:
+            message = """
+             ☆──────────────✬❖✬───────────☆
+             │       ❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈     │
+             │       😄   PERSONAL  😃     │
+             │       😆 INFORMATION 😁     │
+             │       ❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈     │
+             ☆──────────────✬❖✬───────────☆
+
+            """
+            f.write(message)
+            f.write("\n\n")
+
+            f.write(f"Hi {self.userName}, You have {len(PIMList)} personal information records.")
+            f.write("\n\n")
+
+            index_number = 1
+            for pim in self.PIMList:
+                f.write(f"\nPIM {index_number}: \n")
+                index_number += 1
+                f.write(str(pim))
+                f.write("\n")
+
+
+    def output_specified_information(self,PIMList,choice,file_name):
+        outputFilePath = self.__outputFileRootPath + f"/{self.userName}"
+        isExist = os.path.exists(outputFilePath)
+        if not isExist:
+            os.makedirs(outputFilePath)
+        outputFilePath += f"/{file_name}" + ".pim"
+        # count = 1
+        # while os.path.exists(outputFilePath): # 改为append
+        #     outputFilePath = self.__outputFileRootPath + "/" + self.userName + str(count) + ".pim"
+        #     count += 1
+
+        with open(outputFilePath, "w") as f:
+            message = """
+                     ☆──────────────✬❖✬───────────☆
+                     │       ❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈     │
+                     │       😄   PERSONAL  😃     │
+                     │       😆 INFORMATION 😁     │
+                     │       ❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈     │
+                     ☆──────────────✬❖✬───────────☆
+
+                    """
+            f.write(message)
+            f.write("\n\n")
+            f.write(f"Hi {self.userName}! Here are {len(choice)} personal information records that you selected.")
+            f.write("\n\n")
+
+            j = 0
+            idx = 1
+            while j<len(choice) and idx<=len(PIMList):
+                print(f"idx {idx}  choice{choice[j]}")
+                if idx == choice[j]:
+                    print("match")
+                    f.write(f"\nPIM {idx}: \n")
+                    f.write(str(self.PIMList[idx-1]))
+                    j += 1
+                    idx += 1
+                    f.write("\n")
+                else:
+                    idx += 1
+
+    def display_all_files(self):
+        outputFilePath = self.__outputFileRootPath + f"/{self.userName}"
+        isExist = os.path.exists(outputFilePath)
+        if isExist:
+            for file in os.listdir(outputFilePath):
+                print(file,"  ",end='')
+            print()
+
+
+    def load_file(self, file_name):
+        outputFilePath = self.__outputFileRootPath + f"/{self.userName}/{file_name}.pim"
+        try:
+            f = open(outputFilePath)
+            print(f.read())
+        except FileNotFoundError:
+            print("Please enter the right file name.")
 

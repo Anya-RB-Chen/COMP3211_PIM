@@ -11,6 +11,7 @@ from PIM.src.model.Task import Task
 from PIM.src.tools.Tools import Tools, InputType
 from PIM.src.tools.InteractiveUI import InteractiveUI
 from PIM.src.module.UserManager import UserInformationManager as User
+from PIM.src.module.UserManager import UserIO as IO
 
 
 class MainPage:
@@ -271,22 +272,22 @@ class MainPage:
             file_name = self.__userManager.userName
         # 3, output
         if choice[0] == 0:
-            self.__userManager.output_user_information(self.__userManager.get_PIM_List(),file_name)
+            IO(self.__userManager).output_user_information(self.__userManager.get_PIM_List(),file_name)
         else:
-            self.__userManager.output_specified_information(self.__userManager.get_PIM_List(),choice,file_name)
+            IO(self.__userManager).output_specified_information(self.__userManager.get_PIM_List(),choice,file_name)
 
 
     def load_PIM_file(self):
         # 1. print hint to load file
         self.ui.print_message("You can have these PIM files. Please choose one to load.")
         # 2. display all files that can be loaded
-        self.__userManager.display_all_files()
+        IO(self.__userManager).display_all_files()
         # 3. enter the file name (error message if not existed)
 
         file_name = input(self.ui.print_message("Please enter the file's name you want to load(.pim is not required):"))
 
         # 4. display the content of the pim file
-        self.__userManager.load_file(file_name)
+        IO(self.__userManager).load_file(file_name)
 
 
 

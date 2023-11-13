@@ -7,6 +7,7 @@ from PIM.src.module.SystemManager import SystemManager,UserProfile
 from PIM.src.tools.Tools import Tools
 from PIM.src.module.CMDLineIntepreter import CMDLineIntepreter
 from PIM.src.module.UserManager import UserInformationManager
+from PIM.src.module.UserManager import UserIO
 from PIM.src.module.Logger import Logger
 
 
@@ -116,16 +117,16 @@ class PIMApp:
         PIMApp.__systemFilePath = root_path + "/system.txt"
 
         # user directory initialization
-        userFileRootPath = root_path + "/user"
-        if not os.path.exists(userFileRootPath):
-            os.mkdir(userFileRootPath)
-        UserInformationManager.set_user_file_root_path(userFileRootPath)
+        # userFileRootPath = root_path + "/user"
+        # if not os.path.exists(userFileRootPath):
+        #     os.mkdir(userFileRootPath)
+        # UserInformationManager.set_user_file_root_path(userFileRootPath)
 
         # output directory initialization
-        outputRootPath = root_path + "/output"
-        if not os.path.exists(outputRootPath):
-            os.mkdir(outputRootPath)
-        UserInformationManager.set_output_file_root_path(outputRootPath)
+        # outputRootPath = root_path + "/output"
+        # if not os.path.exists(outputRootPath):
+        #     os.mkdir(outputRootPath)
+        # UserIO.set_output_file_root_path(outputRootPath)
 
         # log file initialization
         PIMApp.__logFilePath = root_path + "/log.txt"
