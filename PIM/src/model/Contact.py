@@ -9,7 +9,8 @@ class Contact(PIM):
 
 
     def __init__(self, name: str, mobile_number: str, address: str = ""):
-        super().__init__(name)
+        super().__init__()
+        self.name = name
         self.mobile_number = mobile_number
         self.address = address
 

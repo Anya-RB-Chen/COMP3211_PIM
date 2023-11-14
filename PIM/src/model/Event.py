@@ -5,15 +5,16 @@ from PIM.src.tools.Tools import Tools
 
 
 class Event(PIM):
-    def __init__(self, description: str, start_time: str, alarms: str, name="unamed"):
-        super().__init__(name)
+    def __init__(self, name:str, description: str, start_time: str, alarms: str):
+        super().__init__()
+        self.name = name
         self.description = description
         self.start_time = start_time
         self.alarms = alarms if alarms else None
 
     @classmethod
     def create(cls, name, fields_map):
-        return cls(fields_map["description"], fields_map["start_time"], fields_map.get("alarms", []), name)
+        return cls(name,fields_map["description"], fields_map["start_time"], fields_map.get("alarms", []))
 
     @classmethod
     def get_fields(cls) -> List[str]:
@@ -60,5 +61,6 @@ class Event(PIM):
         description = Tools.get_value_from_line(lines[index + 2])
         start_time = Tools.get_value_from_line(lines[index + 3])
         alarms = Tools.get_value_from_line(lines[index + 4])
+        print(f"test on event creation: name{name}\n, des{description}, start:{start_time}")
         return Event(name, description, start_time, alarms)
 

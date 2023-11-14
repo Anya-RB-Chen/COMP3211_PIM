@@ -40,6 +40,7 @@ class UserInformationManager:
             self.__PIMList = []
             self.__history = []
         else:
+            print("read from txt file")
             self.__PIMList,self.__history = self.__read()
 
 
@@ -140,7 +141,7 @@ class UserInformationManager:
                     reading_history = True
                     reading_pim_records = False
 
-                elif line.startswith("Personal Information Refords:"):
+                elif line.startswith("Personal Information Records:"):
                     reading_history = False
                     reading_pim_records = True
 
@@ -150,6 +151,7 @@ class UserInformationManager:
                         pim_type = lines[index+2].strip().split(":")[1].strip()
                     else:
                         pim, lineNumbers = self.create_pim_object_from_lines(lines, index, pim_type)
+
                         PIMList.append(pim)
 
                         index -= 1
@@ -201,7 +203,8 @@ class UserInformationManager:
     # 3, user information management interface
     # get
     def get_PIM_List(self):
-        return [pim.copy() for pim in self.__PIMList]
+        print("call get list")
+        return self.__PIMList
 
     # operate
     # add the pim. return True if success, False if fail.

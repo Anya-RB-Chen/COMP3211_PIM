@@ -11,9 +11,9 @@ from PIM.src.tools.Tools import Tools
 class PIM:
 
     # field : 通用字段只有时间？？
-    def __init__(self,name = "unamed"):
+    def __init__(self):
         self.createTime = time()  # float 时间戳
-        self.name = name    # 名称被视作字段？
+        #self.name = name    # 名称被视作字段？
         # self.history = []
 
 
@@ -121,8 +121,10 @@ class PIM:
 
         # type conversion
         # if time -> change to float.
-        if Tools.check_time_format(input_field) == "":
-            return Tools.timeStr_to_timeStamp(input_field)
+
+        # zwx: 如果要比较时间的话单独写个时间比较函数
+        # if Tools.check_time_format(input_field) == "":
+        #     return Tools.timeStr_to_timeStamp(input_field)
 
         # other field needing change format ?
         return input_field

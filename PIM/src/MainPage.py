@@ -530,6 +530,7 @@ class MainPage:
                     # 2' input new and check validity
                     self.ui.print_message(f"Enter the {field}")
                     input_field = newPim.get_field_input(field)
+                    print(input_field)
                     if not input_field: # 如果不进行有效输入 说明用户想退出。
                         break
 

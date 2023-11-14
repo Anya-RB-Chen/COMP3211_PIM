@@ -5,18 +5,20 @@ from PIM.src.tools.Tools import Tools
 
 
 class Task(PIM):
-    def __init__(self, description, deadline, reminder=None, name="unamed"):
-        super().__init__(name)
+    def __init__(self, name,description, deadline, reminder=None):
+        super().__init__()
+        self.name = name
         self.description = description
         self.deadline = deadline
         self.reminder = reminder if reminder else ""
+
 
     @classmethod
     # task1 = Task.create("Buy groceries", {"description": "Buy milk, bread, and eggs", "deadline": "2023-10-25 19:00"})
     #        task2 = Task.create("Attend meeting",
     #                       {"description": "Team sync-up", "deadline": "2023-10-21 09:00", "reminder": "2023-10-20 09:00"})
     def create(cls, name, fields_map):
-        return cls(fields_map["description"], fields_map["deadline"], fields_map.get("reminder", []), name)
+        return cls(name,fields_map["description"], fields_map["deadline"], fields_map.get("reminder", []))
 
     @classmethod
     def get_fields(cls) -> List[str]:
@@ -64,5 +66,6 @@ class Task(PIM):
         description = Tools.get_value_from_line(lines[index + 2])
         deadline = Tools.get_value_from_line(lines[index + 3])
         reminder = Tools.get_value_from_line(lines[index + 4]) if lines[index + 4].strip().startswith("Reminder") else ""
+        print(name, description, deadline, reminder)
         return Task(name, description, deadline, reminder)
 

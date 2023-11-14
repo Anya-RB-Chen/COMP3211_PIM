@@ -5,14 +5,15 @@ from PIM.src.tools.Tools import Tools
 
 
 class PlainText(PIM):
-    def __init__(self, text="", name="unamed"):
-        super().__init__(name)
+    def __init__(self, name, text=""):
+        super().__init__()
+        self.name = name
         self.text = text
 
     @classmethod
     # text1 = PlainText.create("Shopping List", {"text": "Milk, Bread, Eggs, Butter"})
     def create(cls, name, fields_map):
-        return cls(fields_map.get("text", ""), name)
+        return cls(name,fields_map.get("text", ""))
 
     @classmethod
     def get_fields(cls) -> List[str]:
