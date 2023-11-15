@@ -220,8 +220,8 @@ class Tools:
         """
         Convert datetime string in format "YYYY-MM-DD HH:MM" to UNIX timestamp.
         """
-        dt = datetime.strptime(time_str, "%Y-%m-%d %H:%M")
-        return int(dt.replace(tzinfo=timezone.utc).timestamp())
+        dt = datetime.strptime(time_str, "%Y-%m-%d %H:%M").timestamp()
+        return dt
 
     @staticmethod
     def timeStamp_to_timeStr(timestamp: float) -> str:
