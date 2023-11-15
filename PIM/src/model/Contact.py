@@ -1,5 +1,4 @@
 from typing import List
-
 from PIM.src.model.PIM import PIM
 from PIM.src.tools.Tools import Tools
 
@@ -35,8 +34,9 @@ class Contact(PIM):
                 "mobile_number": Tools.check_mobile_number_format,
                 "address": lambda x: ""}
 
+
     def contain_text(self, text: str):
-        return text.lower() in self.name.lower() or any(num in text for num in self.mobile_number) or text.lower() in self.address.lower()
+        return text.lower() in self.name.lower() or text.lower() in self.mobile_number or text.lower() in self.address.lower()
 
     def __str__(self):
         return f"Name: {self.name}\nType: Contact\nMobile number: {self.mobile_number}\nAddress: {self.address}"

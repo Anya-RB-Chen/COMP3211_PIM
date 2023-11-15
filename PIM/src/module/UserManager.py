@@ -18,15 +18,15 @@ from PIM.src.tools.Tools import Tools
 
 
 class UserInformationManager:
-
-    __PIMClassList = [Contact,Event,PlainText, Task]
+    __PIMClassList = [Contact, Event, PlainText, Task]
     # ------------------------------------------------------------------------------------------------------------------------------
     # md 搞不懂python的class字段处理，debug一小时了，还是不行。先这样写吧。 按理来说应该runtime在PIMApp.filesysteminitialization()里面初始化。
-    __userFileRootPath =  os.getcwd() + "/file" + "/user"
+    __userFileRootPath = os.getcwd() + "/file" + "/user"
+
     # ------------------------------------------------------------------------------------------------------------------------------
 
     # 1, initialization
-    def __init__(self,userProfile:UserProfile) -> None:
+    def __init__(self, userProfile: UserProfile) -> None:
         self.logInTimeStamp = time.time()
         self.userName = userProfile.get_name()
 
@@ -41,15 +41,14 @@ class UserInformationManager:
             self.__history = []
         else:
             print("read from txt file")
-            self.__PIMList,self.__history = self.__read()
-
+            self.__PIMList, self.__history = self.__read()
 
     # 2, file management 不同文件的读写可以再做封装。
     # (1) user information file management
     # file path: self.__userFilePath  (./file/user)
     # file name: f{self.username}.txt (name.txt)
 
-    #non functional： 1， 安全： 访问 0644（其他人不能删除） 2， 内容加密
+    # non functional： 1， 安全： 访问 0644（其他人不能删除） 2， 内容加密
     # functional： 1， 需要改成 append 模式    2， 需要增加安全性，（系统崩溃恢复原始文件。
     @classmethod
     def set_user_file_root_path(cls, userFileRootPath):
@@ -76,37 +75,37 @@ class UserInformationManager:
     History:
     time1 log in  |  time2 log out 
     ...
-    
+
     Personal information records:
     PIM 1
     content of pim
-    
+
     PIM 2
     ....
-        
+
     """
 
-    #example
+    # example
     """
     history:
     2023-12-01 19:00 log in  |  2023-12-01 19:30 log out
     2023-12-01 20:00 log in  |  2023-12-01 20:30 log out
-    
-    
+
+
     personal information records: 
-        
+
     PIM 1
     Name: John Doe
     Type: Contact
     Mobile number: 123-456-7890
     Address: 123 Elm St.
-    
+
     PIM 2
     Name: Jane Smith
     Type: Contact
     Mobile number: 234-567-8901
     Address: 456 Oak St.
-    
+
     PIM 3
     Name: Buy groceries
     Type: Task
@@ -114,11 +113,11 @@ class UserInformationManager:
     Deadline: 2023-10-25 09:00
     Reminder: 
     """
+
     # interface:
     # 1, PIM.__str__ get the string output format of PIM type.   2, Tools.timeStamp_to_timeStr(timeStamp)
     # contents: 1, self.__PIMList pim list  2, previous log in/out time self.__history  + current log in time self.logInTimeStamp log out time: now.
     # output: PIMList list[PIM]  history list[[log_in_time_str, log_out_time_str]]
-
 
     def __read(self):
         with open(self.__userFilePath, "r") as f:
@@ -148,7 +147,7 @@ class UserInformationManager:
                 elif reading_pim_records:
                     if line.startswith("PIM"):
                         # assumption type 在第二行
-                        pim_type = lines[index+2].strip().split(":")[1].strip()
+                        pim_type = lines[index + 2].strip().split(":")[1].strip()
                     else:
                         pim, lineNumbers = self.create_pim_object_from_lines(lines, index, pim_type)
 
@@ -159,13 +158,12 @@ class UserInformationManager:
 
                 index += 1
 
-            return PIMList,history
-
+            return PIMList, history
 
     def write(self):
         with open(self.__userFilePath, "w") as f:
             f.write("History:\n\n")
-            for log_in_time,log_out_time in self.__history:
+            for log_in_time, log_out_time in self.__history:
                 f.write(f"{log_in_time} log in  |  {log_out_time} log out\n")
             if self.logInTimeStamp is not None:
                 log_in_time = Tools.timeStamp_to_timeStr(self.logInTimeStamp)
@@ -183,7 +181,7 @@ class UserInformationManager:
                 f.write("\n")
 
     @staticmethod
-    def create_pim_object_from_lines(lines, line_index, pim_type) ->(list,int):
+    def create_pim_object_from_lines(lines, line_index, pim_type) -> (list, int):
         pim_type = pim_type.lower()
 
         pim_classes = {
@@ -195,15 +193,12 @@ class UserInformationManager:
 
         pim_class = pim_classes.get(pim_type)
         if pim_class:
-            return pim_class.create_object_from_lines(lines, line_index),len(pim_class.get_fields()) + 1
+            return pim_class.create_object_from_lines(lines, line_index), len(pim_class.get_fields()) + 1
 
-
-
-# ------------------------------------------------------------------------------------------------------------------------------
+    # ------------------------------------------------------------------------------------------------------------------------------
     # 3, user information management interface
     # get
     def get_PIM_List(self):
-        print("call get list")
         return self.__PIMList
 
     # operate
@@ -215,8 +210,8 @@ class UserInformationManager:
             self.__PIMList.append(pim)
             return True
 
-    def contains_name(self,name):
-        pim,index = self.search_name(name)
+    def contains_name(self, name):
+        pim, index = self.search_name(name)
         return index != -1
 
     # search the pim name. return the pim if success, None if fail.
@@ -224,11 +219,11 @@ class UserInformationManager:
         index = 0
         for pim in self.__PIMList:
             if pim.name == name:
-                return pim,index
+                return pim, index
             index += 1
-        return None,-1
+        return None, -1
 
-    def modify(self, pim,newPim):
+    def modify(self, pim, newPim):
         # search the pim
         pim, index = self.search_name(pim.name)
         if index == -1:
@@ -268,10 +263,7 @@ class UserInformationManager:
             return None
 
 
-
-
 class UserIO:
-
     __outputFileRootPath = os.getcwd() + "/file" + "/output"
 
     def __init__(self, UserInformationManager):
@@ -285,14 +277,14 @@ class UserIO:
     def get_output_file_root_path(self):
         return self.__outputFileRootPath
 
-    def output_user_information(self,PIMList, file_name):
+    def output_user_information(self, PIMList, file_name):
         outputFilePath = self.__outputFileRootPath + f"/{self.userName}"
         isExist = os.path.exists(outputFilePath)
         if not isExist:
             os.makedirs(outputFilePath)
         outputFilePath += f"/{file_name}" + ".pim"
 
-        with open(outputFilePath, "w") as f:
+        with open(outputFilePath, "w", encoding="utf-8") as f:
             message = """
              ☆──────────────✬❖✬───────────☆
              │       ❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈     │
@@ -315,8 +307,7 @@ class UserIO:
                 f.write(str(pim))
                 f.write("\n")
 
-
-    def output_specified_information(self,PIMList,choice,file_name):
+    def output_specified_information(self, PIMList, choice, file_name):
         outputFilePath = self.__outputFileRootPath + f"/{self.userName}"
         isExist = os.path.exists(outputFilePath)
         if not isExist:
@@ -327,14 +318,14 @@ class UserIO:
         #     outputFilePath = self.__outputFileRootPath + "/" + self.userName + str(count) + ".pim"
         #     count += 1
 
-        with open(outputFilePath, "w") as f:
+        with open(outputFilePath, "w", encoding="utf-8") as f:
             message = """
-                     ☆──────────────✬❖✬───────────☆
+                       ──────────────✬❖✬───────────
                      │       ❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈     │
                      │       😄   PERSONAL  😃     │
                      │       😆 INFORMATION 😁     │
                      │       ❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈     │
-                     ☆──────────────✬❖✬───────────☆
+                       ──────────────✬❖✬───────────
 
                     """
             f.write(message)
@@ -344,12 +335,10 @@ class UserIO:
 
             j = 0
             idx = 1
-            while j<len(choice) and idx<=len(PIMList):
-                print(f"idx {idx}  choice{choice[j]}")
+            while j < len(choice) and idx <= len(PIMList):
                 if idx == choice[j]:
-                    print("match")
                     f.write(f"\nPIM {idx}: \n")
-                    f.write(str(self.PIMList[idx-1]))
+                    f.write(str(self.PIMList[idx - 1]))
                     j += 1
                     idx += 1
                     f.write("\n")
@@ -361,15 +350,13 @@ class UserIO:
         isExist = os.path.exists(outputFilePath)
         if isExist:
             for file in os.listdir(outputFilePath):
-                print(file,"  ",end='')
+                print(file, "  ", end='')
             print()
-
 
     def load_file(self, file_name):
         outputFilePath = self.__outputFileRootPath + f"/{self.userName}/{file_name}.pim"
         try:
-            f = open(outputFilePath)
-            print(f.read())
+            with open(outputFilePath, encoding="utf-8") as f:
+                print(f.read())
         except FileNotFoundError:
             print("Please enter the right file name.")
-

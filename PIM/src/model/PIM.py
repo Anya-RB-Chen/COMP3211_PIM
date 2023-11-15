@@ -1,7 +1,6 @@
+from typing import List
 from abc import abstractmethod,ABC
 from time import time
-
-from typing import List
 
 from PIM.src.tools.InteractiveUI import InteractiveUI
 from PIM.src.tools.Tools import Tools
@@ -14,11 +13,10 @@ class PIM:
     def __init__(self):
         self.createTime = time()  # float 时间戳
         #self.name = name    # 名称被视作字段？
-        # self.history = []
 
 
     def copy(self):
-            # Create a new instance of the same class with the same name and fields
+    # Create a new instance of the same class with the same name and fields
         fieldsMap =  self.get_fields_contents_map()
         PIMType = type(self)
         return PIMType.create(self.name,fieldsMap)
@@ -60,7 +58,7 @@ class PIM:
     def get_explaination(cls):
         pass
 
-# ------------------------------------------------------------------------------------------------------------------------------
+    # ------------------------------------------------------------------------------------------------------------------------------
 
 
     @abstractmethod
@@ -98,11 +96,11 @@ class PIM:
     @classmethod
     # get a valid input of field  |  None
     def get_field_input(cls, field: str):
-        # if field == "name": # assumption：
-        ## 对于名字唯一的限制是不可以重复, 在外部执行逻辑，因为名字重复属于PIMList User information 已经超越了PIM类方法的范畴。
-        #     name = input()
-        #     while name not in ["", "0"]:
-        #         if
+    # if field == "name": # assumption：
+    ## 对于名字唯一的限制是不可以重复, 在外部执行逻辑，因为名字重复属于PIMList User information 已经超越了PIM类方法的范畴。
+    #     name = input()
+    #     while name not in ["", "0"]:
+    #         if
         checker = cls.get_field_checker(field)
 
         input_field = input()
@@ -119,14 +117,13 @@ class PIM:
                 return None
             wrongMessage = checker(input_field)
 
-        # type conversion
-        # if time -> change to float.
+    # type conversion
+    # if time -> change to float.
+    # zwx: 如果要比较时间的话单独写个时间比较函数
+    # if Tools.check_time_format(input_field) == "":
+    #     return Tools.timeStr_to_timeStamp(input_field)
 
-        # zwx: 如果要比较时间的话单独写个时间比较函数
-        # if Tools.check_time_format(input_field) == "":
-        #     return Tools.timeStr_to_timeStamp(input_field)
-
-        # other field needing change format ?
+    # other field needing change format ?
         return input_field
 
 

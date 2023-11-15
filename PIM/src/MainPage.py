@@ -1,8 +1,6 @@
 
-
 # 用户主页面
 from typing import List
-
 from PIM.src.model.Contact import Contact
 from PIM.src.model.Event import Event
 from PIM.src.model.PIM import PIM
@@ -13,7 +11,6 @@ from PIM.src.tools.InteractiveUI import InteractiveUI
 from PIM.src.module.UserManager import UserInformationManager as User
 from PIM.src.module.UserManager import UserIO as IO
 
-
 class MainPage:
 
     # level 1: initialization
@@ -23,13 +20,20 @@ class MainPage:
 
 
     # level 1: main
-    def main(self,userProfile):
+    def main(self ,userProfile):
+
+
 
         # 0, initialization, welcome message and hint.
         self.ui = InteractiveUI()
         self.__userManager = User(userProfile)
         self.ui.print_main_page()
         self.ui.print_user_welcome_message(self.__userManager.userName)
+
+        # #alarms/reminders登录检测提醒
+        Tools.check_alarms_or_reminders(User, self.__userManager.get_PIM_List())
+
+
         self.ui.print_message("ps: You can tap or enter 0 to quit the module whenever you want.")
 
         # # # 1, main interaction and functional module
@@ -42,10 +46,12 @@ class MainPage:
             contact2 = Contact.create("Jane Smith",
                                       {"mobile_number": "234-567-8901", "address": "456 Oak St."})
 
+
             # Task PIMs 有问题
             task1 = Task.create("Buy groceries", {"description": "Buy milk, bread, and eggs", "deadline": "2023-10-25 09:00"})
             task2 = Task.create("Attend meeting",
                                 {"description": "Team sync-up", "deadline": "2023-10-21 09:00", "reminder": "2023-10-20 09:00"})
+
 
             # Event PIMs
             event1 = Event.create("Birthday party",
@@ -60,10 +66,12 @@ class MainPage:
             text3 = PlainText.create("Poem", {"text": "Roses are red, Violets are blue."})
             text4 = PlainText.create("Quotes", {"text": "Be yourself; everyone else is already taken. - Oscar Wilde"})
 
+
             PIMList = [contact1, contact2, task1, task2, event1, event2, text1, text2, text3, text4]
             for pim in PIMList:
                 self.__userManager.add_PIM(pim)
                 self.ui.print_message(f"Added PIM: {pim}")
+                print("\n")
             print("\n\n\n")
 
             # You now have 10 PIM items: 2 Contacts, 2 Tasks, 2 Events, and 4 PlainTexts.
@@ -71,13 +79,13 @@ class MainPage:
             # # ------------------------------------------------------------------------------------------------------------------------------
 
 
-        moduleNameList = ["Create new PIM", "Manipulate existing PIM", "Generate personal PIM report","Load PIM file"]
-        moduleFunctionList = [self.create_new_PIM,self.manipulate_existing_PIM, self.generate_personal_PIM_report,self.load_PIM_file]
 
+        moduleNameList = ["Create new PIM", "Manipulate existing PIM", "Generate personal PIM report", "Load PIM file"]
+        moduleFunctionList = [self.create_new_PIM, self.manipulate_existing_PIM, self.generate_personal_PIM_report, self.load_PIM_file]
         self.ui.print_choose_hint("", "", moduleNameList)
         choice = self.ui.get_int_input(len(moduleNameList))
         while choice != 0:
-            self.ui.print_choose_hint(moduleNameList[choice-1],"","")
+            self.ui.print_choose_hint(moduleNameList[choice -1] ,"" ,"")
 
             moduleFunctionList[choice - 1]()
 
@@ -115,8 +123,8 @@ class MainPage:
         self.ui.print_message(moduleMessaame)
 
         PIMClassList = User.get_PIMClassList()
-        PIMStrList = [C.__name__ for C in PIMClassList]
-        self.ui.print_choose_hint("","",PIMStrList)
+        PIMStrList = [C.__name__ for        C in PIMClassList]
+        self.ui.print_choose_hint("", "", PIMStrList)
 
         choice = self.ui.get_int_input(len(PIMClassList))
         if choice:
@@ -132,8 +140,13 @@ class MainPage:
             for field in fields:
                 checker_function = checkersMap[field]
 
-                content = input(f"Enter the {field}: ")
-                if not content:
+                if field == "start_time" or field == "deadline" or field == " reminder" or field == "alarms":
+                    print("Expected format: YYYY-MM-DD HH:MM, e.g., 2023-10-18 14:00")
+
+                content = input(f"Enter the {field} (enter 0 to quit):")
+
+
+                if content == "0":
                     return
 
                 wrongMessage = checker_function(content)
@@ -141,9 +154,17 @@ class MainPage:
                     print(f"Invalid input. {wrongMessage}")
                     content = input("Try again: ")
 
+                    if content == "0":
+                        return
+
                     wrongMessage = checker_function(content)
 
                 fieldsMap[field] = content
+
+            self.ui.print_message("Are you sure to save? (1/0)")
+            choice = self.ui.get_int_input(1)
+            if choice == 0:
+                return
 
             newPIM = PIMClass.create(fieldsMap["name"], fieldsMap) # !!!
             self.__userManager.add_PIM(newPIM)
@@ -168,7 +189,7 @@ class MainPage:
         self.ui.print_message("The PIM in your criteria in as follows: ")
         length = len(PIMList)
         for i in range(length):
-            print(f"{i+1}: ", PIMList[i].__str__())
+            print(f"{ i +1}: ", PIMList[i].__str__())
 
         self.ui.print_message("\nYou can modify the or delete some of them.")
 
@@ -264,18 +285,20 @@ class MainPage:
             return
 
         # 需要增加部分输出
-        self.ui.print_message("Please specify the PIMs you want to print. Enter 0 to print all.")
+        # self.ui.print_message("You can choose to outpu")
+        # 3, output
+        self.ui.print_message("Please specify the PIMs you want to print. (e.g., '1 2 3' to print PIM1, 2, 3)Enter 0 to print all.)")
         choice = self.ui.get_int_input_list(len(PIMList))
+
+
         file_name = input(self.ui.print_message("Please enter the file name you want to save as. Enter \" \" "
                                                 "to save as your_name.pim."))
         if file_name == " ":
             file_name = self.__userManager.userName
-        # 3, output
         if choice[0] == 0:
-            IO(self.__userManager).output_user_information(self.__userManager.get_PIM_List(),file_name)
+            IO(self.__userManager).output_user_information(self.__userManager.get_PIM_List(), file_name)
         else:
-            IO(self.__userManager).output_specified_information(self.__userManager.get_PIM_List(),choice,file_name)
-
+            IO(self.__userManager).output_specified_information(self.__userManager.get_PIM_List(), choice, file_name)
 
     def load_PIM_file(self):
         # 1. print hint to load file
@@ -283,13 +306,9 @@ class MainPage:
         # 2. display all files that can be loaded
         IO(self.__userManager).display_all_files()
         # 3. enter the file name (error message if not existed)
-
         file_name = input(self.ui.print_message("Please enter the file's name you want to load(.pim is not required):"))
-
         # 4. display the content of the pim file
         IO(self.__userManager).load_file(file_name)
-
-
 
 # ------------------------------------------------------------------------------------------------------------------------------
     # level 3 细化功能模块以及
@@ -341,15 +360,18 @@ class MainPage:
     def search_PIM(self) -> List[PIM]:
         # Step 1: Message
 
-        self.ui.print_choose_hint("", "Choose a mode of search:",["Type", "Text", "Time", "Compound condition"])
+        self.ui.print_choose_hint("", "Choose a mode of search:" ,["Type", "Text", "Time", "Compound condition"])
         choice = self.ui.get_int_input(4)
         if not choice:
             return None
 
         # Step 2: Functional Module
         if choice == 1:
-            self.ui.print_message("Enter the PIM type you're looking for: ")
+            self.ui.print_message("Enter the PIM type you're looking for (Task, PlainText, Event, Contact): ")
             inputStr = self.ui.get_correct_input(InputType.PIMTYPE)
+            # if not inputStr:
+            #     return None
+            #if not inputStr:
             pim_type = User.PIM_type_to_class(inputStr)
             PIMList = self.__userManager.get_PIM_List()
             results = [pim for pim in PIMList if isinstance(pim, pim_type)]
@@ -370,9 +392,10 @@ class MainPage:
                        pim.time_condition_checker(timestamp, comparator)]
 
         elif choice == 4:
-            print("Format: type Task && (text abc || time < 2023-10-18 14:00)")
-            print("Example: To search for a Task type that contains 'abc' text OR has a time not before '2023-10-18 14:00',\n "
-                  "input: type Task && text abc || ! time < 2023-10-18 14:00")
+            print("Format: type Task && (text: abc || time: < 2023-10-18 14:00)")
+            print \
+                ("Example: To search for a Task type that contains 'abc' text OR has a time not before '2023-10-18 14:00',\n "
+                  "input: type: Task && text: abc || ! time: < 2023-10-18 14:00")
             while True:
                 # compound_input = self.ui.input_hint("Enter your compound search criteria: ")
                 # if compound_input in ["", "0"]:
@@ -461,7 +484,7 @@ class MainPage:
                     timestamp = Tools.timeStr_to_timeStamp(time_input)
 
                     current_results = [pim for pim in self.__userManager.get_PIM_List() if
-                                         pim.time_condition_checker(timestamp, comparator)]
+                                       pim.time_condition_checker(timestamp, comparator)]
                     if negate_next:
                         current_results = [pim for pim in self.__userManager.get_PIM_List() if
                                            pim not in current_results]
@@ -487,6 +510,7 @@ class MainPage:
                 # Handle negation (!) if needed
 
             return list(final_results)
+
     # ------------------------------------------------------------------------------------------------------------------------------
     # 3, modify
     # 对于每一个PIM 提供交互界面让用户指明 更改字段，输入新内容， （有效性查验， 名字需要查看是否重复）
@@ -525,17 +549,17 @@ class MainPage:
                         if input_field in ['0', ""]:
                             break
                 else:
-                    field = fieldsList[choice-1]
+                    field = fieldsList[choice - 1]
 
                     # 2' input new and check validity
                     self.ui.print_message(f"Enter the {field}")
                     input_field = newPim.get_field_input(field)
-                    print(input_field)
-                    if not input_field: # 如果不进行有效输入 说明用户想退出。
+
+                    if not input_field:  # 如果不进行有效输入 说明用户想退出。
                         break
 
                 # 3' change the field.
-                newPim.__setattr__(field,input_field)
+                newPim.__setattr__(field, input_field)
 
                 # 4, next round
                 self.ui.print_choose_hint("", "", fieldsList)
@@ -545,7 +569,7 @@ class MainPage:
             self.ui.print_message(f"After manipulation. The new information: ----->\n {newPim}")
 
             # (4) change in userManager
-            self.__userManager.modify(pim,newPim)
+            self.__userManager.modify(pim, newPim)
 
     # 4, delete
     def delete_PIM(self, PIMList: List[PIM]):
@@ -590,4 +614,3 @@ class MainPage:
     #
     #     # 3, output
     #     self.__userManager.ouput_user_information()
-

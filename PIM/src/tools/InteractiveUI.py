@@ -158,14 +158,19 @@ class InteractiveUI:
                 print("Invalid input, please try again")
 
     def get_int_input_list(self, n):
-        li = list(map(int, input(f"Enter integers from 0 to {n}: ").split()))
-        for i in range(len(li)):
-            num = li[i]
-            while num < 0 or num > n:
-                print(f"{num} in an invalid input. Please try again")
-                num = self.get_int_input(n)
-            li[i] = num
-        return sorted(list(set(li)))
+        while True:
+            try:
+                li = list(map(int, input(f"Enter integers from 0 to {n}: ").split()))
+                for i in range(len(li)):
+                    num = li[i]
+                    while num < 0 or num > n:
+                        print(f"{num} in an invalid input. Please try again")
+                        num = self.get_int_input(n)
+                    li[i] = num
+                return sorted(list(set(li)))
+
+            except Exception:
+                print("Invalid input, please try again")
 
 
     def print_line(self):
@@ -244,16 +249,16 @@ class InteractiveUI:
 
         typeName = inputType
         inputStr = input()
-        if not inputStr or inputStr == "0":
-            return ""
+        # if inputStr == "0":
+        #     return ""
         wrongMessage = inputFormatChecker(inputStr)
 
         while wrongMessage:
             self._instance.print_message(f"Incorrect format.\n"
                                         f"{wrongMessage}")
-            inputStr =  self._instance.input_hint(f"Enter the {typeName}: ")
-            if not inputStr or inputStr == "0":
-                return ""
+            inputStr =  self._instance.input_hint(f"Enter again: ")
+            # if not inputStr or inputStr == "0":
+            #     return ""
             wrongMessage = inputFormatChecker(inputStr)
 
         return inputStr

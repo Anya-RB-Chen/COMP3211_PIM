@@ -1,16 +1,21 @@
 from typing import List
-
 from PIM.src.model.PIM import PIM
 from PIM.src.tools.Tools import Tools
 
 
 class Event(PIM):
-    def __init__(self, name:str, description: str, start_time: str, alarms: str):
+    def __init__(self, name: str, description: str, start_time: str, alarms: str):
         super().__init__()
         self.name = name
         self.description = description
         self.start_time = start_time
         self.alarms = alarms if alarms else None
+
+    def get_alarms(self):
+        return self.alarms
+
+    def get_start_time(self):
+        return self.start_time
 
     @classmethod
     def create(cls, name, fields_map):
@@ -32,7 +37,7 @@ class Event(PIM):
         return {"name": lambda x: "" if x else "Name cannot be empty.",
                 "description": lambda x: "" if x else "Description cannot be empty.",
                 "start_time": Tools.check_time_format,
-                "alarms": lambda x: "" if all(alarm.isdigit() for alarm in x) else "Alarms should only contain timestamps."}
+                "alarms": Tools.check_time_format}
 
     def contain_text(self, text: str):
         return text.lower() in self.name.lower() or text.lower() in self.description.lower()
@@ -61,6 +66,5 @@ class Event(PIM):
         description = Tools.get_value_from_line(lines[index + 2])
         start_time = Tools.get_value_from_line(lines[index + 3])
         alarms = Tools.get_value_from_line(lines[index + 4])
-        print(f"test on event creation: name{name}\n, des{description}, start:{start_time}")
         return Event(name, description, start_time, alarms)
 
