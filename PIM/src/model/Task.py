@@ -52,11 +52,11 @@ class Task(PIM):
 
     def time_condition_checker(self, time: float, comparator: str):
         if comparator == "<":
-            return time < Tools.timeStr_to_timeStamp(self.deadline)
+            return time > Tools.timeStr_to_timeStamp(self.deadline)
         elif comparator == "=":
             return time ==  Tools.timeStr_to_timeStamp(self.deadline)
         elif comparator == ">":
-            return time >  Tools.timeStr_to_timeStamp(self.deadline)
+            return time <  Tools.timeStr_to_timeStamp(self.deadline)
         else:
             return False
 

@@ -44,11 +44,11 @@ class Contact(PIM):
 
     def time_condition_checker(self, time: float, comparator: str):
         if comparator == "<":
-            return time < self.createTime
+            return time > self.createTime
         elif comparator == "=":
             return time == self.createTime
         elif comparator == ">":
-            return time > self.createTime
+            return time < self.createTime
         else:
             return False
 

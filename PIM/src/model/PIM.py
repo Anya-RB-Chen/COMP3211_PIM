@@ -95,38 +95,35 @@ class PIM:
 
     @classmethod
     # get a valid input of field  |  None
-    ### 得到有效的相应字段输入：  如果用户想退出
     def get_field_input(cls, field: str):
-        # if field == "name": # assumption：
-        ## 对于名字唯一的限制是不可以重复, 在外部执行逻辑，因为名字重复属于PIMList User information 已经超越了PIM类方法的范畴。
-        #     name = input()
-        #     while name not in ["", "0"]:
-        #         if
+    # if field == "name": # assumption：
+    ## 对于名字唯一的限制是不可以重复, 在外部执行逻辑，因为名字重复属于PIMList User information 已经超越了PIM类方法的范畴。
+    #     name = input()
+    #     while name not in ["", "0"]:
+    #         if
         checker = cls.get_field_checker(field)
 
         input_field = input()
-        if not input_field:  ### 需不需要定义推出逻辑还需要继续想。 因为有的字段允许空白输入。
+        if not input_field:
             return None
 
         wrongMessage = checker(input_field)
-        ###
         while input_field not in ["", "0"] and wrongMessage != "":
             InteractiveUI._instance.print_message(f"Invalid format. {wrongMessage}")
             InteractiveUI._instance.print_message(("Please input again: "))
 
             input_field = input()
-            if input_field in ["", "0"]:  ### 需不需要定义推出逻辑还需要继续想。 因为有的字段允许空白输入。
+            if input_field in ["", "0"]:
                 return None
-            wrongMessage = checker(input_field)  ### checker的接口得统一做定义。 允不允许做空白输入
+            wrongMessage = checker(input_field)
 
-        # type conversion
-        # if time -> change to float.
-        if Tools.check_time_format(input_field) == "":
-            return Tools.timeStr_to_timeStamp(input_field)
+    # type conversion
+    # if time -> change to float.
+    # zwx: 如果要比较时间的话单独写个时间比较函数
+    # if Tools.check_time_format(input_field) == "":
+    #     return Tools.timeStr_to_timeStamp(input_field)
 
-        # other field needing change format ?
+    # other field needing change format ?
         return input_field
-
-
 
 
