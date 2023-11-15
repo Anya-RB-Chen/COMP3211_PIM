@@ -674,10 +674,7 @@ class MainPage:
             return None
 
         for condition in compound_lst:
-            if condition == "!":
-                template = result_lst[0]
-                result_lst[0] = [pim for pim in PIMList if pim not in template]
-            elif condition == '||':
+            if condition == '||':
                 condition1 = result_lst[0]
                 condition2 = result_lst[1]
                 del result_lst[0]
