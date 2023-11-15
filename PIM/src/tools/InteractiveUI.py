@@ -152,7 +152,24 @@ class InteractiveUI:
                 num = int(input(f"Enter an integer from 0 to {n}: "))
                 if 0 <= num <= n:
                     return num
+                else:
+                    print("Invalid input, please try again")
             except ValueError:
+                print("Invalid input, please try again")
+
+    def get_int_input_list(self, n):
+        while True:
+            try:
+                li = list(map(int, input(f"Enter integers from 0 to {n}: ").split()))
+                for i in range(len(li)):
+                    num = li[i]
+                    while num < 0 or num > n:
+                        print(f"{num} in an invalid input. Please try again")
+                        num = self.get_int_input(n)
+                    li[i] = num
+                return sorted(list(set(li)))
+
+            except Exception:
                 print("Invalid input, please try again")
 
 
@@ -225,23 +242,26 @@ class InteractiveUI:
 
 
 
-    # 输入： 类型
+     ## 输入 类型
     # 输出： 正确格式的相应类型字符串 或者空字符串 （不想继续输入） 进行交互，但是不提供输入提示
+    ### 需不需要定义推出逻辑还需要继续想。 因为有的字段允许空白输入。 ### 需不需要定义推出逻辑还需要继续想。 因为有的字段允许空白输入。
+    ### 这部分与PIM的get field input 重复。 对于格式检验与有效输入的这部分逻辑，需要统一做调整。  看所有的接口调用，整合逻辑，清晰的方式定义接口。
+
     def get_correct_input(self, inputType: InputType) -> str:
         inputFormatChecker = Tools.get_type_format_checker(inputType)
 
         typeName = inputType
         inputStr = input()
-        if not inputStr or inputStr == "0":
-            return ""
+        # if inputStr == "0":
+        #     return ""
         wrongMessage = inputFormatChecker(inputStr)
 
         while wrongMessage:
             self._instance.print_message(f"Incorrect format.\n"
                                         f"{wrongMessage}")
-            inputStr =  self._instance.input_hint(f"Enter the {typeName}: ")
-            if not inputStr or inputStr == "0":
-                return ""
+            inputStr =  self._instance.input_hint(f"Enter again: ")
+            # if not inputStr or inputStr == "0":
+            #     return ""
             wrongMessage = inputFormatChecker(inputStr)
 
         return inputStr

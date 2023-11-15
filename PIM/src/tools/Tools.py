@@ -12,6 +12,7 @@ class InputType(Enum):
     PIMTYPE = "pim type"
     MOBILE_NUMBER = "mobile_number"
 
+
 class Tools:
     @staticmethod
     def checkNameAvailable(name: str) -> bool:
@@ -32,9 +33,9 @@ class Tools:
         if not name.isidentifier():
             return False
         if len(name) < 3 or len(name) > 20:
+            print("Your username must be between 3 and 20 characters in length")
             return False
         return True
-
 
     @staticmethod
     def checkPasswordStrength(password: str) -> bool:
@@ -115,18 +116,26 @@ class Tools:
 
         return True
 
-
-
     # ------------------------------------------------------------------------------------------------------------------------------
     # 格式检验函数：
 
     # 输入： 字符串，   输出：【正确】空字符串   【错误】 正确格式的提示
     @staticmethod
     def check_time_format(str) -> str:
+        format_string = "%Y-%m-%d %H:%M"
         # Regular expression to match the desired format
         pattern = r"^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$"
         if re.match(pattern, str):
+            try:
+                datetime.strptime(str, format_string)
+                return ""
+            except ValueError:
+
+                return ("Your input is not in the correct time format. Expected format: YYYY-MM-DD HH:MM, e.g., "
+                        "2023-10-18 14:00.")
+
             return ""
+
         else:
             return "Expected format: YYYY-MM-DD HH:MM, e.g., 2023-10-18 14:00"
 
@@ -158,7 +167,7 @@ class Tools:
     def check_mobile_number_format(cls, mobileNumber):
         if all(num.isdigit() for num in mobileNumber):
             return ""
-        if  all( num.isdigit() or num == '-' for num in mobileNumber) and mobileNumber.count('-') == 2:
+        if all(num.isdigit() or num == '-' for num in mobileNumber) and mobileNumber.count('-') == 2:
             return ""
         else:
             return "Mobile numbers should only contain digits and be in the format '123-456-7890'."
@@ -166,9 +175,9 @@ class Tools:
     @staticmethod
     def get_type_format_checker(inputType):
         type_checker_map = {
-            InputType.COMPARATOR:Tools.check_comparator_format,
+            InputType.COMPARATOR: Tools.check_comparator_format,
             InputType.TIME: Tools.check_time_format,
-            InputType.EMAIL:  Tools.check_email_format,
+            InputType.EMAIL: Tools.check_email_format,
             InputType.PIMTYPE: Tools.check_PIM_type_format,
             InputType.MOBILE_NUMBER: Tools.check_mobile_number_format
         }
@@ -179,19 +188,18 @@ class Tools:
             return None
 
         typeStr_checker_map = {
-            "comparator":Tools.check_comparator_format,
+            "comparator": Tools.check_comparator_format,
             "time": Tools.check_time_format,
-            "email":  Tools.check_email_format,
+            "email": Tools.check_email_format,
             "pimtype": Tools.check_PIM_type_format
         }
-        if isinstance(inputType,str):
+        if isinstance(inputType, str):
             inputType = inputType.lower()
             if inputType in typeStr_checker_map:
                 return typeStr_checker_map[inputType]
             return None
 
         return None
-
 
     # def validate_format_correctness(input_type: InputType, value: str) -> str:
     #     type_checker_map = {
@@ -204,7 +212,6 @@ class Tools:
     #         return type_checker_map[input_type](value)
     #     else:
     #         return "Unknown input type"
-
 
     # ------------------------------------------------------------------------------------------------------------------------------
     # 时间性质
@@ -227,6 +234,6 @@ class Tools:
     # 文件I/O
     @staticmethod
     def get_value_from_line(line):
-        index=  line.index(":")
-        return line[index+1:].strip()
+        index = line.index(":")
+        return line[index + 1:].strip()
 

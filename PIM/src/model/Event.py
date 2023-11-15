@@ -1,20 +1,28 @@
+from typing import List
 from PIM.src.model.PIM import PIM
 from PIM.src.tools.Tools import Tools
 
 
 class Event(PIM):
-    def __init__(self, description: str, start_time: str, alarms: str, name="unamed"):
-        super().__init__(name)
+    def __init__(self, name: str, description: str, start_time: str, alarms: str):
+        super().__init__()
+        self.name = name
         self.description = description
         self.start_time = start_time
         self.alarms = alarms if alarms else None
 
-    @classmethod
-    def create(cls, name, fields_map):
-        return cls(fields_map["description"], fields_map["start_time"], fields_map.get("alarms", []), name)
+    def get_alarms(self):
+        return self.alarms
+
+    def get_start_time(self):
+        return self.start_time
 
     @classmethod
-    def get_fields(cls) -> list[str]:
+    def create(cls, name, fields_map):
+        return cls(name,fields_map["description"], fields_map["start_time"], fields_map.get("alarms", []))
+
+    @classmethod
+    def get_fields(cls) -> List[str]:
         return ["name", "description", "start_time", "alarms"]
 
     @classmethod
@@ -29,7 +37,7 @@ class Event(PIM):
         return {"name": lambda x: "" if x else "Name cannot be empty.",
                 "description": lambda x: "" if x else "Description cannot be empty.",
                 "start_time": Tools.check_time_format,
-                "alarms": lambda x: "" if all(alarm.isdigit() for alarm in x) else "Alarms should only contain timestamps."}
+                "alarms": Tools.check_time_format}
 
     def contain_text(self, text: str):
         return text.lower() in self.name.lower() or text.lower() in self.description.lower()

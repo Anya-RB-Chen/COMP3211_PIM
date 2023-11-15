@@ -1,9 +1,9 @@
 History:
 
-2023-10-20 17:38 log in  |  2023-10-20 17:38 log out
+2023-11-14 03:24 log in  |  2023-11-14 03:24 log out
 
 
-Personal Information Refords:
+Personal Information Records:
 
 
 PIM 1: 
@@ -19,35 +19,56 @@ Mobile number: 234-567-8901
 Address: 456 Oak St.
 
 PIM 3: 
-Name: John's 30th birthday
-Type: Event
-Description: 2023-11-15 19:00
-Start time: 2023-11-15 18:30
-Alarms: Birthday party
+Name: Buy groceries
+Type: Task
+Description: Buy milk, bread, and eggs
+Deadline: 2023-10-25 09:00
+Reminder: 
 
 PIM 4: 
-Name: Live music by The Beatles
-Type: Event
-Description: 2023-12-01 20:00
-Start time: 2023-12-01 19:00, 2023-12-01 19:30
-Alarms: Concert
+Name: Attend meeting
+Type: Task
+Description: Team sync-up
+Deadline: 2023-10-21 09:00
+Reminder: 2023-10-20 09:00
 
 PIM 5: 
-Name: Milk, Bread, Eggs, Butter
-Type: PlainText
-Text: Shopping List
+Name: Birthday party
+Type: Event
+Description: John's 30th birthday
+Start time: 2023-11-15 19:00
+Alarms: ['2023-11-15 18:30']
 
 PIM 6: 
-Name: Discuss project timeline in the next meeting.
-Type: PlainText
-Text: Work Notes
+Name: Concert
+Type: Event
+Description: Live music by The Beatles
+Start time: 2023-12-01 20:00
+Alarms: ['2023-12-01 19:00', '2023-12-01 19:30']
 
 PIM 7: 
-Name: Roses are red, Violets are blue.
+Name: Shopping List
 Type: PlainText
-Text: Poem
+Text: Milk, Bread, Eggs, Butter
 
 PIM 8: 
-Name: Be yourself; everyone else is already taken. - Oscar Wilde
+Name: Work Notes
 Type: PlainText
-Text: Quotes
+Text: Discuss project timeline in the next meeting.
+
+PIM 9: 
+Name: Poem
+Type: PlainText
+Text: Roses are red, Violets are blue.
+
+PIM 10: 
+Name: Quotes
+Type: PlainText
+Text: Be yourself; everyone else is already taken. - Oscar Wilde
+
+PIM 11: 
+Name: test
+Type: Task
+Description: test on adding
+Deadline: 1668088800
+Reminder: 2022-11-10 11:11

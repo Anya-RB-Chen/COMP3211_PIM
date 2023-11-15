@@ -1,3 +1,4 @@
+from typing import List
 from abc import abstractmethod,ABC
 from time import time
 
@@ -9,14 +10,13 @@ from PIM.src.tools.Tools import Tools
 class PIM:
 
     # field : 通用字段只有时间？？
-    def __init__(self,name = "unamed"):
+    def __init__(self):
         self.createTime = time()  # float 时间戳
-        self.name = name    # 名称被视作字段？
-        # self.history = []
+        #self.name = name    # 名称被视作字段？
 
 
     def copy(self):
-            # Create a new instance of the same class with the same name and fields
+    # Create a new instance of the same class with the same name and fields
         fieldsMap =  self.get_fields_contents_map()
         PIMType = type(self)
         return PIMType.create(self.name,fieldsMap)
@@ -42,7 +42,7 @@ class PIM:
     @classmethod
     @abstractmethod
     # 得到PIM类的字段，用字符串列表表示。
-    def get_fields(cls) -> list[str]:
+    def get_fields(cls) -> List[str]:
         pass
 
     @classmethod
@@ -58,7 +58,7 @@ class PIM:
     def get_explaination(cls):
         pass
 
-# ------------------------------------------------------------------------------------------------------------------------------
+    # ------------------------------------------------------------------------------------------------------------------------------
 
 
     @abstractmethod
@@ -95,6 +95,7 @@ class PIM:
 
     @classmethod
     # get a valid input of field  |  None
+    ### 得到有效的相应字段输入：  如果用户想退出
     def get_field_input(cls, field: str):
         # if field == "name": # assumption：
         ## 对于名字唯一的限制是不可以重复, 在外部执行逻辑，因为名字重复属于PIMList User information 已经超越了PIM类方法的范畴。
@@ -104,18 +105,19 @@ class PIM:
         checker = cls.get_field_checker(field)
 
         input_field = input()
-        if not input_field:
+        if not input_field:  ### 需不需要定义推出逻辑还需要继续想。 因为有的字段允许空白输入。
             return None
 
         wrongMessage = checker(input_field)
+        ###
         while input_field not in ["", "0"] and wrongMessage != "":
             InteractiveUI._instance.print_message(f"Invalid format. {wrongMessage}")
             InteractiveUI._instance.print_message(("Please input again: "))
 
             input_field = input()
-            if input_field in ["", "0"]:
+            if input_field in ["", "0"]:  ### 需不需要定义推出逻辑还需要继续想。 因为有的字段允许空白输入。
                 return None
-            wrongMessage = checker(input_field)
+            wrongMessage = checker(input_field)  ### checker的接口得统一做定义。 允不允许做空白输入
 
         # type conversion
         # if time -> change to float.
@@ -124,5 +126,7 @@ class PIM:
 
         # other field needing change format ?
         return input_field
+
+
 
 

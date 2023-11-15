@@ -1,3 +1,4 @@
+from typing import List
 from PIM.src.model.PIM import PIM
 from PIM.src.tools.Tools import Tools
 
@@ -7,7 +8,8 @@ class Contact(PIM):
 
 
     def __init__(self, name: str, mobile_number: str, address: str = ""):
-        super().__init__(name)
+        super().__init__()
+        self.name = name
         self.mobile_number = mobile_number
         self.address = address
 
@@ -16,7 +18,7 @@ class Contact(PIM):
         return cls(name, fields_map["mobile_number"], fields_map.get("address", ""))
 
     @classmethod
-    def get_fields(cls) -> list[str]:
+    def get_fields(cls) -> List[str]:
         return ["name", "mobile_number", "address"]
 
     @classmethod
@@ -32,8 +34,9 @@ class Contact(PIM):
                 "mobile_number": Tools.check_mobile_number_format,
                 "address": lambda x: ""}
 
+
     def contain_text(self, text: str):
-        return text.lower() in self.name.lower() or any(num in text for num in self.mobile_number) or text.lower() in self.address.lower()
+        return text.lower() in self.name.lower() or text.lower() in self.mobile_number or text.lower() in self.address.lower()
 
     def __str__(self):
         return f"Name: {self.name}\nType: Contact\nMobile number: {self.mobile_number}\nAddress: {self.address}"
