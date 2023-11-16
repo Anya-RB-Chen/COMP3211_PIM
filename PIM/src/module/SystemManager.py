@@ -91,6 +91,7 @@ class SystemFileManager:
         self.__systemFilePath = systemFilePath
         if not os.path.exists(systemFilePath):
             self.create()
+        self.__user_profiles = self.read()
 
 
     def create(self):
