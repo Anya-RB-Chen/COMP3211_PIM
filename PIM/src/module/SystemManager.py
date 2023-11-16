@@ -22,7 +22,7 @@ class SystemManager:  # 老子不用file manager了，直接封装在系统内�
         systemFilePath = os.getcwd() + "/file" + "/.system.txt"
         self.__systemFileManager = SystemFileManager(systemFilePath)
 
-        self.__user_profiles = self.__systemFileManager.system_file_read()  # profile object
+        self.__user_profiles = self.__systemFileManager.read()  # profile object
         if not self.__user_profiles:
             self.__user_profiles = []
         self.__system_state = []
@@ -87,7 +87,7 @@ class UserProfile:
 
 class SystemFileManager:
 
-    def __int__(self, systemFilePath):
+    def __init__(self, systemFilePath):
         self.__systemFilePath = systemFilePath
         if not os.path.exists(systemFilePath):
             self.create()

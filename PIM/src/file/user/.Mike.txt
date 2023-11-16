@@ -37,14 +37,14 @@ Name: Birthday party
 Type: Event
 Description: John's 30th birthday
 Start time: 2023-11-15 19:00
-Alarms: ['2023-11-15 18:30']
+Alarms: '2023-11-15 18:30'
 
 PIM 6: 
 Name: Concert
 Type: Event
 Description: Live music by The Beatles
 Start time: 2023-12-01 20:00
-Alarms: ['2023-12-01 19:00', '2023-12-01 19:30']
+Alarms: '2023-12-01 19:00', '2023-12-01 19:30'
 
 PIM 7: 
 Name: Shopping List

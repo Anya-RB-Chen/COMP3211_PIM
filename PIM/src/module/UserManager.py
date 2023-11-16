@@ -242,10 +242,9 @@ class UserFileManager:
         self.__userFilePath = userFilePath
 
         if not os.path.exists(userFilePath):
-            self.__create(userFilePath)
+            self.__create()
         else:
-            print("read from txt file")
-            self.__PIMList, self.__history = self.__read()
+            self.__PIMList, self.__history = self.read()
 
 
 
