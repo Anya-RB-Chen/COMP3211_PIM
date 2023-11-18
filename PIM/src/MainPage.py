@@ -16,7 +16,7 @@ class MainPage:
 
     # level 1: initialization
     def __init__(self) -> None:
-        self.__userManager = None
+        self._userManager = None
         pass
 
     # level 1: main
@@ -24,12 +24,12 @@ class MainPage:
 
         # 0, initialization, welcome message and hint.
         self.ui = InteractiveUI()
-        self.__userManager = User(userProfile)
+        self._userManager = User(userProfile)
         self.ui.print_main_page()
-        self.ui.print_user_welcome_message(self.__userManager.userName)
+        self.ui.print_user_welcome_message(self._userManager.userName)
 
         # #alarms/reminders登录检测提醒
-        MainPage.check_alarms_or_reminders(User, self.__userManager.get_PIM_List())
+        MainPage.check_alarms_or_reminders(User, self._userManager.get_PIM_List())
 
         moduleNameList = ["Create new PIM", "Manipulate existing PIM", "Generate personal PIM report", "Load PIM file"]
         moduleFunctionList = [self.create_new_PIM, self.manipulate_existing_PIM, self.generate_personal_PIM_report,
@@ -50,7 +50,7 @@ class MainPage:
         self.ui.print_leave_main_page()
         # ------------------------------------------------------------------------------------------------------------------------------
         # 文件输出
-        self.__userManager.write_user_information()
+        self._userManager.write_user_information()
 
     # ------------------------------------------------------------------------------------------------------------------------------
 
@@ -114,7 +114,7 @@ class MainPage:
                 return
 
             newPIM = PIMClass.create(fieldsMap["name"], fieldsMap)  # !!!
-            self.__userManager.add_PIM(newPIM)
+            self._userManager.add_PIM(newPIM)
 
     def manipulate_existing_PIM(self):
         self.ui.print_module_in("manipulate existing PIM")
@@ -209,7 +209,7 @@ class MainPage:
         # 1, print the information of PIMs
         self.ui.print_module_in("Generate personal PIM report.")
 
-        PIMList = self.__userManager.get_PIM_List()
+        PIMList = self._userManager.get_PIM_List()
         self.ui.print_message(f"You have {len(PIMList)}.PIMs in total.")
         if len(PIMList) == 0:  # no PIM no output
             return
@@ -230,27 +230,27 @@ class MainPage:
         # self.ui.print_message("You can choose to outpu")
         # 3, output
         self.ui.print_message(
-            "Please specify the PIMs you want to print. (e.g., '1 2 3' to print PIM1, 2, 3)Enter 0 to print all.)")
+            "Please specify the PIMs you want to print. (e.g., '1 2 3' to print PIM 1, 2, 3)Enter 0 to print all.)")
         choice = self.ui.get_int_input_list(len(PIMList))
 
         file_name = input(self.ui.print_message("Please enter the file name you want to save as. Enter \" \" "
                                                 "to save as your_name.pim."))
         if file_name == " ":
-            file_name = self.__userManager.userName
+            file_name = self._userManager.userName
         if choice[0] == 0:
-            IO(self.__userManager).output_user_information(self.__userManager.get_PIM_List(), file_name)
+            IO(self._userManager).output_user_information(self._userManager.get_PIM_List(), file_name)
         else:
-            IO(self.__userManager).output_specified_information(self.__userManager.get_PIM_List(), choice, file_name)
+            IO(self._userManager).output_specified_information(self._userManager.get_PIM_List(), choice, file_name)
 
     def load_PIM_file(self):
         # 1. print hint to load file
         self.ui.print_message("You can have these PIM files. Please choose one to load.")
         # 2. display all files that can be loaded
-        IO(self.__userManager).display_all_files()
+        IO(self._userManager).display_all_files()
         # 3. enter the file name (error message if not existed)
         file_name = input(self.ui.print_message("Please enter the file's name you want to load(.pim is not required):"))
         # 4. display the content of the pim file
-        IO(self.__userManager).load_file(file_name)
+        IO(self._userManager).load_file(file_name)
 
     # ------------------------------------------------------------------------------------------------------------------------------
     # level 3 细化功能模块以及
@@ -302,6 +302,7 @@ class MainPage:
     def search_PIM(self) -> List[PIM]:
         # Step 1: Message
 
+        global results
         self.ui.print_choose_hint("", "Choose a mode of search:", ["Type", "Text", "Time", "Compound condition"])
         choice = self.ui.get_int_input(4)
         if not choice:
@@ -315,13 +316,13 @@ class MainPage:
             #     return None
             # if not inputStr:
             pim_type = User.PIM_type_to_class(inputStr)
-            PIMList = self.__userManager.get_PIM_List()
+            PIMList = self._userManager.get_PIM_List()
             results = [pim for pim in PIMList if isinstance(pim, pim_type)]
 
         elif choice == 2:
             self.ui.print_message("Enter the Text you're looking for: ")
             text = input()
-            results = [pim for pim in self.__userManager.get_PIM_List() if pim.contain_text(text)]
+            results = [pim for pim in self._userManager.get_PIM_List() if pim.contain_text(text)]
 
         elif choice == 3:
             self.ui.print_message("Enter the comparator (<, =, >): ")
@@ -330,11 +331,11 @@ class MainPage:
             time_input = self.ui.get_correct_input(InputType.TIME)
             timestamp = Tools.timeStr_to_timeStamp(time_input)
 
-            results = [pim for pim in self.__userManager.get_PIM_List() if
+            results = [pim for pim in self._userManager.get_PIM_List() if
                        pim.time_condition_checker(timestamp, comparator)]
 
         elif choice == 4:
-            self.ui.print_message("Format: type: Task &&  text: ! abc || time: < 2023-10-18 14:00")
+            self.ui.print_message("Format: type Task &&  text: ! abc || time: < 2023-10-18 14:00")
             self.ui.print_message(
                 "Example: To search for Task types that don't contain 'abc' text OR has a time not before '2023-10-18 14:00',\n "
                 "input: type: Task && text: ! abc || time: < 2023-10-18 14:00")
@@ -343,7 +344,7 @@ class MainPage:
                 condition = self.ui.input_hint("Enter your compound search criteria: ")
                 try:
                     # 进行交互，返回查找结果。 如果没找到返回空列表
-                    results = MainPage.compound_search(User, self.__userManager.get_PIM_List(), condition)
+                    results = MainPage.compound_search(User, self._userManager.get_PIM_List(), condition)
                 except Exception as e:
                     print(e)
                     self.ui.print_message("Invalid input. Try again:")
@@ -352,224 +353,6 @@ class MainPage:
 
         # Step 3: Return Results
         return results if results else []
-
-    @staticmethod
-    def compound_search(User, PIMList, condition):
-        if condition in ["", "0"]:
-            return None
-        result = ""
-        stack = []
-        for i in range(len(condition)):
-            char = condition[i]
-            if char.isspace() or char.isalnum() or char in ["<", ">", "=", "-", ":"]:
-                result += char
-            elif char == "(":
-                stack.append(char)
-            elif char == ")":
-                result += " "
-                while (len(stack) != 0) and (stack[-1] != "("):
-                    result += stack.pop()
-                    if len(stack) != 0:
-                        if result[-1] == "!":
-                            result += " "
-                stack.pop()
-            else:
-                stack.append(char)
-
-        result += " "
-        while len(stack) != 0:
-            if stack[-1] == "(": return "Invalid Expression"
-            result += stack.pop()
-            if len(stack) != 0:
-                if result[-1] == "!":
-                    result += " "
-
-        handle = result.split(" ")
-        handle2 = []
-        for j in handle:
-            if len(j) != 0:
-                handle2.append(j)
-
-        compound_lst = [char for char in handle2 if char in ["||", "&&", "!"]]
-        handle2 = [char for char in handle2 if char not in ["||", "&&", "!"]]
-
-        condition_index = []
-        condition_lst = []
-        for j in range(len(handle2)):
-            if handle2[j].lower() in ["type:", "text:", "time:"]:
-                condition_index.append(j)
-        for i in range(len(condition_index)):
-            if condition_index[i] == condition_index[-1]:
-                condition_lst.append({handle2[condition_index[i]].lower(): " ".join(handle2[condition_index[i] + 1:])})
-            else:
-                condition_lst.append({handle2[condition_index[i]].lower(): " ".join(
-                    handle2[condition_index[i] + 1:condition_index[i + 1]])})
-
-        result_lst = []
-        for request in condition_lst:
-            if "type" in request.keys():
-                inputStr = request["type"]
-                pim_type = User.PIM_type_to_class(inputStr)
-                results = [pim for pim in PIMList if isinstance(pim, pim_type)]
-                result_lst.append(results)
-            if "text" in request.keys():
-                results = [pim for pim in PIMList if pim.contain_text(request["text"])]
-                result_lst.append(results)
-            if "time" in request.keys():
-                input = request["time"]
-                comparator = request[1]
-                time_input = input[1:].strip()
-                timestamp = Tools.timeStr_to_timeStamp(time_input)
-
-                results = [pim for pim in PIMList if pim.time_condition_checker(timestamp, comparator)]
-                result_lst.append(results)
-
-        answer_lst = []
-        for condition in compound_lst:
-            if condition == "!":
-                template = result_lst[-1]
-                result_lst[-1] = [pim for pim in PIMList if pim not in template]
-            elif condition == "||":
-                condition1 = result_lst[-1]
-                condition2 = result_lst[-2]
-                result_lst.pop()
-                result_lst.pop()
-                result_lst.append([pim for pim in (condition1 or condition2)])
-            elif condition == "&&":
-                condition1 = result_lst[-1]
-                condition2 = result_lst[-2]
-                result_lst.pop()
-                result_lst.pop()
-                result_lst.append([pim for pim in (condition1 and condition2)])
-            else:
-                print("Invalid Expression")
-
-        answer_lst = result_lst[0]
-        return answer_lst
-
-    # ------------------------------------------------------------------------------------------------------------------------------
-    # 3, modify
-    # 对于每一个PIM 提供交互界面让用户指明 更改字段，输入新内容， （有效性查验， 名字需要查看是否重复）
-    # 完成以后进行调用 __userManager 接口在用户信息内进行更改。
-
-    def modify_PIM(self, PIMList: List[PIM]):
-        self.ui.print_e_line()
-        self.ui.print_message(f"You have {len(PIMList)} to manipulate.")
-        self.ui.print_message("Let's manipulate the PIM now!")
-
-        count = 0
-        for pim in PIMList:
-            # (1) print original infromation
-            count += 1
-            self.ui.print_message(f"Round {count}\n"
-                                  f"Original: ------->\n{pim}", )
-
-            # (2) interact to get new information
-            fieldsList = pim.get_fields()
-            newPim = pim.copy()
-            # allow user to enter number to chooce the field to be changed (0 to quit) or use the name to indicate (enter "" to skip enter q to quit and back to main page)
-            # 1' indicate fields
-
-            self.ui.print_choose_hint("", "", fieldsList)
-            choice = self.ui.get_int_input(len(fieldsList))
-            while choice:
-                if choice == 1:
-                    field = "name"
-                    input_field = input()
-                    if input_field in ['0', ""]:
-                        break
-
-                    while self.__userManager.contains_name(input_field):
-                        self.ui.print_message("The name already exist. please change another name.")
-                        input_field = input()
-                        if input_field in ['0', ""]:
-                            break
-                else:
-                    field = fieldsList[choice - 1]
-
-                    # 2' input new and check validity
-                    self.ui.print_message(f"Enter the {field}")
-                    input_field = newPim.get_field_input(field)
-
-                    if not input_field:  # 如果不进行有效输入 说明用户想退出。
-                        break
-
-                # 3' change the field.
-                newPim.__setattr__(field, input_field)
-
-                # 4, next round
-                self.ui.print_choose_hint("", "", fieldsList)
-                choice = self.ui.get_int_input(len(fieldsList))
-
-            # (3) print new inforamtion.
-            self.ui.print_message(f"After manipulation. The new information: ----->\n {newPim}")
-
-            # (4) change in userManager
-            self.__userManager.modify(pim, newPim)
-
-    # 4, delete
-    def delete_PIM(self, PIMList: List[PIM]):
-        # 1, print the information of PIMs
-        self.ui.print_e_line()
-        self.ui.print_message(f"You have {len(PIMList)} to delete.")
-        count = 0
-        for pim in PIMList:
-            count += 1
-            print(f"PIM {count}", end=" ")
-            self.ui.print_message(pim.__str__())
-
-        # 2, get the confirm information
-        self.ui.print_message("Are you sure to delete them? (1/0)")
-        choice = self.ui.get_int_input(1)
-        if choice == 0:
-            return
-
-        # 3, delete
-        for pim in PIMList:
-            self.__userManager.delete(pim)
-
-        # 4, print message
-        self.ui.print_message("Delete successfully!")
-
-    # ------------------------------------------------------------------------------------------------------------------------------
-
-   @staticmethod
-    def check_alarms_or_reminders(User, PIMList):
-        given_format = '%Y-%m-%d %H:%M'
-        remind_lst = []
-        coming_lst = []
-        for pim in PIMList:
-            task_type = User.PIM_type_to_class("task")
-            event_type = User.PIM_type_to_class("event")
-            remind_time, coming_time = None, None
-            if isinstance(pim, task_type):
-                remind_time = pim.get_reminder()
-                coming_time = pim.get_deadline()
-
-            elif isinstance(pim, event_type):
-                remind_time = pim.get_alarms()
-                coming_time = pim.get_start_time()
-
-
-            if coming_time:
-                current_timestamp = datetime.now().timestamp()
-                coming_timestamp = datetime.strptime(coming_time.strip("'"), given_format).timestamp()
-                if current_timestamp >= coming_timestamp:
-                    coming_lst.append(pim)
-                  # 获取当前时间戳
-                if remind_time:
-                    remind_timestamp = datetime.strptime(remind_time.strip("'"), given_format).timestamp()
-                    if remind_timestamp < current_timestamp < coming_timestamp:
-                        remind_lst.append(pim)
-
-        if len(coming_lst) != 0:
-            ("These start times/ deadlines have passed:")
-            for pim in coming_lst:
-                print(f"{pim}\n")
-        if len(remind_lst) != 0:
-            print("There are some tasks/events you should remember:")
-            for pim in remind_lst:
-                print(f"{pim}\n")
 
 
     @staticmethod
