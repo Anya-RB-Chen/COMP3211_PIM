@@ -239,6 +239,7 @@ class UserFileManager:
 
 
     def __init__(self, userFilePath):
+        self.logInTimeStamp = time.time()
         self.__userFilePath = userFilePath
 
         if not os.path.exists(userFilePath):
