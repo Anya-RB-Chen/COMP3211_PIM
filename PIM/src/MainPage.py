@@ -533,7 +533,7 @@ class MainPage:
 
     # ------------------------------------------------------------------------------------------------------------------------------
 
-    @staticmethod
+   @staticmethod
     def check_alarms_or_reminders(User, PIMList):
         given_format = '%Y-%m-%d %H:%M'
         remind_lst = []
@@ -570,7 +570,6 @@ class MainPage:
             print("There are some tasks/events you should remember:")
             for pim in remind_lst:
                 print(f"{pim}\n")
-
 
 
     @staticmethod
@@ -689,3 +688,4 @@ class MainPage:
 
         answer_lst = result_lst[0]
         return answer_lst
+
