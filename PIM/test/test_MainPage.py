@@ -6,6 +6,7 @@ from PIM.src.model.Task import Task
 from PIM.src.module.SystemManager import SystemManager
 from PIM.src.tools.InteractiveUI import InteractiveUI
 from PIM.src.module.UserManager import UserInformationManager as User
+import os
 
 
 class TestMainPage(unittest.TestCase):
@@ -18,6 +19,7 @@ class TestMainPage(unittest.TestCase):
     def test_create_new_PIM_save(self):
         with patch('builtins.input', side_effect=['4', 'Attend meeting', 'Team sync-up', '2023-11-21 09:00', '2023-11-21 08:00', '1']):
             self.main_page.create_new_PIM()
+            self.assertEqual(len(self.main_page._userManager.get_PIM_List()), 11)
 
         #self.main_page._userManager.add_PIM.assert_called()
 
@@ -60,18 +62,20 @@ class TestMainPage(unittest.TestCase):
     def test_manipulate_existing_PIM_delete_searchCompoundFalse(self):
         with patch('builtins.input', side_effect=['4', "type: Contact &&  text: !a && time: > 2023-10-18 14:00", "delete 1", "0"]):
             self.main_page.manipulate_existing_PIM()
+
     def test_manipulate_existing_PIM_delete_true(self):
         with patch('builtins.input', side_effect=['4', 'Attend meeting', 'Team sync-up', '2023-11-21 09:00', '2023-11-21 08:00', '1']):
             self.main_page.create_new_PIM()
         with patch('builtins.input', side_effect=['1', 'task', "delete 2", "1"]):
             self.main_page.manipulate_existing_PIM()
+            self.assertEqual(len(self.main_page._userManager.get_PIM_List()), 10)
 
     def test_manipulate_existing_PIM_modify(self):
         # Test modifying a PIM
         pim = Contact.create("John Doe", {"mobile_number": "123-456-7890", "address": "123 Elm St."})
         self.main_page._userManager.add_PIM(pim)
 
-        with patch('builtins.input', side_effect=['4', 'Attend meeting', 'Team sync-up', '2023-11-21 09:00', '2023-11-21 08:00', '1']):
+        with patch('builtins.input', side_effect=['1', 'task', 'modify 1', '1', 'Buy Groceries', '0']):
             self.main_page.manipulate_existing_PIM()
 
         self.assertEqual(pim.name, "John Doe")
@@ -85,11 +89,13 @@ class TestMainPage(unittest.TestCase):
 
         with patch('builtins.input', side_effect=['1', '0', 'sample']):
             self.main_page.generate_personal_PIM_report()
+            self.assertTrue(os.path.exists('file/output/Mike/sample.pim'))
 
     def test_load_PIM_file(self):
         # Test loading a file
         with patch('builtins.input', side_effect=['sample']):
             self.main_page.load_PIM_file()
+            self.assertEqual(len(self.main_page._userManager.get_PIM_List()), 11)
 
     def test_main(self):
         with patch('builtins.input', side_effect=['1', '4', 'Attend meeting', 'Team sync-up', '2023-11-21 09:00', '2023-11-21 08:00', '0', '0']):
