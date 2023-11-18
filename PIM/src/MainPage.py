@@ -334,7 +334,7 @@ class MainPage:
                        pim.time_condition_checker(timestamp, comparator)]
 
         elif choice == 4:
-            self.ui.print_message("Format: type Task &&  text: ! abc || time: < 2023-10-18 14:00")
+            self.ui.print_message("Format: type: Task &&  text: ! abc || time: < 2023-10-18 14:00")
             self.ui.print_message(
                 "Example: To search for Task types that don't contain 'abc' text OR has a time not before '2023-10-18 14:00',\n "
                 "input: type: Task && text: ! abc || time: < 2023-10-18 14:00")
