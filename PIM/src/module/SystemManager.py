@@ -41,7 +41,7 @@ class SystemManager:  # 老子不用file manager了，直接封装在系统内�
         return self.__systemFileManager.read()
 
     def system_file_write(self):
-        self.__systemFileManager.write()
+        self.__systemFileManager.write(self.__user_profiles)
 
     def get_user_profiles(self):
         return self.__user_profiles.copy()
@@ -91,7 +91,7 @@ class SystemFileManager:
         self.__systemFilePath = systemFilePath
         if not os.path.exists(systemFilePath):
             self.create()
-        self.__user_profiles = self.read()
+        # self.__user_profiles = self.read()
 
 
     def create(self):
@@ -120,10 +120,10 @@ class SystemFileManager:
 
             return user_profiles
 
-    def write(self):
+    def write(self,userProfiles):
         with open (self.__systemFilePath, "w") as f:
             f.write("User Profiles:\n\n")
-            for userProfile in self.__user_profiles:
+            for userProfile in userProfiles:
                 name = userProfile.get_name()
                 password = userProfile.get_password()
                 f.write("name:" + name + "\n")
