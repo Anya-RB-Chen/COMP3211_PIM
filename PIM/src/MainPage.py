@@ -11,7 +11,6 @@ from PIM.src.tools.InteractiveUI import InteractiveUI
 from PIM.src.module.UserManager import UserInformationManager as User
 from PIM.src.module.UserManager import UserIO as IO
 
-
 class MainPage:
 
     # level 1: initialization
@@ -29,7 +28,7 @@ class MainPage:
         self.ui.print_user_welcome_message(self._userManager.userName)
 
         # #alarms/reminders登录检测提醒
-        MainPage.check_alarms_or_reminders(User, self._userManager.get_PIM_List())
+        #MainPage.check_alarms_or_reminders(User, self._userManager.get_PIM_List())
 
         moduleNameList = ["Create new PIM", "Manipulate existing PIM", "Generate personal PIM report", "Load PIM file"]
         moduleFunctionList = [self.create_new_PIM, self.manipulate_existing_PIM, self.generate_personal_PIM_report,
@@ -345,7 +344,7 @@ class MainPage:
                 try:
                     # 进行交互，返回查找结果。 如果没找到返回空列表
                     results = MainPage.compound_search(User, self._userManager.get_PIM_List(), condition)
-                except Exception as e:)
+                except Exception as e:
                     self.ui.print_message("Invalid input. Try again:")
                     continue
                 break

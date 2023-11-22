@@ -244,8 +244,7 @@ class UserFileManager:
 
         if not os.path.exists(userFilePath):
             self.__create()
-        else:
-            self.__PIMList, self.__history = self.read()
+        self.__PIMList, self.__history = self.read()
 
 
 
