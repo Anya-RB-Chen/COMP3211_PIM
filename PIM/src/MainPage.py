@@ -442,7 +442,7 @@ class MainPage:
                 input = request["time:"].strip()
                 if input[0] == "!":
                     turn = True
-                    input = request["time:"][1:]
+                    input = request["time:"]。strip()[1:]
                 comparator = input.strip()[0]
                 time_input = input.strip()[1:].strip()
                 timestamp = Tools.timeStr_to_timeStamp(time_input)
