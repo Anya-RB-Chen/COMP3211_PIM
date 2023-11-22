@@ -491,13 +491,10 @@ class MainPage:
 
         for condition in compound_lst:
             if condition == '||':
-                print(result_lst)
                 condition1 = result_lst[0]
                 condition2 = result_lst[1]
                 result_lst.remove(condition1)
-                print(result_lst)
                 result_lst[0] = condition1 + condition2
-                print(result_lst)
             elif condition == '&&':
                 condition1 = result_lst[0]
                 condition2 = result_lst[1]
