@@ -43,14 +43,7 @@ class Contact(PIM):
 
 
     def time_condition_checker(self, time: float, comparator: str):
-        if comparator == "<":
-            return time > self.createTime
-        elif comparator == "=":
-            return time == self.createTime
-        elif comparator == ">":
-            return time < self.createTime
-        else:
-            return False
+        return False
 
     @classmethod
     def get_field_checker(cls, field: str):
