@@ -345,8 +345,7 @@ class MainPage:
                 try:
                     # 进行交互，返回查找结果。 如果没找到返回空列表
                     results = MainPage.compound_search(User, self._userManager.get_PIM_List(), condition)
-                except Exception as e:
-                    print(e)
+                except Exception as e:)
                     self.ui.print_message("Invalid input. Try again:")
                     continue
                 break
