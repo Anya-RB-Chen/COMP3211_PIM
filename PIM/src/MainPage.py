@@ -424,7 +424,7 @@ class MainPage:
 
         result += " "
         while len(stack) != 0:
-            #if stack[-1] == "(": return "Invalid Expression"
+            # if stack[-1] == "(": return "Invalid Expression"
             if stack[-1] == "||" or stack[-1] == "&&":
                 result += stack.pop()
             else:
@@ -440,7 +440,6 @@ class MainPage:
                 handle2.append(j)
         compound_lst = [char for char in handle2 if char in ['||', '&&']]
         handle2 = [char for char in handle2 if char not in ['||', '&&']]
-
 
         condition_index = []
         condition_lst = []
@@ -479,7 +478,7 @@ class MainPage:
                 input = request["time:"].strip()
                 if input[0] == "!":
                     turn = True
-                    input = request["time:"].strip()[1:]
+                    input = request["time:"].strip()[1:].strip()
                 comparator = input.strip()[0]
                 time_input = input.strip()[1:].strip()
                 timestamp = Tools.timeStr_to_timeStamp(time_input)
@@ -493,15 +492,18 @@ class MainPage:
 
         for condition in compound_lst:
             if condition == '||':
+                print(result_lst)
                 condition1 = result_lst[0]
                 condition2 = result_lst[1]
-                del result_lst[0]
-                result_lst[0] = [pim for pim in (condition1 or condition2)]
+                result_lst.remove(condition1)
+                print(result_lst)
+                result_lst[0] = condition1 + condition2
+                print(result_lst)
             elif condition == '&&':
                 condition1 = result_lst[0]
                 condition2 = result_lst[1]
-                del result_lst[0]
-                result_lst[0] = [pim for pim in (condition1 and condition2)]
+                result_lst.remove(condition1)
+                result_lst[0] = [value for value in condition1 if value in condition2]
             else:
                 print("Invalid Expression")
 
