@@ -35,7 +35,7 @@ class Event(PIM):
     @classmethod
     def get_fields_checkers_map(cls) -> dict:
         return {"name": lambda x: "" if x else "Name cannot be empty.",
-                "description": lambda x: "" if x else "Description cannot be empty.",
+                "description": lambda x: "",
                 "start_time": Tools.check_time_format,
                 "alarms": Tools.check_time_format}
 
