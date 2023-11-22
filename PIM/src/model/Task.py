@@ -39,7 +39,7 @@ class Task(PIM):
     def get_fields_checkers_map(cls) -> dict:
 
         return {"name": lambda x: "" if x else "Name cannot be empty.",
-                "description": lambda x: "" if x else "Description cannot be empty.",
+                "description": lambda x: "",
                 "deadline": Tools.check_time_format,
                 "reminder": Tools.check_time_format}
 
