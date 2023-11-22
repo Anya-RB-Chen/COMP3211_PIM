@@ -353,6 +353,43 @@ class MainPage:
         # Step 3: Return Results
         return results if results else []
 
+    @staticmethod
+    def check_alarms_or_reminders(User, PIMList):
+        given_format = '%Y-%m-%d %H:%M'
+        remind_lst = []
+        coming_lst = []
+        for pim in PIMList:
+            task_type = User.PIM_type_to_class("task")
+            event_type = User.PIM_type_to_class("event")
+            remind_time, coming_time = None, None
+            if isinstance(pim, task_type):
+                remind_time = pim.get_reminder()
+                coming_time = pim.get_deadline()
+
+            elif isinstance(pim, event_type):
+                remind_time = pim.get_alarms()
+                coming_time = pim.get_start_time()
+
+            if coming_time:
+                current_timestamp = datetime.now().timestamp()
+                coming_timestamp = datetime.strptime(coming_time.strip("'"), given_format).timestamp()
+                if current_timestamp >= coming_timestamp:
+                    coming_lst.append(pim)
+                # 获取当前时间戳
+                if remind_time:
+                    remind_timestamp = datetime.strptime(remind_time.strip("'"), given_format).timestamp()
+                    if remind_timestamp < current_timestamp < coming_timestamp:
+                        remind_lst.append(pim)
+
+        if len(coming_lst) != 0:
+            print("These start times/ deadlines have passed:")
+            for pim in coming_lst:
+                print(f"{pim}\n")
+        if len(remind_lst) != 0:
+            print("There are some tasks/events you should remember:")
+            for pim in remind_lst:
+                print(f"{pim}\n")
+
 
     @staticmethod
     def compound_search(User, PIMList, condition):
