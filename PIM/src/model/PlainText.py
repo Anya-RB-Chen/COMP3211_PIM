@@ -28,7 +28,7 @@ class PlainText(PIM):
     @classmethod
     def get_fields_checkers_map(cls) -> dict:
         return {"name": lambda x: "",
-                "text": lambda x: if x else "text cannot be empty."}
+                "text": lambda x: "" if x else "text cannot be empty."}
 
     def contain_text(self, text: str):
         return text.lower() in self.name.lower() or text.lower() in self.text.lower()
