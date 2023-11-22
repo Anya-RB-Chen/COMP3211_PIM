@@ -352,6 +352,43 @@ class MainPage:
         # Step 3: Return Results
         return results if results else []
 
+    @staticmethod
+    def check_alarms_or_reminders(User, PIMList):
+        given_format = '%Y-%m-%d %H:%M'
+        remind_lst = []
+        coming_lst = []
+        for pim in PIMList:
+            task_type = User.PIM_type_to_class("task")
+            event_type = User.PIM_type_to_class("event")
+            remind_time, coming_time = None, None
+            if isinstance(pim, task_type):
+                remind_time = pim.get_reminder()
+                coming_time = pim.get_deadline()
+
+            elif isinstance(pim, event_type):
+                remind_time = pim.get_alarms()
+                coming_time = pim.get_start_time()
+
+            if coming_time:
+                current_timestamp = datetime.now().timestamp()
+                coming_timestamp = datetime.strptime(coming_time.strip("'"), given_format).timestamp()
+                if current_timestamp >= coming_timestamp:
+                    coming_lst.append(pim)
+                # 获取当前时间戳
+                if remind_time:
+                    remind_timestamp = datetime.strptime(remind_time.strip("'"), given_format).timestamp()
+                    if remind_timestamp < current_timestamp < coming_timestamp:
+                        remind_lst.append(pim)
+
+        if len(coming_lst) != 0:
+            print("These start times/ deadlines have passed:")
+            for pim in coming_lst:
+                print(f"{pim}\n")
+        if len(remind_lst) != 0:
+            print("There are some tasks/events you should remember:")
+            for pim in remind_lst:
+                print(f"{pim}\n")
+
 
     @staticmethod
     def compound_search(User, PIMList, condition):
@@ -386,7 +423,7 @@ class MainPage:
 
         result += " "
         while len(stack) != 0:
-            #if stack[-1] == "(": return "Invalid Expression"
+            # if stack[-1] == "(": return "Invalid Expression"
             if stack[-1] == "||" or stack[-1] == "&&":
                 result += stack.pop()
             else:
@@ -402,7 +439,6 @@ class MainPage:
                 handle2.append(j)
         compound_lst = [char for char in handle2 if char in ['||', '&&']]
         handle2 = [char for char in handle2 if char not in ['||', '&&']]
-
 
         condition_index = []
         condition_lst = []
@@ -441,7 +477,7 @@ class MainPage:
                 input = request["time:"].strip()
                 if input[0] == "!":
                     turn = True
-                    input = request["time:"].strip()[1:]
+                    input = request["time:"].strip()[1:].strip()
                 comparator = input.strip()[0]
                 time_input = input.strip()[1:].strip()
                 timestamp = Tools.timeStr_to_timeStamp(time_input)
@@ -455,15 +491,18 @@ class MainPage:
 
         for condition in compound_lst:
             if condition == '||':
+                print(result_lst)
                 condition1 = result_lst[0]
                 condition2 = result_lst[1]
-                del result_lst[0]
-                result_lst[0] = [pim for pim in (condition1 or condition2)]
+                result_lst.remove(condition1)
+                print(result_lst)
+                result_lst[0] = condition1 + condition2
+                print(result_lst)
             elif condition == '&&':
                 condition1 = result_lst[0]
                 condition2 = result_lst[1]
-                del result_lst[0]
-                result_lst[0] = [pim for pim in (condition1 and condition2)]
+                result_lst.remove(condition1)
+                result_lst[0] = [value for value in condition1 if value in condition2]
             else:
                 print("Invalid Expression")
 
