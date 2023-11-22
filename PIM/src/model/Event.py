@@ -48,11 +48,11 @@ class Event(PIM):
 
     def time_condition_checker(self, time: float, comparator: str):
         if comparator == "<":
-            return time > Tools.timeStr_to_timeStamp(self.start_time)
+            return time > Tools.timeStr_to_timeStamp(self.start_time) or time > Tools.timeStr_to_timeStamp(self.alarms)
         elif comparator == "=":
-            return time == Tools.timeStr_to_timeStamp(self.start_time)
+            return time == Tools.timeStr_to_timeStamp(self.start_time) or time == Tools.timeStr_to_timeStamp(self.alarms)
         elif comparator == ">":
-            return time < Tools.timeStr_to_timeStamp(self.start_time)
+            return time < Tools.timeStr_to_timeStamp(self.start_time) or time < Tools.timeStr_to_timeStamp(self.alarms)
         else:
             return False
 
