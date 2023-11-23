@@ -1,9 +1,9 @@
 import unittest
-from PIM.src.model.Contact import Contact
-from PIM.src.model.Event import Event
-from PIM.src.model.Task import Task
-from PIM.src.model.PIM import PIM
-from PIM.src.model.PlainText import PlainText
+from PIM.src.model.contact import Contact
+from PIM.src.model.event import Event
+from PIM.src.model.task import Task
+from PIM.src.model.pim import PIM
+from PIM.src.model.plain_text import PlainText
 
 class PIMCreationTest(unittest.TestCase):
     def test_ContactCreationTest1(self):

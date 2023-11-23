@@ -1,18 +1,18 @@
 import os
 import unittest
 from unittest.mock import MagicMock
-from PIM.src.module.UserManager import UserIO
+from PIM.src.file_manager.output_file_manager import OutputFileManager
 
 
-class TestUserIO(unittest.TestCase):
+class TestOutputFileManager(unittest.TestCase):
     def setUp(self):
         # Create a mock UserInformationManager object
         self.user_info_manager = MagicMock()
         self.user_info_manager.userName = "John"
         self.user_info_manager.get_PIM_List.return_value = ["PIM 1", "PIM 2", "PIM 3"]
 
-        # Create an instance of UserIO
-        self.user_io = UserIO(self.user_info_manager)
+        # Create an instance of OutputFileManager
+        self.user_io = OutputFileManager(self.user_info_manager)
 
     def test_set_output_file_root_path(self):
         new_output_path = os.getcwd()+"/file/output.txt"

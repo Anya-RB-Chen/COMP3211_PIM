@@ -179,7 +179,7 @@ Installation and Setup
 To use this program, you need to have Python 3 installed on your system. You also need to download
 the source code files from https://github.com/PIM/PIM.git. To run
 the program, you can use any Python IDE or simply execute
-the command 'python PIMApp.py' in your terminal.
+the command 'python pim_app.py' in your terminal.
 
 Basic Usage
 

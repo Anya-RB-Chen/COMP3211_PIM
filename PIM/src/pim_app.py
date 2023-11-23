@@ -2,11 +2,11 @@ import os
 import traceback
 
 from PIM.src.tools.InteractiveUI import InteractiveUI
-from PIM.src.MainPage import MainPage
-from PIM.src.module.SystemManager import SystemManager,UserProfile
+from PIM.src.main_page import MainPage
+import PIM.src.model
+from PIM.src.model.system_manager import SystemManager,UserProfile
 from PIM.src.tools.Tools import Tools
-from PIM.src.module.UserManager import UserInformationManager
-from PIM.src.module.UserManager import UserIO
+from PIM.src.model.user_manager import UserInformationManager
 
 
 
@@ -99,7 +99,7 @@ class PIMApp:
         # outputRootPath = root_path + "/output"
         # if not os.path.exists(outputRootPath):
         #     os.mkdir(outputRootPath)
-        # UserIO.set_output_file_root_path(outputRootPath)
+        # OutputFileManager.set_output_file_root_path(outputRootPath)
         # ------------------------------------------------------------------------------------------------------------------------------
 
 

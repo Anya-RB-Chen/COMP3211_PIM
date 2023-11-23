@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch
-from PIM.src.PIMApp import PIMApp
-from PIM.src.MainPage import MainPage
+from PIM.src.pim_app import PIMApp
+from PIM.src.main_page import MainPage
 
 
 class TestPIMApp(unittest.TestCase):

@@ -1,11 +1,11 @@
 import unittest
 from unittest.mock import patch
-from PIM.src.MainPage import MainPage
-from PIM.src.model.Contact import Contact
-from PIM.src.model.Task import Task
-from PIM.src.module.SystemManager import SystemManager
+from PIM.src.main_page import MainPage
+from PIM.src.model.contact import Contact
+from PIM.src.model.task import Task
+from PIM.src.model.system_manager import SystemManager
 from PIM.src.tools.InteractiveUI import InteractiveUI
-from PIM.src.module.UserManager import UserInformationManager as User
+from PIM.src.model.user_manager import UserInformationManager as User
 import os
 
 

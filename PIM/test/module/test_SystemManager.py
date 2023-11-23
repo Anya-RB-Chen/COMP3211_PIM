@@ -1,6 +1,6 @@
 import unittest
 import os
-from PIM.src.module.SystemManager import SystemManager, SystemFileManager, UserProfile
+from PIM.src.model.system_manager import SystemManager, SystemFileManager, UserProfile
 
 """把测试文件全部放到test/testfile中"""
 

@@ -1,15 +1,13 @@
 # 用户主页面
 from datetime import datetime
 from typing import List
-from PIM.src.model.Contact import Contact
-from PIM.src.model.Event import Event
-from PIM.src.model.PIM import PIM
-from PIM.src.model.PlainText import PlainText
-from PIM.src.model.Task import Task
+
+from  PIM.src.model import *
+
 from PIM.src.tools.Tools import Tools, InputType
 from PIM.src.tools.InteractiveUI import InteractiveUI
-from PIM.src.module.UserManager import UserInformationManager as User
-from PIM.src.module.UserManager import UserIO as IO
+from PIM.src.model.user_manager import UserInformationManager as User
+from PIM.src.file_manager.output_file_manager import OutputFileManager as IO
 
 class MainPage:
 
@@ -36,7 +34,7 @@ class MainPage:
         self.ui.print_choose_hint("", "", moduleNameList)
         choice = self.ui.get_int_input(len(moduleNameList))
         while choice != 0:
-            self.ui.print_choose_hint(moduleNameList[choice - 1], "", "")
+            # self.ui.print_choose_hint(moduleNameList[choice - 1], "", "")
 
             moduleFunctionList[choice - 1]()
 
@@ -46,7 +44,7 @@ class MainPage:
             choice = self.ui.get_int_input(len(moduleNameList))
 
         # 2, exit
-        self.ui.print_leave_main_page()
+        # self.ui.print_leave_main_page()
         # ------------------------------------------------------------------------------------------------------------------------------
         # 文件输出
         self._userManager.write_user_information()
@@ -64,7 +62,7 @@ class MainPage:
     # （1） 现在仅仅进行基本交互模式：分支模式选择，线性信息输入。
     # 之后可以补充更多模式：比如组快输入（一次性输入多条信息）， 比如不同字段一起输入。 task name dealine ---
     def create_new_PIM(self):
-        self.ui.print_module_in("Create new PIM.")
+        self.ui.print_module_in("    Create new PIM.")
 
         moduleMessaame = "Which type of the task do you want to create? "
         self.ui.print_message(moduleMessaame)
@@ -206,7 +204,7 @@ class MainPage:
     def generate_personal_PIM_report(self):
 
         # 1, print the information of PIMs
-        self.ui.print_module_in("Generate personal PIM report.")
+        self.ui.print_module_in("  Generate PIM report.")
 
         PIMList = self._userManager.get_PIM_List()
         self.ui.print_message(f"You have {len(PIMList)}.PIMs in total.")
@@ -505,4 +503,88 @@ class MainPage:
 
         answer_lst = result_lst[0]
         return answer_lst
+
+    # ------------------------------------------------------------------------------------------------------------------------------
+    # 3, modify
+    # 对于每一个PIM 提供交互界面让用户指明 更改字段，输入新内容， （有效性查验， 名字需要查看是否重复）
+    # 完成以后进行调用 __userManager 接口在用户信息内进行更改。
+
+    def modify_PIM(self, PIMList: List[PIM]):
+        self.ui.print_e_line()
+        self.ui.print_message(f"You have {len(PIMList)} to manipulate.")
+        self.ui.print_message("Let's manipulate the PIM now!")
+
+        count = 0
+        for pim in PIMList:
+            # (1) print original infromation
+            count += 1
+            self.ui.print_message(f"\n---◅▯◊║◊▯▻  Round {count}  ◅▯◊║◊▯▻---\n"
+                                  f"<--------- original --------->\n{pim}", )
+
+            # (2) interact to get new information
+            fieldsList = pim.get_fields()
+            newPim = pim.copy()
+            # allow user to enter number to chooce the field to be changed (0 to quit) or use the name to indicate (enter "" to skip enter q to quit and back to main page)
+            # 1' indicate fields
+
+            self.ui.print_choose_hint("", "", fieldsList)
+            choice = self.ui.get_int_input(len(fieldsList))
+            while choice:
+                if choice == 1:
+                    field = "name"
+                    input_field = input()
+                    if input_field in ['0', ""]:
+                        break
+
+                    while self._userManager.contains_name(input_field):
+                        self.ui.print_message("The name already exist. please change another name.")
+                        input_field = input()
+                        if input_field in ['0', ""]:
+                            break
+                else:
+                    field = fieldsList[choice - 1]
+
+                    # 2' input new and check validity
+                    self.ui.print_message(f"Enter the {field}")
+                    input_field = newPim.get_field_input(field)
+
+                    if not input_field:  # 如果不进行有效输入 说明用户想退出。
+                        break
+
+                # 3' change the field.
+                newPim.__setattr__(field, input_field)
+
+                # 4, next round
+                self.ui.print_choose_hint("", "", fieldsList)
+                choice = self.ui.get_int_input(len(fieldsList))
+
+            # (3) print new inforamtion.
+            self.ui.print_message(f"<--------- New Information After Manipulation -------->\n {newPim}")
+
+            # (4) change in userManager
+            self._userManager.modify(pim, newPim)
+
+    # 4, delete
+    def delete_PIM(self, PIMList: List[PIM]):
+        # 1, print the information of PIMs
+        self.ui.print_e_line()
+        print(f"You have {len(PIMList)} to delete.\n")
+        count = 0
+        for pim in PIMList:
+            count += 1
+            print(f"PIM {count}", end=" ")
+            self.ui.print_message(pim.__str__())
+
+        # 2, get the confirm information
+        self.ui.print_message("Are you sure to delete them? (1/0)")
+        choice = self.ui.get_int_input(1)
+        if choice == 0:
+            return
+
+        # 3, delete
+        for pim in PIMList:
+            self._userManager.delete(pim)
+
+        # 4, print message
+        self.ui.print_message("Delete successfully!")
 

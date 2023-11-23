@@ -131,15 +131,15 @@ class InteractiveUI:
     def print_module_in(self,module_name):
         # 3 lines
         print("\n")
-        s = " " * 70  # Equivalent to the Java string with 57 spaces
+        s = " " * 45  # Equivalent to the Java string with 57 spaces
         s1 = s.replace(" ", " ")
         s2 = "▾" * 137  # Creates a string with 137 "▾" characters
         s2 = s2.replace("▾", " ")
 
         # Constructing and printing the message
-        print(Fore.YELLOW + f"{s}   ╔━━━━━━━━━━━━━━━━━━━━━━╗\n{s1}   ║   ▿   ▿   ◈   ▿   ▿  ║   {s2}")
+        print(Fore.YELLOW + f"{s}   ╔━━━━━━━━━━━━━━━━━━━━━━╗\n{s1}   ║   ▿   ▿   ◈   ▿   ▿  ║ ")
         print(Fore.YELLOW + f"{s}    {module_name}")
-        print(Fore.YELLOW + f"{s1}   ║   ▿   ▿   ◈   ▿   ▿  ║   {s2}\n{s}   ╚━━━━━━━━━━━━━━━━━━━━━━╝")
+        print(Fore.YELLOW + f"{s1}   ║   ▿   ▿   ◈   ▿   ▿  ║   \n{s}   ╚━━━━━━━━━━━━━━━━━━━━━━╝\n")
 
 
     def print_module_out(self, module_name):
@@ -279,7 +279,7 @@ class InteractiveUI:
             print(" " * int(self.HALF_COLUMN) + line)
 
 #
-# # ui = InteractiveUI()
-# # ui.print_main_page()
+# ui = InteractiveUI()
+# ui.print_module_in("module")
 
 

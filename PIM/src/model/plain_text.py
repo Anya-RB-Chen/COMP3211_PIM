@@ -1,5 +1,5 @@
 from typing import List
-from PIM.src.model.PIM import PIM
+from PIM.src.model.pim import PIM
 from PIM.src.tools.Tools import Tools
 
 
