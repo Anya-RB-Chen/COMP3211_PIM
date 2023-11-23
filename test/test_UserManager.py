@@ -1,90 +1,78 @@
-import os
 import unittest
-from unittest.mock import MagicMock
 import sys
 sys.path.append("..")
-from PIM.src.file_manager.output_file_manager import OutputFileManager as UserIO
+from PIM.src.model.user_manager import UserInformationManager
+from PIM.src.model.user_profile import UserProfile
+from PIM.src.model.contact import Contact
+from PIM.src.model.event import Event
+from PIM.src.model.task import Task
+from PIM.src.model.plain_text import PlainText
 
 
-class TestUserIO(unittest.TestCase):
+class UserInformationManagerTests(unittest.TestCase):
     def setUp(self):
-        # Create a mock UserInformationManager object
-        self.user_info_manager = MagicMock()
-        self.user_info_manager.userName = "John"
-        self.user_info_manager.get_PIM_List.return_value = ["PIM 1", "PIM 2", "PIM 3"]
-
-        # Create an instance of UserIO
-        self.user_io = UserIO(self.user_info_manager)
-
-    def test_set_output_file_root_path(self):
-        new_output_path = os.getcwd()+"/file/output.txt"
-        self.user_io.set_output_file_root_path(new_output_path)
-        self.assertEqual(self.user_io.get_output_file_root_path(), new_output_path)
-
-    def test_output_user_information(self):
-        file_name = "user_info"
-        self.user_io.output_user_information(self.user_io.PIMList, file_name)
-
-        # Verify that the file is created and contains the expected content
-        expected_output = """\n             ☆──────────────✬❖✬───────────☆
-             │       ❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈     │
-             │       😄   PERSONAL  😃     │
-             │       😆 INFORMATION 😁     │
-             │       ❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈     │
-             ☆──────────────✬❖✬───────────☆
-
-            \n\nHi John, You have 3 personal information records.\n\n\nPIM 1: \nPIM 1\n\nPIM 2: \nPIM 2\n\nPIM 3: \nPIM 3\n"""
-
-        with open(f"./file/output/John/{file_name}.pim", "r", encoding="utf-8") as f:
-            actual_output = f.read()
-
-        self.assertEqual(actual_output, expected_output)
-
-    def test_output_specified_information(self):
-        file_name = "specified_info"
-        choices = [1, 2]
-        self.user_io.output_specified_information(self.user_io.PIMList, choices, file_name)
-
-        # Verify that the file is created and contains the expected content
-        expected_output = """\n                       ──────────────✬❖✬───────────
-                     │       ❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈     │
-                     │       😄   PERSONAL  😃     │
-                     │       😆 INFORMATION 😁     │
-                     │       ❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈     │
-                       ──────────────✬❖✬───────────
-
-                    \n\nHi John! Here are 2 personal information records that you selected.\n\n\nPIM 1: \nPIM 1\n\nPIM 2: \nPIM 2\n"""
-
-        with open(f"./file/output/John/{file_name}.pim", "r", encoding="utf-8") as f:
-            actual_output = f.read()
-        self.maxDiff = 10000
-        self.assertEqual(actual_output, expected_output)
-
-    def test_load_file(self):
-        file_name = "user_info"
-        expected_output = "File contents"
-
-        # Create a mock for the file
-        file_mock = MagicMock()
-        file_mock.__enter__.return_value.read.return_value = expected_output
-
-        # Mock the open() function and patch it to return the file_mock
-        with unittest.mock.patch('builtins.open', return_value=file_mock):
-            with unittest.mock.patch('builtins.print') as mock_print:
-                self.user_io.load_file(file_name)
-                mock_print.assert_called_with(expected_output)
+        user_profile = UserProfile("John","123456")
+        self.user_information_manager = UserInformationManager(user_profile)
 
     def tearDown(self):
-        # Clean up any files created during the tests
-        file_path1 = "./file/output/John/user_info.pim"
-        file_path2 = "./file/output/John/specified_info.pim"
+        self.user_information_manager = None
 
-        # Remove the test files if they exist
-        if os.path.exists(file_path1):
-            os.remove(file_path1)
-        if os.path.exists(file_path2):
-            os.remove(file_path2)
+    def test_get_PIM_List(self):
+        pim_list = []
+        self.user_information_manager._UserInformationManager__PIMList = pim_list
+        result = self.user_information_manager.get_PIM_List()
+        self.assertEqual(result, pim_list)
+
+    def test_add_PIM(self):
+        pim = Contact.create("John Doe", {"mobile_number": "1234567890", "address": "123 Elm St"})
+        result = self.user_information_manager.add_PIM(pim)
+        self.assertTrue(result)
+        self.assertIn(pim, self.user_information_manager._UserInformationManager__PIMList)
+
+    def test_contains_name(self):
+        pim = Contact.create("John Doe", {"mobile_number": "1234567890", "address": "123 Elm St"})
+        self.user_information_manager._UserInformationManager__PIMList = [pim]
+        result = self.user_information_manager.contains_name("John Doe")
+        self.assertTrue(result)
+
+    def test_search_name(self):
+        pim = Contact.create("John Doe", {"mobile_number": "1234567890", "address": "123 Elm St"})
+        self.user_information_manager._UserInformationManager__PIMList = [pim]
+        result, index = self.user_information_manager.search_name("John Doe")
+        self.assertEqual(result, pim)
+        self.assertEqual(index, 0)
+
+        pim = Contact.create("John Doe", {"mobile_number": "1234567890", "address": "123 Elm St"})
+        new_pim = Contact.create("John Doe", {"mobile_number": "1234567890", "address": "123 Elm St"})
+        self.user_information_manager._UserInformationManager__PIMList = [pim]
+        result = self.user_information_manager.modify(pim, new_pim)
+        self.assertTrue(result)
+        self.assertIn(new_pim, self.user_information_manager._UserInformationManager__PIMList)
+
+    def test_delete(self):
+        pim = Contact.create("John Doe", {"mobile_number": "1234567890", "address": "123 Elm St"})
+        self.user_information_manager._UserInformationManager__PIMList = [pim]
+        result = self.user_information_manager.delete(pim)
+        self.assertTrue(result)
+        self.assertNotIn(pim, self.user_information_manager._UserInformationManager__PIMList)
+
+    def test_get_PIMClassList(self):
+        pim_class_list = [Contact, Event, PlainText, Task]
+        result = self.user_information_manager.get_PIMClassList()
+        self.assertEqual(result, pim_class_list)
+
+    def test_PIM_type_to_class(self):
+        result = self.user_information_manager.PIM_type_to_class("contact")
+        self.assertEqual(result, Contact)
+        result = self.user_information_manager.PIM_type_to_class("event")
+        self.assertEqual(result, Event)
+        result = self.user_information_manager.PIM_type_to_class("plaintext")
+        self.assertEqual(result, PlainText)
+        result = self.user_information_manager.PIM_type_to_class("task")
+        self.assertEqual(result, Task)
+        result = self.user_information_manager.PIM_type_to_class("invalid_type")
+        self.assertIsNone(result)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

@@ -1,0 +1,17 @@
+
+
+
+
+Name                                                                            Stmts   Miss  Cover
+---------------------------------------------------------------------------------------------------
+/Users/zhangwenxuan/Desktop/COMP3211_PIM_1123/PIM/src/model/__init__.py             5      0   100%
+/Users/zhangwenxuan/Desktop/COMP3211_PIM_1123/PIM/src/model/contact.py             38      0   100%
+/Users/zhangwenxuan/Desktop/COMP3211_PIM_1123/PIM/src/model/event.py               50      2    96%
+/Users/zhangwenxuan/Desktop/COMP3211_PIM_1123/PIM/src/model/pim.py                 68     17    75%
+/Users/zhangwenxuan/Desktop/COMP3211_PIM_1123/PIM/src/model/plain_text.py          36      0   100%
+/Users/zhangwenxuan/Desktop/COMP3211_PIM_1123/PIM/src/model/system_manager.py      29      2    93%
+/Users/zhangwenxuan/Desktop/COMP3211_PIM_1123/PIM/src/model/task.py                50      3    94%
+/Users/zhangwenxuan/Desktop/COMP3211_PIM_1123/PIM/src/model/user_manager.py        69      6    91%
+/Users/zhangwenxuan/Desktop/COMP3211_PIM_1123/PIM/src/model/user_profile.py        18      0   100%
+---------------------------------------------------------------------------------------------------
+TOTAL                                                                             363     30    92%
