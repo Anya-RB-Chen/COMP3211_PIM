@@ -36,7 +36,7 @@ class PIM:
     @classmethod
     @abstractmethod
     # 对于类别进行描述。 基本功能，字段。
-    def decode(cls,):
+    def decode(cls):
         pass
 
     @classmethod
@@ -96,11 +96,7 @@ class PIM:
     @classmethod
     # get a valid input of field  |  None
     def get_field_input(cls, field: str):
-    # if field == "name": # assumption：
-    ## 对于名字唯一的限制是不可以重复, 在外部执行逻辑，因为名字重复属于PIMList User information 已经超越了PIM类方法的范畴。
-    #     name = input()
-    #     while name not in ["", "0"]:
-    #         if
+
         checker = cls.get_field_checker(field)
 
         input_field = input()
@@ -117,13 +113,7 @@ class PIM:
                 return None
             wrongMessage = checker(input_field)
 
-    # type conversion
-    # if time -> change to float.
-    # zwx: 如果要比较时间的话单独写个时间比较函数
-    # if Tools.check_time_format(input_field) == "":
-    #     return Tools.timeStr_to_timeStamp(input_field)
 
-    # other field needing change format ?
         return input_field
 
 

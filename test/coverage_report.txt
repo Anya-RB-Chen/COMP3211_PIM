@@ -1,5 +1,21 @@
+Steps to get coverage report:
+1. Open terminal, go to the test directory (cd test/)
+2. Execute the following command:
+    coverage run -a --source PIM.src.model test_Contact.py
+    coverage run -a --source PIM.src.model test_Event.py
+    coverage run -a --source PIM.src.model test_PIM.py
+    coverage run -a --source PIM.src.model test_PIMCreation.py
+    coverage run -a --source PIM.src.model test_PlainText.py
+    coverage run -a --source PIM.src.model test_SystemManager.py
+    coverage run -a --source PIM.src.model test_Task.py
+    coverage run -a --source PIM.src.model test_UserManager.py
+    coverage run -a --source PIM.src.model test_UserProfile.py
+    coverage report # generate coverage report on terminal
+    coverage html # generate html coverage report
 
 
+
+                    **** Coverage Report For PIM Model ****
 
 
 Name                                                                            Stmts   Miss  Cover
