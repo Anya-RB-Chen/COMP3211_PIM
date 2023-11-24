@@ -1,0 +1,72 @@
+
+             ☆──────────────✬❖✬───────────☆
+             │       ❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈     │
+             │       😄   PERSONAL  😃     │
+             │       😆 INFORMATION 😁     │
+             │       ❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈❈     │
+             ☆──────────────✬❖✬───────────☆
+
+            
+
+Hi Tom, You have 10 personal information records.
+
+
+PIM 1: 
+Name: John Doe
+Type: Contact
+Mobile number: 123-456-7890
+Address: 123 Elm St.
+
+PIM 2: 
+Name: Jane Smith
+Type: Contact
+Mobile number: 234-567-8901
+Address: 456 Oak St.
+
+PIM 3: 
+Name: Buy groceries
+Type: Task
+Description: Buy milk, bread, and eggs
+Deadline: 2023-10-25 09:00
+Reminder: 
+
+PIM 4: 
+Name: Attend meeting
+Type: Task
+Description: Team sync-up
+Deadline: 2023-10-21 09:00
+Reminder: 2023-10-20 09:00
+
+PIM 5: 
+Name: Birthday party
+Type: Event
+Description: John's 30th birthday
+Start time: 2023-11-15 19:00
+Alarms: ['2023-11-15 18:30']
+
+PIM 6: 
+Name: Concert
+Type: Event
+Description: Live music by The Beatles
+Start time: 2023-12-01 20:00
+Alarms: ['2023-12-01 19:00', '2023-12-01 19:30']
+
+PIM 7: 
+Name: Shopping List
+Type: PlainText
+Text: Milk, Bread, Eggs, Butter
+
+PIM 8: 
+Name: Work Notes
+Type: PlainText
+Text: Discuss project timeline in the next meeting.
+
+PIM 9: 
+Name: Poem
+Type: PlainText
+Text: Roses are red, Violets are blue.
+
+PIM 10: 
+Name: Quotes
+Type: PlainText
+Text: Be yourself; everyone else is already taken. - Oscar Wilde

@@ -1,0 +1,53 @@
+
+任务
+
+4个文件：
+
+1， system file：
+用户profile， 历史信息， 其他。。。
+
+
+
+2， user file
+.txt .pim 两种格式 (PIM）
+用户 PIR信息
+
+
+
+3， output file
+对于用户的PIR进行输出
+基本： .pim / .txt 原始信息
+进阶： .txt 用户信息统计报告
+
+
+4， logging file：
+记录系统状态，历史。 可以和系统文件统一
+
+
+进阶：
+实现访问文件的多进程访问 -> 系统实现多用户同时登录。
+method: 1， append 模式 代替 读写。 2， 资源访问控制
+（参考数据库多进程知识
+
+
+
+
+位置：
+SystemManager -> system_file management methods
+UserManager -> user_file management methods
+UserManager -> output management methods
+Logger？
+可以自己封装file manager 类。
+write 方法： 根据系统内对象以及file manager 保存的信息 写入。
+append: 根据新信息？和 现有文件（再读一遍） 写入
+read: 读信息， 系统内需要用的部分需要转化成对象 返回。  如果写入文件时需要，保存再file manager 模块中。
+
+
+上层调用：
+
+
+接口使用：
+
+PIM： PIM的操作
+UserManager： 对于用户PIM信息的操作
+
