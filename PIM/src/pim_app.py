@@ -80,7 +80,7 @@ class PIMApp:
     # file system initialzation
     def file_system_initialization(self):
         # root folder initialization
-        root_path = os.getcwd() + "/file"
+        root_path = os.getcwd() + "/PIM/src/file"
         if not os.path.exists(root_path):
             os.mkdir(root_path)
 

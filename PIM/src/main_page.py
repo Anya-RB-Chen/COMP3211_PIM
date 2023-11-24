@@ -207,7 +207,7 @@ class MainPage:
         self.ui.print_module_in("  Generate PIM report.")
 
         PIMList = self._userManager.get_PIM_List()
-        self.ui.print_message(f"You have {len(PIMList)}.PIMs in total.")
+        self.ui.print_message(f"You have {len(PIMList)} PIMs in total.")
         if len(PIMList) == 0:  # no PIM no output
             return
 
