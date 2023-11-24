@@ -1,7 +1,7 @@
 import os
 
 class OutputFileManager:
-    __outputFileRootPath = os.getcwd() + "/file" + "/output"
+    __outputFileRootPath = os.getcwd() + "/PIM/src/file" + "/output"
 
     def __init__(self, UserInformationManager):
         self.user = UserInformationManager

@@ -8,17 +8,18 @@
 
             
 
-Hi anya3, You have 2 personal information records.
+Hi anya, You have 2 personal information records.
 
 
 PIM 1: 
-Name: text1
-Type: PlainText
-Text: hello pim test 1
+Name: Mike
+Type: Contact
+Mobile number: 88888888
+Address: polyu
 
 PIM 2: 
-Name: task1
-Type: Task
-Description: hey hey
-Deadline: 2024-10-18 14:00
-Reminder: 2023-10-18 14:00
+Name: event1
+Type: Event
+Description: hello
+Start time: 2023-10-18 14:00
+Alarms: 2023-10-11 14:00

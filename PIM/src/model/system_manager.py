@@ -20,7 +20,7 @@ class SystemManager:  # 老子不用file manager了，直接封装在系统内�
 
         # write buffer initialization.
         self.__history = []  # str
-        systemFilePath = os.getcwd() + "/file" + "/.system.txt"
+        systemFilePath = os.getcwd() + "/PIM/src/file" + "/.system.txt"
         self.__systemFileManager = SystemFileManager(systemFilePath)
 
         self.__user_profiles = self.__systemFileManager.read()  # profile object
