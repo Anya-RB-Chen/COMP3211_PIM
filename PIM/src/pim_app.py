@@ -1,12 +1,13 @@
 import os
 import traceback
-
-from PIM.src.tools.InteractiveUI import InteractiveUI
-from PIM.src.main_page import MainPage
-import PIM.src.model
-from PIM.src.model.system_manager import SystemManager,UserProfile
-from PIM.src.tools.Tools import Tools
-from PIM.src.model.user_manager import UserInformationManager
+import sys
+sys.path.append("../..")
+from tools.InteractiveUI import InteractiveUI
+from main_page import MainPage
+import model
+from model.system_manager import SystemManager,UserProfile
+from tools.Tools import Tools
+from model.user_manager import UserInformationManager
 
 
 
@@ -35,10 +36,10 @@ class PIMApp:
         # 2, page 1: log in system | register | command mode
         ### 不着急删掉 但如果 需要测试其他部分则 要用标准选项
         ### cmd 要删
-        choice = " \n3 -- 以默认用户登录。 现在为了方便做测试，还保留直接登录的选项，测试其他模块记着选别的   \n1 --log in  2 --register 0-- quit"
+        choice = " \n1 --log in  2 --register 0-- quit"
         ui.print_choose_hint("","",choice)
 
-        choice = ui.get_int_input(3) #
+        choice = ui.get_int_input(2) #
 
         # 2, 
         try:
