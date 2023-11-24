@@ -4,7 +4,7 @@ from PIM.src.model import *
 from PIM.src.tools.Tools import Tools
 
 class UserFileManager:
-    __userFileRootPath = os.getcwd() + "/file" + "/user"
+    __userFileRootPath = os.getcwd() + "/PIM/src/file" + "/user"
 
 
     def __init__(self, userFilePath):

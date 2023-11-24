@@ -19,7 +19,7 @@ class UserInformationManager:
     __PIMClassList = [Contact, Event, PlainText, Task]
     # ------------------------------------------------------------------------------------------------------------------------------
     # md 搞不懂python的class字段处理，debug一小时了，还是不行。先这样写吧。 按理来说应该runtime在PIMApp.filesysteminitialization()里面初始化。
-    __userFileRootPath = os.getcwd() + "/file" + "/user"
+    __userFileRootPath = os.getcwd() + "/PIM/src/file" + "/user"
     # ------------------------------------------------------------------------------------------------------------------------------
 
     # 1, initialization
