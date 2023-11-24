@@ -1,13 +1,15 @@
 # 用户主页面
 from datetime import datetime
 from typing import List
+import sys
+sys.path.append("../..")
 
-from  PIM.src.model import *
+from model import *
 
-from PIM.src.tools.Tools import Tools, InputType
-from PIM.src.tools.InteractiveUI import InteractiveUI
-from PIM.src.model.user_manager import UserInformationManager as User
-from PIM.src.file_manager.output_file_manager import OutputFileManager as IO
+from tools.Tools import Tools, InputType
+from tools.InteractiveUI import InteractiveUI
+from model.user_manager import UserInformationManager as User
+from file_manager.output_file_manager import OutputFileManager as IO
 
 class MainPage:
 
@@ -26,7 +28,7 @@ class MainPage:
         self.ui.print_user_welcome_message(self._userManager.userName)
 
         # #alarms/reminders登录检测提醒
-        #MainPage.check_alarms_or_reminders(User, self._userManager.get_PIM_List())
+        MainPage.check_alarms_or_reminders(User, self._userManager.get_PIM_List())
 
         moduleNameList = ["Create new PIM", "Manipulate existing PIM", "Generate personal PIM report", "Load PIM file"]
         moduleFunctionList = [self.create_new_PIM, self.manipulate_existing_PIM, self.generate_personal_PIM_report,
