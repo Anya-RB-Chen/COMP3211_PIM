@@ -1,6 +1,10 @@
 import os
 
 class OutputFileManager:
+    """
+    This class is to manage the output file for each user. Users can choose to load file or print files.
+    The files for each user are stored under PIM/src/file/output/username
+    """
     __outputFileRootPath = os.getcwd() + "/file" + "/output"
 
     def __init__(self, UserInformationManager):
@@ -15,6 +19,12 @@ class OutputFileManager:
         return self.__outputFileRootPath
 
     def output_user_information(self, PIMList, file_name):
+        """
+        :param PIMList: write user's PIM (all) back to user file.
+        :param: PIMList: User's all PIMs.
+        :param file_name: the file name that the user wants to specify.
+        :return: None
+        """
         outputFilePath = self.__outputFileRootPath + f"/{self.userName}"
         isExist = os.path.exists(outputFilePath)
         if not isExist:
@@ -45,15 +55,18 @@ class OutputFileManager:
                 f.write("\n")
 
     def output_specified_information(self, PIMList, choice, file_name):
+        """
+        This function is to write user's specified PIM(s) into a .pim file.
+        :param PIMList: User's all PIMs.
+        :param choice: User's specified PIM number list.
+        :param file_name: the file name that the user wants to specify.
+        :return: None
+        """
         outputFilePath = self.__outputFileRootPath + f"/{self.userName}"
         isExist = os.path.exists(outputFilePath)
         if not isExist:
             os.makedirs(outputFilePath)
         outputFilePath += f"/{file_name}" + ".pim"
-        # count = 1
-        # while os.path.exists(outputFilePath): # 改为append
-        #     outputFilePath = self.__outputFileRootPath + "/" + self.userName + str(count) + ".pim"
-        #     count += 1
 
         with open(outputFilePath, "w", encoding="utf-8") as f:
             message = """
@@ -83,6 +96,10 @@ class OutputFileManager:
                     idx += 1
 
     def display_all_files(self):
+        """
+        Display all files on the terminal. The user can choose one of them to load on the terminal.
+        :return:
+        """
         outputFilePath = self.__outputFileRootPath + f"/{self.userName}"
         isExist = os.path.exists(outputFilePath)
         if isExist:
@@ -91,6 +108,11 @@ class OutputFileManager:
             print()
 
     def load_file(self, file_name):
+        """
+        Display the content of the .pim file that the user wants to load.
+        :param file_name: The name of the file that the user wants to load.
+        :return: None
+        """
         outputFilePath = self.__outputFileRootPath + f"/{self.userName}/{file_name}.pim"
         try:
             with open(outputFilePath, encoding="utf-8") as f:

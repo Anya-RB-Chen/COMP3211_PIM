@@ -1,11 +1,9 @@
 
 class UserProfile:
-    # __count = 0
-
+    """
+    This is the class of user profile. The information is what the user input during registration.
+    """
     def __init__(self, name, password, email="", description=""):
-        # self.id = UserProfile.__count
-        # UserProfile.__count += 1
-
         self.__name = name
         self.__password = password
         self.__email = email

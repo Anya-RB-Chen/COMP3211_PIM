@@ -1,14 +1,14 @@
 from typing import List
-import sys
-sys.path.append("../..")
-from model.pim import PIM
-from tools.Tools import Tools
+from PIM.src.model.pim import PIM
+from PIM.src.tools.Tools import Tools
 
 
 
 class Contact(PIM):
-
-
+    """
+        This class is the Contact type. It inherits the PIM class.
+        Three properties: name, mobile number, address
+    """
     def __init__(self, name: str, mobile_number: str, address: str = ""):
         super().__init__()
         self.name = name
@@ -54,7 +54,6 @@ class Contact(PIM):
 
     @classmethod
     def create_object_from_lines(cls, lines, index):
-
         name = Tools.get_value_from_line(lines[index])
         mobile_number = Tools.get_value_from_line(lines[index + 2])
         address = Tools.get_value_from_line(lines[index + 3])

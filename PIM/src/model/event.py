@@ -1,11 +1,13 @@
 from typing import List
-import sys
-sys.path.append("../..")
-from model.pim import PIM
-from tools.Tools import Tools
+from PIM.src.model.pim import PIM
+from PIM.src.tools.Tools import Tools
 
 
 class Event(PIM):
+    """
+    This class is the Event type. It inherits the PIM class.
+    Four properties: name, description, start time, alarms
+    """
     def __init__(self, name: str, description: str, start_time: str, alarms: str):
         super().__init__()
         self.name = name

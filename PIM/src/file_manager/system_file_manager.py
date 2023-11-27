@@ -1,24 +1,32 @@
 import os
-import sys
-sys.path.append("../..")
-from model.user_profile import UserProfile
-from model import *
+from PIM.src.model.user_profile import UserProfile
+from PIM.src.model import *
+
 
 class SystemFileManager:
-
+    """
+    This class is to manage system files which are stored in PIM/src/user/.system.txt
+    It serves as a database to store user information
+    """
     def __init__(self, systemFilePath):
         self.__systemFilePath = systemFilePath
         if not os.path.exists(systemFilePath):
             self.create()
-        # self.__user_profiles = self.read()
-
 
     def create(self):
+        """
+        Create system file.
+        :return:
+        """
         if not os.path.exists(self.__systemFilePath):
             with open(self.__systemFilePath, "w") as f:
                 f.write("")
 
     def read(self) -> list:
+        """
+        read system file as a list containing user profiles.
+        :return: List: user profiles
+        """
         with open(self.__systemFilePath, "r") as f:
             lines = f.readlines()
             index = 2
@@ -40,6 +48,11 @@ class SystemFileManager:
             return user_profiles
 
     def write(self,userProfiles):
+        """
+        Write the user profile list back to system file for storage.
+        :param userProfiles: List
+        :return: None
+        """
         with open (self.__systemFilePath, "w") as f:
             f.write("User Profiles:\n\n")
             for userProfile in userProfiles:

@@ -1,11 +1,12 @@
 from typing import List
-import sys
-sys.path.append("../..")
-from model.pim import PIM
-from tools.Tools import Tools
-
+from PIM.src.model.pim import PIM
+from PIM.src.tools.Tools import Tools
 
 class Task(PIM):
+    """
+    This class is the Task type. It inherits the PIM class.
+    Four properties: name, description, deadline, reminder
+    """
     def __init__(self, name, description, deadline, reminder=None):
         super().__init__()
         self.name = name
@@ -20,9 +21,6 @@ class Task(PIM):
         return self.deadline
 
     @classmethod
-    # task1 = Task.create("Buy groceries", {"description": "Buy milk, bread, and eggs", "deadline": "2023-10-25 19:00"})
-    #        task2 = Task.create("Attend meeting",
-    #                       {"description": "Team sync-up", "deadline": "2023-10-21 09:00", "reminder": "2023-10-20 09:00"})
     def create(cls, name, fields_map):
         return cls(name, fields_map["description"], fields_map["deadline"], fields_map.get("reminder", []))
 

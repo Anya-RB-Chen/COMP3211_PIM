@@ -1,19 +1,19 @@
-# 用户主页面
 from datetime import datetime
 from typing import List
-import sys
-sys.path.append("../..")
 
-from model import *
+from  PIM.src.model import *
 
-from tools.Tools import Tools, InputType
-from tools.InteractiveUI import InteractiveUI
-from model.user_manager import UserInformationManager as User
-from file_manager.output_file_manager import OutputFileManager as IO
+from PIM.src.tools.Tools import Tools, InputType
+from PIM.src.tools.InteractiveUI import InteractiveUI
+from PIM.src.model.user_manager import UserInformationManager as User
+from PIM.src.file_manager.output_file_manager import OutputFileManager as IO
+
 
 class MainPage:
-
-    # level 1: initialization
+    """
+    Main page for each user. Should be displayed after logging into the system.
+    """
+    # level 0: initialization
     def __init__(self) -> None:
         self._userManager = None
         pass
@@ -27,7 +27,7 @@ class MainPage:
         self.ui.print_main_page()
         self.ui.print_user_welcome_message(self._userManager.userName)
 
-        # #alarms/reminders登录检测提醒
+        # #alarms/reminders
         MainPage.check_alarms_or_reminders(User, self._userManager.get_PIM_List())
 
         moduleNameList = ["Create new PIM", "Manipulate existing PIM", "Generate personal PIM report", "Load PIM file"]
@@ -36,7 +36,6 @@ class MainPage:
         self.ui.print_choose_hint("", "", moduleNameList)
         choice = self.ui.get_int_input(len(moduleNameList))
         while choice != 0:
-            # self.ui.print_choose_hint(moduleNameList[choice - 1], "", "")
 
             moduleFunctionList[choice - 1]()
 
@@ -45,25 +44,18 @@ class MainPage:
             self.ui.print_choose_hint("", "", moduleNameList)
             choice = self.ui.get_int_input(len(moduleNameList))
 
-        # 2, exit
-        # self.ui.print_leave_main_page()
-        # ------------------------------------------------------------------------------------------------------------------------------
-        # 文件输出
+        # write user information into user file
         self._userManager.write_user_information()
 
     # ------------------------------------------------------------------------------------------------------------------------------
 
     # level 2: specific functional module
-    # 统一接口：
-    # input : no 进入功能模块。 无需要准备
-    # output： 交互、执行功能模块， 直接返回 no return value.
-
-    # 1, create
-    # 输出： 添加有效信息 -- add the PIM into system， 打印PIM信息。  中途选择退出： 直接返回
-    # 交互过程：
-    # （1） 现在仅仅进行基本交互模式：分支模式选择，线性信息输入。
-    # 之后可以补充更多模式：比如组快输入（一次性输入多条信息）， 比如不同字段一起输入。 task name dealine ---
     def create_new_PIM(self):
+        """1, create
+    Output: add valid information -- add the PIM into system, print PIM information.  Option to exit midway: return directly
+    Interaction process:
+    (1) For now, just the basic interaction modes are performed: branch mode selection, linear message entry.
+    More modes can be added later: e.g. group entry (entering multiple messages at once), e.g. entering different fields together. task name dealine ---"""
         self.ui.print_module_in("    Create new PIM.")
 
         moduleMessaame = "Which type of the task do you want to create? "
@@ -79,16 +71,13 @@ class MainPage:
 
             fields = PIMClass.get_fields()
             checkersMap = PIMClass.get_fields_checkers_map()
-            # name = input("Enter the name: ")
-            # if not name:
-            #     return
 
             fieldsMap = {}
             for field in fields:
                 checker_function = checkersMap[field]
 
                 if field == "start_time" or field == "deadline" or field == " reminder" or field == "alarms":
-                    print("Expected format: YYYY-MM-DD HH:MM, e.g., 2023-10-18 14:00")
+                    print(f"The expected format of {field}: YYYY-MM-DD HH:MM, e.g., 2023-10-18 14:00")
 
                 content = input(f"Enter the {field} (enter 0 to quit):")
 
@@ -116,21 +105,25 @@ class MainPage:
             self._userManager.add_PIM(newPIM)
 
     def manipulate_existing_PIM(self):
-        self.ui.print_module_in("manipulate existing PIM")
-
+        """
+        Discription:This function is for manipulating the PIRs, first, search the information,
+                    then to choose to delete or modify them.
+        :return None
+        """
+        self.ui.print_module_in("manipulate existing PIR")
         # 1, search module
         PIMList = self.search_PIM()
         if PIMList == None:
             return
 
         elif PIMList == []:
-            self.ui.print_message("Cannot find the PIM satisfying your criteria.")
+            self.ui.print_message("Cannot find the PIRs satisfying your criteria.")
             return
 
         # pre: get valid PIMList
-        # 2, print the PIM
+        # 2, print the PIR
         self.ui.print_e_line()
-        self.ui.print_message("The PIM in your criteria in as follows: ")
+        self.ui.print_message("The PIRs in your criteria in as follows: ")
         length = len(PIMList)
         for i in range(length):
             print(f"{i + 1}: ", PIMList[i].__str__())
@@ -147,7 +140,7 @@ class MainPage:
             # modify 1 2 3
             # 0 or ""   -> quit directly (return noting)
 
-            operation: delete or modify    +   index of the PIMs.
+            operation: delete or modify    +   index of the PIRs.
 
         2, get user input. 
            check the validity of input: 
@@ -204,12 +197,17 @@ class MainPage:
             break
 
     def generate_personal_PIM_report(self):
+        """
+        Discription: This funtion is to generate personal PIM report.
+                    Users can choose to generate report for all PIMs or some specific PIMs.
+        :return: None
+        """
 
         # 1, print the information of PIMs
-        self.ui.print_module_in("  Generate PIM report.")
+        self.ui.print_module_in("  Generate PIRs report.")
 
         PIMList = self._userManager.get_PIM_List()
-        self.ui.print_message(f"You have {len(PIMList)}.PIMs in total.")
+        self.ui.print_message(f"You have {len(PIMList)} PIRs in total.")
         if len(PIMList) == 0:  # no PIM no output
             return
 
@@ -225,11 +223,9 @@ class MainPage:
         if choice == 0:
             return
 
-        # 需要增加部分输出
-        # self.ui.print_message("You can choose to outpu")
         # 3, output
         self.ui.print_message(
-            "Please specify the PIMs you want to print. (e.g., '1 2 3' to print PIM 1, 2, 3)Enter 0 to print all.)")
+            "Please specify the PIRs you want to print. (e.g., '1 2 3' to print PIR 1, 2, 3)Enter 0 to print all.)")
         choice = self.ui.get_int_input_list(len(PIMList))
 
         file_name = input(self.ui.print_message("Please enter the file name you want to save as. Enter \" \" "
@@ -242,8 +238,13 @@ class MainPage:
             IO(self._userManager).output_specified_information(self._userManager.get_PIM_List(), choice, file_name)
 
     def load_PIM_file(self):
+        """
+        Description: This function is to load .pim file (which is generated by calling the above function) under
+                    PIM/src/file/output/user_name/
+        :return: None
+        """
         # 1. print hint to load file
-        self.ui.print_message("You can have these PIM files. Please choose one to load.")
+        self.ui.print_message("You can have these PIR files. Please choose one to load.")
         # 2. display all files that can be loaded
         IO(self._userManager).display_all_files()
         # 3. enter the file name (error message if not existed)
@@ -252,13 +253,13 @@ class MainPage:
         IO(self._userManager).load_file(file_name)
 
     # ------------------------------------------------------------------------------------------------------------------------------
-    # level 3 细化功能模块以及
+    # level 3
 
     # 2, search
-    # requirement discription
+    # requirement description
     """
-    As a user, I want to search for PIMs based on criteria concerning their types and the data stored in their fields. 
-    whether the PIM belongs to a type. 
+    As a user, I want to search for PIrs based on criteria concerning their types and the data stored in their fields. 
+    whether the PIR belongs to a type. 
     whether a piece of text (stored in a note, a description, a name, an address, or a mobile number) contains a string, 
     whether a time (stored in a deadline, a starting time, or an alarm) is before (<), after (>), or equal to (=) another given point in time, 
     whether a condition combining multiple other conditions via logical connectors and (&&), or (||), and negation (!)
@@ -267,11 +268,11 @@ class MainPage:
     # interface
     """
     UserManager:
-    self.__userManager.get_PIM_List() get all of the PIM of the user. 
+    self.__userManager.get_PIM_List() get all of the PIRs of the user. 
 
     PIM:
-    contain_text()  # 输入： 文本字符串  # 输出： True or False
-    time_condition_checker(time:float, comparator: str)     # 输入： 时间戳，比较符号： 限制 < = > 三种  # 输出： True or False
+    contain_text()  # input: string  # output: True or False
+    time_condition_checker(time:float, comparator: str)     # input: time, Comparison Symbols: < = >  # output： True or False
     """
 
     # NL description of system (solution)
@@ -286,7 +287,7 @@ class MainPage:
     2, functional module
     (1)  in every modules, interact with the user to get further input. check the validity of the input 
     (2) in the compound search module. print the hint to user to explain format requirement of the input, with one example and explaination.
-        then allow the uesr to input one line of the text to represent command:
+        then allow the user to input one line of the text to represent command:
         the user's input will be like this:  "type Task && (text abc || time < 2023-10-18 14:00)"  
     3, Do the search. return the PIM list. if no elements, return empty list [].
 
@@ -299,6 +300,10 @@ class MainPage:
     """
 
     def search_PIM(self) -> List[PIM]:
+        """
+        This function is to search PIM according to a specific mode
+        :return: List
+        """
         # Step 1: Message
 
         global results
@@ -342,7 +347,7 @@ class MainPage:
             while True:
                 condition = self.ui.input_hint("Enter your compound search criteria: ")
                 try:
-                    # 进行交互，返回查找结果。 如果没找到返回空列表
+
                     results = MainPage.compound_search(User, self._userManager.get_PIM_List(), condition)
                 except Exception as e:
                     self.ui.print_message("Invalid input. Try again:")
@@ -354,6 +359,14 @@ class MainPage:
 
     @staticmethod
     def check_alarms_or_reminders(User, PIMList):
+        """
+         Description:
+        When the user logs in, tell the user the task that has passed the deadline and the event that has passed the start time,
+        if it has not passed, but has passed the time set by alarm or reminder, remind the user.
+        :param User:
+        :param PIMList:
+        :return: None
+        """
         given_format = '%Y-%m-%d %H:%M'
         remind_lst = []
         coming_lst = []
@@ -374,7 +387,6 @@ class MainPage:
                 coming_timestamp = datetime.strptime(coming_time.strip("'"), given_format).timestamp()
                 if current_timestamp >= coming_timestamp:
                     coming_lst.append(pim)
-                # 获取当前时间戳
                 if remind_time:
                     remind_timestamp = datetime.strptime(remind_time.strip("'"), given_format).timestamp()
                     if remind_timestamp < current_timestamp < coming_timestamp:
@@ -392,6 +404,13 @@ class MainPage:
 
     @staticmethod
     def compound_search(User, PIMList, condition):
+        """
+        Description: This function can do compound search based on multiple criteria.
+        :param User:
+        :param PIMList:
+        :param condition:
+        :return: List: search_result
+        """
         condition = condition.strip()
         result = ""
         stack = []
@@ -399,14 +418,6 @@ class MainPage:
             char = condition[i]
             if char.isspace() or char.isalnum() or char in ["<", ">", "=", "-", ":", "!"]:
                 result += char
-            # elif char == "(":
-            #     stack.append(char)
-            # elif char == ")":
-            #     result += " "
-            #     while (len(stack) != 0) and (stack[-1] != "("):
-            #         result += stack.pop()
-            #
-            #     stack.pop()
             else:
                 if len(stack) != 0:
                     if char == stack[-1]:
@@ -423,7 +434,6 @@ class MainPage:
 
         result += " "
         while len(stack) != 0:
-            # if stack[-1] == "(": return "Invalid Expression"
             if stack[-1] == "||" or stack[-1] == "&&":
                 result += stack.pop()
             else:
@@ -508,13 +518,17 @@ class MainPage:
 
     # ------------------------------------------------------------------------------------------------------------------------------
     # 3, modify
-    # 对于每一个PIM 提供交互界面让用户指明 更改字段，输入新内容， （有效性查验， 名字需要查看是否重复）
-    # 完成以后进行调用 __userManager 接口在用户信息内进行更改。
-
     def modify_PIM(self, PIMList: List[PIM]):
+        """
+        Description:
+        For each PIM, an interactive interface is provided for the user to indicate changes to the fields, enter new content, (validity checks, names need to be checked for duplicates).
+        When finished, call the __userManager interface to make changes in the user information.
+        :param PIMList: The PIM list that the user wants to modify
+        :return: None
+        """
         self.ui.print_e_line()
         self.ui.print_message(f"You have {len(PIMList)} to manipulate.")
-        self.ui.print_message("Let's manipulate the PIM now!")
+        self.ui.print_message("Let's manipulate the PIRs now!")
 
         count = 0
         for pim in PIMList:
@@ -550,7 +564,7 @@ class MainPage:
                     self.ui.print_message(f"Enter the {field}")
                     input_field = newPim.get_field_input(field)
 
-                    if not input_field:  # 如果不进行有效输入 说明用户想退出。
+                    if not input_field:  # If no valid entry is made it means that the user wants to quit.
                         break
 
                 # 3' change the field.
@@ -568,6 +582,12 @@ class MainPage:
 
     # 4, delete
     def delete_PIM(self, PIMList: List[PIM]):
+        """
+        Description:
+        This function is for deleting PIMs
+        :param PIMList: The PIM that the user wants to delete
+        :return: None
+        """
         # 1, print the information of PIMs
         self.ui.print_e_line()
         print(f"You have {len(PIMList)} to delete.\n")

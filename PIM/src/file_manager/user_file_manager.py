@@ -1,13 +1,13 @@
 import os
 import time
-import sys
-sys.path.append("../..")
-from model import *
-from tools.Tools import Tools
+from PIM.src.model import *
+from PIM.src.tools.Tools import Tools
 
 class UserFileManager:
-    __userFileRootPath = os.getcwd() + "/PIM/src/file" + "/user"
-
+    """
+    This class is to manage user files, which stores user's personal PIM as a database.
+    """
+    __userFileRootPath = os.getcwd() + "/file" + "/user"
 
     def __init__(self, userFilePath):
         self.logInTimeStamp = time.time()
@@ -18,23 +18,28 @@ class UserFileManager:
         self.__PIMList, self.__history = self.read()
 
 
-
-    # mode: 0644. the file cannot be deleted by others.
-    # the empty file should be able to be read correctly without errors.
     def __create(self):
+        """
+        Create the system file for new users.
+        Use mode 0644 to ensure the file cannot be deleted by others.
+        The empty file should be able to be read correctly without errors.
+        :return: None
+        """
         if not os.path.exists(self.__userFilePath):
-            # 先不进行框架的print，因为在结束的write方法后，会把内容连同字段一起写入文件
-
             with open(self.__userFilePath, "w") as f:
                 pass
             os.chmod(self.__userFilePath, 0o644)
 
-
-    # interface:
-    # 1, PIM.__str__ get the string output format of PIM type.   2, Tools.timeStamp_to_timeStr(timeStamp)
-    # contents: 1, self.__PIMList pim list  2, previous log in/out time self.__history  + current log in time self.logInTimeStamp log out time: now.
-    # output: PIMList list[PIM]  history list[[log_in_time_str, log_out_time_str]]
-
+    """
+    interface:
+        1, PIM.__str__ get the string output format of PIM type.   
+        2, Tools.timeStamp_to_timeStr(timeStamp)
+    contents: 
+        1, self.__PIMList pim list  
+        2, previous log in/out time self.__history  + current log in time self.logInTimeStamp log out time: now.
+    output: 
+        PIMList list[PIM]  history list[[log_in_time_str, log_out_time_str]]
+    """
     def read(self):
         with open(self.__userFilePath, "r") as f:
             lines = f.readlines()

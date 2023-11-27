@@ -3,10 +3,8 @@ import time
 import random
 
 from colorama import Fore
-import sys
-sys.path.append("../..")
 
-from tools.Tools import InputType, Tools
+from PIM.src.tools.Tools import InputType, Tools
 
 
 # create the global instance for the interactive UI
